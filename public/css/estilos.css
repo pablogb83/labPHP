@@ -1,0 +1,84 @@
+figure {
+    float: left;
+    margin: 6px;
+}
+
+figure img {
+    padding: 4px;
+    background: #666;
+    border-radius: 20px;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out 0.1s;
+    box-shadow: #999 5px 5px 10px;
+}
+
+
+/*pseudo clase*/
+
+figure img:hover {
+    -webkit-transform: scale(1.2);
+}
+
+figcaption {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3em;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.card-img-top:hover {
+    /* -webkit-transform: scale(1.2);*/
+    opacity: 0.5;
+}
+
+#categorias {
+    margin-top: 30px;
+}
+
+.tituolopost {
+    text-align: center;
+}
+
+#ultimosPost {
+    margin-top: 50px;
+}
+
+#columnas {
+    column-count: 3;
+    column-gap: 80px;
+    /*column-rule: 4px double black;*/
+    list-style: none;
+}
+
+#columnas1 {
+    column-count: 1;
+    column-gap: 20px;
+    /*column-rule: 4px double black;*/
+    list-style: none;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #000000;
+}
+
+a:active {
+    color: #000000;
+}
+
+a:hover {
+    color: #424242;
+}
+
+.tituloslider {
+    color: #000000;
+    background-color: aliceblue;
+}
+
+.subslider {
+    color: #000000;
+    background-color: aliceblue;
+}
