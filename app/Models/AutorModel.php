@@ -4,20 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsuarioModel extends Model
+class AutorModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'usuarios';
+	protected $table                = 'autor';
 	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
-	protected $returnType           = 'App\Entities\Usuario';
+	protected $returnType           = 'App\Entities\Autor';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ['email', 'nick', 'password', 'tipo'];
+	protected $allowedFields        = ['nombre', 'apellido', 'rutaImg', 'biografia', 'nick_usuario'];
 
 	// Dates
-	protected $useTimestamps        = true;
+	protected $useTimestamps        = false;
 	protected $dateFormat           = 'datetime';
 	protected $createdField         = 'created_at';
 	protected $updatedField         = 'updated_at';

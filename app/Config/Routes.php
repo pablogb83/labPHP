@@ -35,13 +35,29 @@ $routes->setAutoRoute(true);
 //$routes->get('/', 'Home::index');
 $routes->get('/', 'MainController::index');
 $routes->get('/login', 'MainController::loginPage');
+$routes->get('/admin', 'MainController::adminPage');
 $routes->get('/registrarse', 'MainController::registerPage');
 $routes->post('/registrarUsuario', 'UsuarioController::guardar');
 $routes->post('/login', 'UsuarioController::login');
-$routes->get('/listaUsuarios', 'UsuarioController::listar');
+$routes->get('/logout', 'UsuarioController::logout');
+$routes->get('/listaAutores', 'UsuarioController::listarAutores');
+$routes->get('/listaClientes', 'UsuarioController::listarClientes');
 $routes->get('/borrar', 'UsuarioController::borrar');
 $routes->get('/editar', 'UsuarioController::editar');
 $routes->post('/actualizar', 'UsuarioController::actualizar');
+$routes->get('/listaCategorias', 'CategoriaController::index');
+$routes->get('/nuevaCategoria', 'CategoriaController::nueva');
+$routes->post('/registrarCategoria', 'CategoriaController::guardar');
+$routes->get('/borrarCategoria', 'CategoriaController::borrar');
+$routes->get('/editarCategoria', 'CategoriaController::editar');
+$routes->post('/actualizarCategoria', 'CategoriaController::actualizar');
+$routes->post('/loginAdmin', 'AdminController::index');
+$routes->get('/completarPerfil', 'MainController::seleccionarPerfil');
+$routes->get('/perfilAutor', 'AutorController::index');
+$routes->post('/registrarAutor', 'AutorController::guardar');
+$routes->get('/perfilCliente', 'ClienteController::index');
+$routes->post('/registrarCliente', 'ClienteController::guardar');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

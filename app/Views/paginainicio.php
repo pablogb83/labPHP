@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+
 
 
     <div class="container">
@@ -41,41 +41,19 @@
             </button>
         </div>
     </div>
-
+    
     <div class="container" id="categorias">
+        
+        <?php foreach($categorias as $categoria){ ?>
         <a href="">
             <figure>
-                <img src="images/deportes.jpg" alt="deportes" width="210" height="150">
-                <figcaption> Deportes </figcaption>
+                <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">
+                <figcaption> <?php echo $categoria->nombre ?> </figcaption>
             </figure>
         </a>
-        <a href="">
-            <figure>
-                <img src="images/ciencia.jpg" alt="ciencias" width="210" height="150">
-                <figcaption> Ciencias </figcaption>
-            </figure>
-        </a>
-        <a href="">
-            <figure>
-                <img src="images/viajes.jpg" alt="Flores de corte" width="210" height="150">
-                <figcaption> Viajes </figcaption>
-            </figure>
-        </a>
-        <a href="">
-            <figure>
-                <img src="images/videojuegos.jpeg" alt="Flores de corte" width="210" height="150">
-                <figcaption> Video Juegos </figcaption>
-            </figure>
-        </a>
-        <a href="">
-            <figure>
-                <img src="images/tecnologia.jpg" alt="Flores de corte" width="210" height="150">
-                <figcaption> Tecnología </figcaption>
-            </figure>
-        </a>
-
+        <?php } ?>
     </div>
-
+    
     <div class="container">
         <center>
             <h2 class="titulopost">Ultimos post</h2>
@@ -123,4 +101,3 @@
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>

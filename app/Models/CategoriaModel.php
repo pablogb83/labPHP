@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsuarioModel extends Model
+class CategoriaModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'usuarios';
+	protected $table                = 'categorias';
 	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
-	protected $returnType           = 'App\Entities\Usuario';
+	protected $returnType           = 'object';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ['email', 'nick', 'password', 'tipo'];
+	protected $allowedFields        = ['nombre', 'rutaImg'];
 
 	// Dates
 	protected $useTimestamps        = true;

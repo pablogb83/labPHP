@@ -5,94 +5,144 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Entities\Usuario;
 use App\Models\UsuarioModel;
+use Config\Services;
 
 class UsuarioController extends BaseController
 {
 
+	protected $usuarioModel;
+
+	public function __construct()
+	{
+		$this->usuarioModel = new UsuarioModel($db);
+	}
+
+	public function index(){
+
+	}
+
 	public function guardar()
 	{	
-		$usuarioModel = new UsuarioModel($db);
-		$request = \Config\Services::request();
+		//$usuarioModel = new UsuarioModel($db);
+		$request = Services::request();
 		$usuario = new Usuario();
 		
 
-		$usuario->nombre=$request->getPost('nombre');
+		
 		$usuario->email = $request->getPost('email');
-		$usuario->apellido = $request->getPost('apellido');
 		$usuario->nick = $request->getPost('nick');
-		$usuario->fechaNac = $request->getPost('fnac');
 		$usuario->password = $request->getPost('password');
 
+		/*
 		$file = $request->getFile('rutaFoto');
 		$name=$file->getRandomName();
 		$usuario->rutaImg = $name;
-		$file->move('images', $name);
+		$file->move('images', $name);*/
 
 		/*
 		$data = $request->getPost();
 		$usuario->fill($data);*/
-		$usuarioModel->save($usuario);
-		return view('paginainicio');
+		$this->usuarioModel->save($usuario);
+		return redirect()->to(base_url());
 	}
 
 	public function login(){
-		$usuarioModel = new UsuarioModel($db);
-		$request = \Config\Services::request();
-		$usuario = new Usuario();
+		//$usuarioModel = new UsuarioModel($db);
+		$request = Services::request();
+		//$usuario = new Usuario();
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
-		$usuario=$usuarioModel->where('password', $pass)
+		$usuario=$this->usuarioModel->asArray()->where('password', $pass)
 		->where('email',$email)
 		->findAll();
+		//$user=array('user'=>$usuario);
+		//var_dump($usuario);
+		//$usuario = new Usuario($data);
+		//echo  'El usuarios encontrado es' . $usuario[0]['nick'];
+		
 		if($usuario!=null){
-			echo "Bienvenido ";
+			session_start();
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario[0]['id'],
+				"nick" => $usuario[0]['nick'],
+				"tipo" => $usuario[0]['tipo'],
+				"email"	=> $usuario[0]['email']
+			);
+			return redirect()->to(base_url());
 		}else{
-			echo "Usuario no registrado";
+			return redirect()->to(base_url().'/login');
 		}
 	}
 
-	public function listar(){
-		$usuarioModel = new UsuarioModel($db);
-		$usuarios=$usuarioModel->findAll();
+	public function logout(){
+		session_start();
+		unset($_SESSION['logueado']);
+		unset($_SESSION['datos_usuario']);
+		session_destroy();
+		// Redirect
+		return redirect()->to(base_url()); 
+	}
+
+	public function listarAutores(){
+		//$usuarioModel = new UsuarioModel($db);
+		$usuarios=$this->usuarioModel->where('tipo', 'autor')->findAll();
 		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
+		echo view('headerAdmin');
+		echo view('listaAutoresAdmin', $usuarios);
+		echo view('footerAdmin');
+		//return view('listaUsuarios', $usuarios);
+	}
+
+	public function listarClientes(){
+		//$usuarioModel = new UsuarioModel($db);
+		$usuarios=$this->usuarioModel->where('tipo', 'cliente')->findAll();
+		$usuarios = array('usuarios'=>$usuarios);
+		echo view('headerAdmin');
+		echo view('listaClientesAdmin', $usuarios);
+		echo view('footerAdmin');
+		//return view('listaUsuarios', $usuarios);
 	}
 
 	public function borrar(){
-		$request = \Config\Services::request();
+		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$usuarioModel->delete($id);
-		$usuarios=$usuarioModel->findAll();
-		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
+		//$usuarioModel = new UsuarioModel($db);
+		$this->usuarioModel->delete($id);
+		//$usuarios=$this->usuarioModel->findAll();
+		//$usuarios = array('usuarios'=>$usuarios);
+		//return view('listaUsuarios', $usuarios);
+		return redirect()->to(base_url().'/listaUsuarios');
 	}
 
 	public function editar(){
-		$request = \Config\Services::request();
+		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$user = $usuarioModel->find($id);
+		//$usuarioModel = new UsuarioModel($db);
+		$user = $this->usuarioModel->find($id);
 		$user=array('user'=>$user);
-		return view('formEditar', $user);
+		echo view('headerAdmin');
+		echo view('formEditar', $user);
+		echo view('footerAdmin');
+		
+		
 		//echo "esto es editar";
 	}
 
 	public function actualizar(){
 		
-		echo "No esta implementado, ya me pondre a ello!! </br>";
-		echo "A.Z";
-		/*
+
 		$request = \Config\Services::request();
 		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$usuario = $usuarioModel->find($id);
+		//$usuarioModel = new UsuarioModel($db);
+		//$usuario = $this->usuarioModel->find($id);
 		$data = $request->getPost();
-		$usuario->fill($data);
-		$usuarioModel->save($data);
-		$usuarios=$usuarioModel->findAll();
-		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
-		*/
+		//$usuario->fill($data);
+		$this->usuarioModel->update($id,$data);
+		//$usuarios=$this->usuarioModel->findAll();
+		//$usuarios = array('usuarios'=>$usuarios);
+		//return view('listaUsuarios', $usuarios);
+		return redirect()->to(base_url().'/listaUsuarios');
+	
 	}
 }

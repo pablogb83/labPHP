@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+
 
 <br>
     <div class="container">
@@ -7,14 +7,12 @@
             <tr>
                 <th scope="col">Nick</th>
                 <th scope="col">Email</th>
-                <th scope="col">Foto</th>
                 <th scope="col">Accion</th>
             </tr>
                 <?php  foreach($usuarios as $user)  {?>
                     <tr scope="row">
                         <td><?php echo $user->nick;  ?></td>
                         <td><?php echo $user->email;  ?></td>
-                        <td><img src="images/<?php echo $user->rutaImg;  ?>" alt="" width="100"> </td>
                         <td><a href="<?php echo base_url(); ?>/editar?id=<?php echo $user->id; ?>" class="btn btn-warning" role="button"><i class="fa fa-pencil-square-o"></i></a>
                             <a href="<?php echo base_url(); ?>/borrar?id=<?php echo $user->id; ?>" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
                         </td>
@@ -23,4 +21,3 @@
         </table>
     </div>
 <br>
-<?php include 'footer.php'; ?>
