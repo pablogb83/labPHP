@@ -31,10 +31,10 @@ class ClienteController extends BaseController
 		$cliente = new Cliente();
 		
 		$id = $request->getPost('id');
-		$cliente->nick_usuario=$request->getPost('nick');
+		$cliente->id_usuario=$id;
 		$cliente->nombre = $request->getPost('nombre');
 		$cliente->apellido = $request->getPost('apellido');
-		$cliente->fechNac = $request->getPost('fechNac');
+		$cliente->fechaNac = $request->getPost('fechNac');
 
 		
 		$file = $request->getFile('foto');

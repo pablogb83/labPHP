@@ -4,7 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity;
 
-class Autor extends Entity
+class Recurso extends Entity
 {
 	protected $datamap = [];
 	protected $dates   = [

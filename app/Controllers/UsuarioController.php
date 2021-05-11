@@ -108,11 +108,20 @@ class UsuarioController extends BaseController
 		$request = Services::request();
 		$id = $request->getPostGet('id');
 		//$usuarioModel = new UsuarioModel($db);
+		$usuario = $this->usuarioModel->find($id);
+		$tipo = $usuario->tipo;
 		$this->usuarioModel->delete($id);
 		//$usuarios=$this->usuarioModel->findAll();
 		//$usuarios = array('usuarios'=>$usuarios);
 		//return view('listaUsuarios', $usuarios);
-		return redirect()->to(base_url().'/listaUsuarios');
+		switch($tipo){
+			case 'autor':
+				return redirect()->to(base_url().'/listaAutores');
+				break;
+			case 'cliente':
+				return redirect()->to(base_url().'/listaClientes');
+				break;
+		}
 	}
 
 	public function editar(){
@@ -142,7 +151,16 @@ class UsuarioController extends BaseController
 		//$usuarios=$this->usuarioModel->findAll();
 		//$usuarios = array('usuarios'=>$usuarios);
 		//return view('listaUsuarios', $usuarios);
-		return redirect()->to(base_url().'/listaUsuarios');
+		$usuario = $this->usuarioModel->find($id);
+		$tipo = $usuario->tipo;
+		switch($tipo){
+			case 'autor':
+				return redirect()->to(base_url().'/listaAutores');
+				break;
+			case 'cliente':
+				return redirect()->to(base_url().'/listaClientes');
+				break;
+		}
 	
 	}
 }

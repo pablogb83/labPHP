@@ -52,52 +52,32 @@
             </figure>
         </a>
         <?php } ?>
+
     </div>
     
     <div class="container">
         <center>
             <h2 class="titulopost">Ultimos post</h2>
         </center>
+        
         <div class="card-group" style="margin-top: 45px;">
+        <?php foreach($recursos as $recurso){ ?>
             <div class="card">
-                <img src="images/postCiencia.jpeg" class="card-img-top" alt="...">
+                <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="..." >
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title"><?php echo $recurso->nombre ?></h5>
+                    <p class="card-text"><?php echo $recurso->descripcion ?></p>
                     <a href="">
-                        <p>Ler mas...</p>
+                        <p>Leer mas...</p>
                     </a>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
+                    <small class="text-muted"><?php echo $recurso->created_at ?></small>
                 </div>
             </div>
-            <div class="card">
-                <img src="images/postJuegos.jfif" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                    <a href="">
-                        <p>Ler mas...</p>
-                    </a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/postNaturaleza.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                    <a href="">
-                        <p>Ler mas...</p>
-                    </a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
+
+
 

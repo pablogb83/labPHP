@@ -32,6 +32,7 @@ figcaption {
 
 #categorias {
     margin-top: 30px;
+    width: 50%;
 }
 
 .tituolopost {
@@ -40,6 +41,7 @@ figcaption {
 
 #ultimosPost {
     margin-top: 50px;
+    
 }
 
 #columnas {

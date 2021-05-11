@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AutorModel extends Model
+class RecursocategoriaModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'autor';
+	protected $table                = 'recursoscategorias';
 	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
-	protected $returnType           = 'App\Entities\Autor';
+	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ['nombre', 'apellido', 'rutaImg', 'biografia', 'id_usuario'];
+	protected $allowedFields        = ['id_recurso', 'id_categoria'];
 
 	// Dates
 	protected $useTimestamps        = false;

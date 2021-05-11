@@ -57,7 +57,8 @@ $routes->get('/perfilAutor', 'AutorController::index');
 $routes->post('/registrarAutor', 'AutorController::guardar');
 $routes->get('/perfilCliente', 'ClienteController::index');
 $routes->post('/registrarCliente', 'ClienteController::guardar');
-
+$routes->get('/nuevoRecurso', 'RecursoController::index');
+$routes->post('/registrarRecurso', 'RecursoController::guardar');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

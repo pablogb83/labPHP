@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="card" style="width: 18rem; float: left; margin: 12px;">
-        <img src="..." class="card-img-top" alt="...">
+        <img src="images/autor.jpg" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">Autor</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+        <img src="images/usuarios.jpeg" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">Cliente</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

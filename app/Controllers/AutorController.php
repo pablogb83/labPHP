@@ -31,7 +31,7 @@ class AutorController extends BaseController
 		$autor = new Autor();
 		
 		$id = $request->getPost('id');
-		$autor->nick_usuario=$request->getPost('nick');
+		$autor->id_usuario=$id;
 		$autor->nombre = $request->getPost('nombre');
 		$autor->apellido = $request->getPost('apellido');
 		$autor->biografia = $request->getPost('biografia');

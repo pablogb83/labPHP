@@ -14,7 +14,7 @@ class ClienteModel extends Model
 	protected $returnType           = 'App\Entities\Cliente';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ['nombre', 'apellido', 'rutaImg', 'fechaNac', 'nick_usuario'];
+	protected $allowedFields        = ['nombre', 'apellido', 'rutaImg', 'fechaNac', 'id_usuario'];
 
 	// Dates
 	protected $useTimestamps        = false;
