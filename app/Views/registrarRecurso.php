@@ -46,7 +46,7 @@
 
         <label for="cars">Categoria</label>
         
-        <select name="Categoria" id="Categoria">
+        <select name="Categoria[]" id="Categoria" multiple>
             <?php  foreach($categorias as $categoria){ ?>
                 <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
             <?php } ?>

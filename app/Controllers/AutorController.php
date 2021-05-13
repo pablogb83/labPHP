@@ -54,4 +54,18 @@ class AutorController extends BaseController
 		return redirect()->to(base_url());
 		echo $autor->nick_usuario;
 	}
+
+	public function perfil(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$autor = $this->autorModel->find($id);
+		//var_dump($id);
+		$usuarioModel = new UsuarioModel();
+		$usuario = $usuarioModel->find($autor->id_usuario);
+		$datos['autor'] = $autor;
+		$datos['usuario'] = $usuario;
+		echo view('header');
+		echo view('paginaAutor', $datos);
+		echo view('footer');
+	}
 }

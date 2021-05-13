@@ -16,8 +16,8 @@ class MainController extends BaseController
 	{
 		$categoriaModel = new CategoriaModel($db);
 		$recursosModel = new RecursoModel($db);
-		$recursos = $recursosModel->findAll();
-		$categorias = $categoriaModel->findAll();
+		$recursos = $recursosModel->orderBy('created_at','desc')->findAll(3);
+		$categorias = $categoriaModel->findAll(5);
 		$datos['categorias'] = $categorias;
 		$datos['recursos'] = $recursos;
 		//$categorias = array('categorias'=>$categorias);

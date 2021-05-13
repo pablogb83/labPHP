@@ -17,6 +17,7 @@ class UsuarioController extends BaseController
 		$this->usuarioModel = new UsuarioModel($db);
 	}
 
+
 	public function index(){
 
 	}
@@ -43,7 +44,19 @@ class UsuarioController extends BaseController
 		$data = $request->getPost();
 		$usuario->fill($data);*/
 		$this->usuarioModel->save($usuario);
-		return redirect()->to(base_url());
+		$usuario = $this->usuarioModel->asArray()->where('nick',$usuario->nick)->find();
+		if($usuario!=null){
+			session_start();
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario[0]['id'],
+				"nick" => $usuario[0]['nick'],
+				"tipo" => $usuario[0]['tipo'],
+				"email"	=> $usuario[0]['email']
+			);
+		}
+		//return redirect()->to(base_url());
+		return redirect()->to(base_url().'/completarPerfil');
 	}
 
 	public function login(){
@@ -163,4 +176,6 @@ class UsuarioController extends BaseController
 		}
 	
 	}
+
+	
 }

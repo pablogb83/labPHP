@@ -44,16 +44,43 @@ class RecursoController extends BaseController
 
 		$id_categoria = $request->getPost('Categoria');
 		
+		
 		$file = $request->getFile('foto');
 		$name=$file->getRandomName();
 		$recurso->rutaImg = $name;
 		$file->move('images', $name);
+		
+		$this->recursoModel->transStart();
+		$this->recursoModel->save($recurso);
+		$recurso=$this->recursoModel->where('nombre', $recurso->nombre)->first();
+		foreach ($id_categoria as $id){
+			$data = [
+				'id_recurso' => $recurso->id,
+				'id_categoria' => $id
+			];
+			$recCatModel->insert($data);
+		}
+		$this->recursoModel->transComplete();
+		
+		return redirect()->to(base_url());
 
 		
-		$this->recursoModel->save($recurso);
-		return redirect()->to(base_url());
 		//echo $autor->nick_usuario;
 
 		//echo 'estamos en guardar recurso';
+	}
+
+	public function mostrar(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$recurso = $this->recursoModel->find($id);
+		$autorModel = new AutorModel();
+		//$recCatModel = new RecursocategoriaModel($db);
+		$autor = $autorModel->where('id', $recurso->id_autor)->first();
+		$datos['autor'] = $autor;
+		$datos['recurso'] = $recurso;
+		echo view('header');
+		echo view('paginaRecurso', $datos);
+		echo view('footer');
 	}
 }
