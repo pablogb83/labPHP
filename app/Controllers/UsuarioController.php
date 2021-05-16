@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Entities\Usuario;
-use App\Models\UsuarioModel;
+use App\Models\Autor;
+use App\Models\Usuario;
 use Config\Services;
 
 class UsuarioController extends BaseController
@@ -14,7 +14,7 @@ class UsuarioController extends BaseController
 
 	public function __construct()
 	{
-		$this->usuarioModel = new UsuarioModel($db);
+		$this->usuarioModel = new Usuario();
 	}
 
 
@@ -30,9 +30,9 @@ class UsuarioController extends BaseController
 		
 
 		
-		$usuario->email = $request->getPost('email');
-		$usuario->nick = $request->getPost('nick');
-		$usuario->password = $request->getPost('password');
+		$this->usuarioModel->email = $request->getPost('email');
+		$this->usuarioModel->nick = $request->getPost('nick');
+		$this->usuarioModel->password = $request->getPost('password');
 
 		/*
 		$file = $request->getFile('rutaFoto');
@@ -43,7 +43,7 @@ class UsuarioController extends BaseController
 		/*
 		$data = $request->getPost();
 		$usuario->fill($data);*/
-		$this->usuarioModel->save($usuario);
+		$this->usuarioModel->save();
 		$usuario = $this->usuarioModel->asArray()->where('nick',$usuario->nick)->find();
 		if($usuario!=null){
 			session_start();
@@ -65,9 +65,9 @@ class UsuarioController extends BaseController
 		//$usuario = new Usuario();
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
-		$usuario=$this->usuarioModel->asArray()->where('password', $pass)
-		->where('email',$email)
-		->findAll();
+		$usuario=$this->usuarioModel->where('password', $pass)
+									->where('email',$email)
+									->get();
 		//$user=array('user'=>$usuario);
 		//var_dump($usuario);
 		//$usuario = new Usuario($data);
@@ -98,35 +98,31 @@ class UsuarioController extends BaseController
 	}
 
 	public function listarAutores(){
-		//$usuarioModel = new UsuarioModel($db);
-		$usuarios=$this->usuarioModel->where('tipo', 'autor')->findAll();
+		$usuarios=Usuario::where('tipo', 'autor')->get();
+		//$autoresModel = new Autor();
+		//$autores=$autoresModel->get();
+		//var_dump($autores);
 		$usuarios = array('usuarios'=>$usuarios);
 		echo view('headerAdmin');
 		echo view('listaAutoresAdmin', $usuarios);
 		echo view('footerAdmin');
-		//return view('listaUsuarios', $usuarios);
 	}
 
 	public function listarClientes(){
 		//$usuarioModel = new UsuarioModel($db);
-		$usuarios=$this->usuarioModel->where('tipo', 'cliente')->findAll();
+		$usuarios=Usuario::where('tipo', 'cliente')->get();
 		$usuarios = array('usuarios'=>$usuarios);
 		echo view('headerAdmin');
 		echo view('listaClientesAdmin', $usuarios);
 		echo view('footerAdmin');
-		//return view('listaUsuarios', $usuarios);
 	}
 
 	public function borrar(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
-		//$usuarioModel = new UsuarioModel($db);
-		$usuario = $this->usuarioModel->find($id);
+		$usuario = Usuario::find($id);
 		$tipo = $usuario->tipo;
-		$this->usuarioModel->delete($id);
-		//$usuarios=$this->usuarioModel->findAll();
-		//$usuarios = array('usuarios'=>$usuarios);
-		//return view('listaUsuarios', $usuarios);
+		$usuario->delete();
 		switch($tipo){
 			case 'autor':
 				return redirect()->to(base_url().'/listaAutores');
@@ -140,31 +136,22 @@ class UsuarioController extends BaseController
 	public function editar(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
-		//$usuarioModel = new UsuarioModel($db);
 		$user = $this->usuarioModel->find($id);
 		$user=array('user'=>$user);
 		echo view('headerAdmin');
 		echo view('formEditar', $user);
 		echo view('footerAdmin');
-		
-		
-		//echo "esto es editar";
 	}
 
 	public function actualizar(){
 		
-
 		$request = \Config\Services::request();
 		$id = $request->getPostGet('id');
-		//$usuarioModel = new UsuarioModel($db);
-		//$usuario = $this->usuarioModel->find($id);
-		$data = $request->getPost();
-		//$usuario->fill($data);
-		$this->usuarioModel->update($id,$data);
-		//$usuarios=$this->usuarioModel->findAll();
-		//$usuarios = array('usuarios'=>$usuarios);
-		//return view('listaUsuarios', $usuarios);
-		$usuario = $this->usuarioModel->find($id);
+		$usuario = Usuario::find($id);
+		$usuario->nick = $request->getPost('nick');
+		$usuario->email = $request->getPost('email');
+		$usuario->password = $request->getPost('password');
+		$usuario->save();
 		$tipo = $usuario->tipo;
 		switch($tipo){
 			case 'autor':
@@ -174,8 +161,5 @@ class UsuarioController extends BaseController
 				return redirect()->to(base_url().'/listaClientes');
 				break;
 		}
-	
 	}
-
-	
 }

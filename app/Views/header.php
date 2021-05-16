@@ -27,11 +27,9 @@
                             </li>
                             
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="login"><?php echo 'Bienvenido ' . $_SESSION['datos_usuario']['nick']; ?></a>
+                                <a class="nav-link active" aria-current="page" href="perfilUsuario?id=<?php echo $_SESSION['datos_usuario']['id']; ?>"><?php echo 'Bienvenido ' . $_SESSION['datos_usuario']['nick']; ?></a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="completarPerfil">Funciones</a>
-                            </li>
+
                         <?php }else{ ?>
                             <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="login">Login</a>

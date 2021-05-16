@@ -3,23 +3,22 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\CategoriaModel;
-use App\Entities\Categoria;
+use App\Models\Categoria;
 use Config\Services;
 
 class CategoriaController extends BaseController
 {
-	protected $categoriaModel;
+	protected $categoria;
 
 	public function __construct()
 	{
-		$this->categoriaModel = new CategoriaModel($db);
+		$this->categoria = new Categoria();
 	}
 
 	
 	public function index()
 	{
-		$categorias=$this->categoriaModel->findAll();
+		$categorias=$this->categoria->get();
 		$categorias = array('categorias'=>$categorias);
 		echo view('headerAdmin');
 		echo view('listaCategoriasAdmin', $categorias);

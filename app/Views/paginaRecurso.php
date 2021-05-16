@@ -153,7 +153,7 @@
                       <h6 class="mb-0">Autor</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                    <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->id; ?>" > <?php echo $autor->nombre . ' ' . $autor->apellido ?></a>
+                    <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $usuario->id; ?>" > <?php echo $autor->nombre . ' ' . $autor->apellido ?></a>
                     </div>
                   </div>
                   

@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Entities\Cliente;
-use App\Models\ClienteModel;
-use App\Models\UsuarioModel;
+
+use App\Models\Cliente;
+use App\Models\Usuario;
+use App\Models\Autor;
+use App\Models\ClientesautoresModel;
 use Config\Services;
 
 use App\Controllers\BaseController;
@@ -13,10 +15,12 @@ class ClienteController extends BaseController
 {
 
 	protected $clienteModel;
+	protected $usuarioModel;
 
 	public function __construct()
 	{
-		$this->clienteModel = new ClienteModel($db);
+		$this->clienteModel = new Cliente();
+		$this->usuarioModel = new Usuario();
 	}
 
 	public function index()
@@ -28,30 +32,50 @@ class ClienteController extends BaseController
 
 	public function guardar(){
 		$request = Services::request();
-		$cliente = new Cliente();
 		
-		$id = $request->getPost('id');
-		$cliente->id_usuario=$id;
-		$cliente->nombre = $request->getPost('nombre');
-		$cliente->apellido = $request->getPost('apellido');
-		$cliente->fechaNac = $request->getPost('fechNac');
+		$this->usuarioModel->email = $request->getPost('email');
+		$this->usuarioModel->nick = $request->getPost('nick');
+		$this->usuarioModel->password = $request->getPost('password');
+		$this->usuarioModel->tipo = 'cliente';
+
+
+		$this->clienteModel->nombre = $request->getPost('nombre');
+		$this->clienteModel->apellido = $request->getPost('apellido');
+		$this->clienteModel->fechaNac = $request->getPost('fechNac');
 
 		
 		$file = $request->getFile('foto');
 		$name=$file->getRandomName();
-		$cliente->rutaImg = $name;
+		$this->clienteModel->rutaImg = $name;
 		$file->move('images', $name);
 
-		/*
-		$data = $request->getPost();
-		$usuario->fill($data);*/
+		$this->usuarioModel->save();
+		$this->usuarioModel->cliente()->save($this->clienteModel);
 
-		$usuarioModel = new UsuarioModel($db);
-		$usuarioModel->update($id,['tipo'=>'cliente']);
-		session_start();
-		$_SESSION['datos_usuario']['tipo'] = 'cliente';
-		$this->clienteModel->save($cliente);
 		return redirect()->to(base_url());
-		//echo $cliente->nick_usuario;
+	}
+
+	public function perfil(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$cliente = Usuario::find($id)->cliente;
+		$datos['cliente'] = $cliente;
+		$datos['usuario'] = $usuario;
+		echo view('header');
+		echo view('paginaCliente', $datos);
+		echo view('footer');
+	}
+
+	public function seguirAutores(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$autor = Usuario::find($id)->autor;
+		session_start();
+		$id_cliente = $_SESSION['datos_usuario']['id'];
+		$cliente = Usuario::find($id_cliente)->cliente;
+		$cliente->autores()->save($autor);
+		return redirect()->to(base_url().'/paginaAutor?id='. $id);
+		
 	}
 }

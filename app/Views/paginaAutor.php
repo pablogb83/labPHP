@@ -95,7 +95,12 @@
                 <div class="mt-3">
                   <h4><?php echo $usuario->nick ?></h4>
                   <br>
-                  <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
+                  <?php if(isset($_SESSION['logueado'])){ 
+                          if ($_SESSION['datos_usuario']['tipo'] == 'autor'){ ?>
+                              <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
+                          <?php }else{ ?>
+                            <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
+                  <?php }}?> 
                   <button class="btn btn-outline-primary">Seguidores</button>
                 </div>
               </div>

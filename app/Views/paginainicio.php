@@ -72,6 +72,7 @@
                 <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $recurso->nombre ?></h5>
+                    <p class="card-text"><?php echo $recurso->tipo ?></p>
                     <p class="card-text"><?php echo $recurso->descripcion ?></p>
                     <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>">
                         <p>Leer mas...</p>

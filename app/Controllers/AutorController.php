@@ -2,9 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Entities\Autor;
-use App\Models\AutorModel;
-use App\Models\UsuarioModel;
+use App\Models\Autor;
+use App\Models\Usuario;
 use Config\Services;
 
 use App\Controllers\BaseController;
@@ -13,10 +12,12 @@ class AutorController extends BaseController
 {
 
 	protected $autorModel;
+	protected $usuarioModel;
 
 	public function __construct()
 	{
-		$this->autorModel = new AutorModel($db);
+		$this->autorModel = new Autor();
+		$this->usuarioModel = new Usuario();
 	}
 
 	public function index()
@@ -28,40 +29,34 @@ class AutorController extends BaseController
 
 	public function guardar(){
 		$request = Services::request();
-		$autor = new Autor();
 		
-		$id = $request->getPost('id');
-		$autor->id_usuario=$id;
-		$autor->nombre = $request->getPost('nombre');
-		$autor->apellido = $request->getPost('apellido');
-		$autor->biografia = $request->getPost('biografia');
+		$this->usuarioModel->email = $request->getPost('email');
+		$this->usuarioModel->nick = $request->getPost('nick');
+		$this->usuarioModel->password = $request->getPost('password');
+		$this->usuarioModel->tipo = 'autor';
+
+
+		$this->autorModel->nombre = $request->getPost('nombre');
+		$this->autorModel->apellido = $request->getPost('apellido');
+		$this->autorModel->biografia = $request->getPost('biografia');
 
 		
 		$file = $request->getFile('foto');
 		$name=$file->getRandomName();
-		$autor->rutaImg = $name;
+		$this->autorModel->rutaImg = $name;
 		$file->move('images', $name);
 
-		/*
-		$data = $request->getPost();
-		$usuario->fill($data);*/
+		$this->usuarioModel->save();
+		$this->usuarioModel->autor()->save($this->autorModel);
 
-		$usuarioModel = new UsuarioModel($db);
-		$usuarioModel->update($id,['tipo'=>'autor']);
-		session_start();
-		$_SESSION['datos_usuario']['tipo'] = 'autor';
-		$this->autorModel->save($autor);
 		return redirect()->to(base_url());
-		echo $autor->nick_usuario;
 	}
 
 	public function perfil(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$autor = $this->autorModel->find($id);
-		//var_dump($id);
-		$usuarioModel = new UsuarioModel();
-		$usuario = $usuarioModel->find($autor->id_usuario);
+		$usuario = Usuario::find($id);
+		$autor = Usuario::find($id)->autor;
 		$datos['autor'] = $autor;
 		$datos['usuario'] = $usuario;
 		echo view('header');

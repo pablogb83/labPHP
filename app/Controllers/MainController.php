@@ -3,21 +3,19 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\CategoriaModel;
-use App\Models\RecursosModel;
-use App\Models\AutorModel;
-use App\Models\ClienteModel;
-use App\Models\RecursoModel;
-use App\Models\UsuarioModel;
+use App\Models\Categoria;
+use App\Models\Recurso;
+use App\Models\Usuario;
+use Config\Services;
 
 class MainController extends BaseController
 {
 	public function index()
 	{
-		$categoriaModel = new CategoriaModel($db);
-		$recursosModel = new RecursoModel($db);
-		$recursos = $recursosModel->orderBy('created_at','desc')->findAll(3);
-		$categorias = $categoriaModel->findAll(5);
+		$categoriaModel = new Categoria();
+		$recursosModel = new Recurso();
+		$recursos = $recursosModel->orderBy('created_at','desc')->take(3)->get();
+		$categorias = $categoriaModel->take(5)->get();
 		$datos['categorias'] = $categorias;
 		$datos['recursos'] = $recursos;
 		//$categorias = array('categorias'=>$categorias);
@@ -51,35 +49,24 @@ class MainController extends BaseController
 	}
 
 	public function seleccionarPerfil(){
-		echo view('header');
-		switch($_SESSION['datos_usuario']['tipo']){
-			case 'indefinido':
-				echo view('selecPerfil');
-				echo view('footer');
-				break;
-			case 'autor':
-				$autorModel = new AutorModel($db);
-				$usuarioModel = new UsuarioModel($db);
-				$usuario = $usuarioModel->find($_SESSION['datos_usuario']['id']);
-				$autor=$autorModel->where('id_usuario', $_SESSION['datos_usuario']['id'])->first();
-				$datos['autor'] = $autor;
-				$datos['usuario'] = $usuario;
-				echo view('paginaAutor', $datos);
-				echo view('footer');
-				break;
-			case 'cliente':
-				$clienteModel = new ClienteModel($db);
-				$usuarioModel = new UsuarioModel($db);
-				$usuario = $usuarioModel->find($_SESSION['datos_usuario']['id']);
-				$cliente=$clienteModel->where('id_usuario', $_SESSION['datos_usuario']['id'])->first();
-				$datos['cliente'] = $cliente;
-				$datos['usuario'] = $usuario;
-				echo view('paginaCliente', $datos);
-				echo view('footer');
-				break;
-		}
-
 		
+		echo view('header');
+		echo view('selecPerfil');
+		echo view('footer');
 	}
 
+	public function perfil(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuarioModel = new Usuario();
+		$usuaurio = $usuarioModel->find($id);
+		switch ($usuaurio->tipo){
+			case 'autor':
+				return redirect()->to(base_url().'/paginaAutor?id='. $id);
+				break;
+			case 'cliente':
+				return redirect()->to(base_url().'/paginaCliente?id='. $id);
+				break;
+		}
+	}
 }

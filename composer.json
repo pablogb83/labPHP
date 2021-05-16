@@ -1,4 +1,5 @@
-{
+{	
+	"minimum-stability": "dev",
 	"name": "codeigniter4/appstarter",
 	"type": "project",
 	"description": "CodeIgniter4 starter app",
@@ -6,8 +7,11 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.3||^8.0",
-		"codeigniter4/framework": "^4"
+		"codeigniter4/framework": "^4",
+		"4spacesdk/ci4ormextension": "dev-master",
+		"illuminate/database": "9.x-dev"
 	},
+	
 	"require-dev": {
 		"fakerphp/faker": "^1.9",
 		"mikey179/vfsstream": "^1.6",

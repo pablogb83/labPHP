@@ -36,7 +36,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'MainController::index');
 $routes->get('/login', 'MainController::loginPage');
 $routes->get('/admin', 'MainController::adminPage');
-$routes->get('/registrarse', 'MainController::registerPage');
+$routes->get('/registrarse', 'MainController::seleccionarPerfil');
 $routes->post('/registrarUsuario', 'UsuarioController::guardar');
 $routes->post('/login', 'UsuarioController::login');
 $routes->get('/logout', 'UsuarioController::logout');
@@ -52,7 +52,7 @@ $routes->get('/borrarCategoria', 'CategoriaController::borrar');
 $routes->get('/editarCategoria', 'CategoriaController::editar');
 $routes->post('/actualizarCategoria', 'CategoriaController::actualizar');
 $routes->post('/loginAdmin', 'AdminController::index');
-$routes->get('/completarPerfil', 'MainController::seleccionarPerfil');
+//$routes->get('/completarPerfil', 'MainController::seleccionarPerfil');
 $routes->get('/perfilAutor', 'AutorController::index');
 $routes->post('/registrarAutor', 'AutorController::guardar');
 $routes->get('/perfilCliente', 'ClienteController::index');
@@ -61,6 +61,9 @@ $routes->get('/nuevoRecurso', 'RecursoController::index');
 $routes->post('/registrarRecurso', 'RecursoController::guardar');
 $routes->get('/paginaRecurso', 'RecursoController::mostrar');
 $routes->get('/paginaAutor', 'AutorController::perfil');
+$routes->get('/paginaCliente', 'ClienteController::perfil');
+$routes->get('/perfilUsuario', 'MainController::perfil');
+$routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
