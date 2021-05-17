@@ -74,8 +74,33 @@ class ClienteController extends BaseController
 		session_start();
 		$id_cliente = $_SESSION['datos_usuario']['id'];
 		$cliente = Usuario::find($id_cliente)->cliente;
-		$cliente->autores()->save($autor);
+		if($cliente->autores()->find($autor->id)==null){
+			$cliente->autores()->save($autor);
+		}
 		return redirect()->to(base_url().'/paginaAutor?id='. $id);
 		
+	}
+
+	public function formSuscrip(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$cliente = Usuario::find($id)->cliente;
+		$datos=['usuario' => $usuario,
+				'cliente' => $cliente
+				];
+		echo view('header');
+		echo view('paginaSuscripcion', $datos);
+		echo view('footer');
+
+	}
+
+	public function SuscripExito(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$cliente = Usuario::find($id)->cliente;
+		$cliente->suscripto = true;
+		$cliente->save();
+		echo "la suscripcion fue exitosa para " . $cliente->nombre;
 	}
 }

@@ -11,7 +11,9 @@
     <link href="css/estilos.css" rel="stylesheet">
 </head>
 <body>
-<?php session_start(); ?>
+<?php if(!isset($_SESSION)){
+			session_start();
+		}	 ?>
 <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -32,7 +34,7 @@
 
                         <?php }else{ ?>
                             <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="login">Login</a>
+                            <a class="nav-link active" aria-current="page" href="loginpage">Login</a>
                         </li>
                         <?php }  ?>
                         
@@ -42,7 +44,9 @@
                     </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="<?php echo base_url(); ?>/registrarse">Registrarse</a></li>
-                              <!--  <li><a class="dropdown-item" href="<?//php echo base_url(); ?>/listaUsuarios">Lista de Usuarios</a></li> -->
+                                <?php if(isset($_SESSION['logueado']) && $_SESSION['datos_usuario']['tipo'] == 'cliente') { ?>
+                                <li><a class="dropdown-item" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id'];?>">Suscribirse</a></li>
+                                <?php }  ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

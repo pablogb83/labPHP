@@ -74,84 +74,86 @@
 </head>
 
 <body>
-<br>
+  <br>
   <div class="container">
 
 
-      <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-          <h4>Perfil del Cliente</h4>
-        </ol>
-      </nav>
-      <!-- /Breadcrumb -->
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <h4>Perfil del Cliente</h4>
+      </ol>
+    </nav>
+    <!-- /Breadcrumb -->
 
-      <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="images/<?php echo $cliente->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
-                <div class="mt-3">
-                  <h4><?php echo $usuario->nick ?></h4>
-                  <br>
-                  <button class="btn btn-primary">Favoritos</button>
-                  <button class="btn btn-outline-primary">Autores Seguidos</button>
-                </div>
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="images/<?php echo $cliente->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
+              <div class="mt-3">
+                <h4><?php echo $usuario->nick ?></h4>
+                <br>
+                <button class="btn btn-primary">Favoritos</button>
+                <button class="btn btn-outline-primary">Autores Seguidos</button>
               </div>
             </div>
           </div>
-
         </div>
-        <div class="col-md-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Nombre:</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $cliente->nombre ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Apellido</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $cliente->apellido ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $usuario->email ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Perfil</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <b><?php echo $usuario->tipo ?></b>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Fecha de Nacimiento</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $cliente->fechaNac ?>
-                </div>
-              </div>
 
-
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nombre:</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $cliente->nombre ?>
+              </div>
             </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Apellido</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $cliente->apellido ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $usuario->email ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Perfil</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <b><?php echo $usuario->tipo ?></b>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Fecha de Nacimiento</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $cliente->fechaNac ?>
+              </div>
+            </div>
+
+
           </div>
         </div>
+      </div>
+    </div>
+  </div>

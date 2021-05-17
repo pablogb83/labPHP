@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-05-2021 a las 00:39:11
+-- Tiempo de generación: 18-05-2021 a las 01:28:17
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -81,7 +81,8 @@ CREATE TABLE `autor_cliente` (
 --
 
 INSERT INTO `autor_cliente` (`autor_id`, `cliente_id`) VALUES
-(19, 9);
+(19, 9),
+(19, 10);
 
 -- --------------------------------------------------------
 
@@ -102,8 +103,9 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nombre`, `rutaImg`, `created_at`, `updated_at`) VALUES
-(12, 'ciencia', 'ciencia.jpg', '2021-05-16 20:37:45', NULL),
-(13, 'historia', 'historia.jpg', '2021-05-16 20:37:45', NULL);
+(12, 'Ciencias', 'ciencia.jpg', '2021-05-16 22:51:30', '2021-05-16 20:51:30'),
+(14, 'Video Juegos', '1621205199_71ce83b27cc9f5cd6bf6.jpeg', '2021-05-16 20:46:39', '2021-05-16 20:46:39'),
+(15, 'Viajes', '1621205514_3e963ed66e45102d5a6a.jpg', '2021-05-16 20:51:54', '2021-05-16 20:51:54');
 
 -- --------------------------------------------------------
 
@@ -122,7 +124,10 @@ CREATE TABLE `categoria_recurso` (
 
 INSERT INTO `categoria_recurso` (`categoria_id`, `recurso_id`) VALUES
 (12, 15),
-(13, 15);
+(13, 15),
+(15, 17),
+(12, 18),
+(14, 18);
 
 -- --------------------------------------------------------
 
@@ -137,6 +142,7 @@ CREATE TABLE `clientes` (
   `apellido` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `rutaImg` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `fechaNac` date NOT NULL,
+  `suscripto` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -145,8 +151,9 @@ CREATE TABLE `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `usuario_id`, `nombre`, `apellido`, `rutaImg`, `fechaNac`, `created_at`, `updated_at`) VALUES
-(9, 31, 'jose', 'perez', '1621192587_c2c2f032f2551eadfdad.jpg', '1989-02-15', '2021-05-16 17:16:27', '2021-05-16 17:16:27');
+INSERT INTO `clientes` (`id`, `usuario_id`, `nombre`, `apellido`, `rutaImg`, `fechaNac`, `suscripto`, `created_at`, `updated_at`) VALUES
+(9, 31, 'jose', 'perez', '1621192587_c2c2f032f2551eadfdad.jpg', '1989-02-15', 1, '2021-05-17 22:59:25', '2021-05-17 20:59:25'),
+(10, 32, 'joselo', 'garcia', '1621282440_8aa34b37278460c98ad2.png', '1982-05-04', 0, '2021-05-17 18:14:00', '2021-05-17 18:14:00');
 
 -- --------------------------------------------------------
 
@@ -187,6 +194,7 @@ CREATE TABLE `recursos` (
   `rutaImg` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `tipo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `descargable` int(11) NOT NULL,
+  `suscripcion` tinyint(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -195,9 +203,11 @@ CREATE TABLE `recursos` (
 -- Volcado de datos para la tabla `recursos`
 --
 
-INSERT INTO `recursos` (`id`, `autor_id`, `nombre`, `descripcion`, `rutaImg`, `tipo`, `descargable`, `created_at`, `updated_at`) VALUES
-(15, 19, 'una historia maravillosa', 'libro de arte', '1621198428_17f50e87ecd26607da00.jpg', 'audio-libro', 1, '2021-05-16 18:53:48', '2021-05-16 18:53:48'),
-(16, 19, 'Video Juegos', 'te ayudo si me pagas bien ', '1621199086_02f72ba0597a9c97a267.jpg', 'podcast', 1, '2021-05-16 19:04:46', '2021-05-16 19:04:46');
+INSERT INTO `recursos` (`id`, `autor_id`, `nombre`, `descripcion`, `rutaImg`, `tipo`, `descargable`, `suscripcion`, `created_at`, `updated_at`) VALUES
+(15, 19, 'una historia maravillosa', 'libro de arte', '1621198428_17f50e87ecd26607da00.jpg', 'audio-libro', 1, 0, '2021-05-16 18:53:48', '2021-05-16 18:53:48'),
+(16, 19, 'Video Juegos', 'te ayudo si me pagas bien ', '1621199086_02f72ba0597a9c97a267.jpg', 'podcast', 1, 0, '2021-05-16 19:04:46', '2021-05-16 19:04:46'),
+(17, 19, 'La historia de Pi', 'Audio libro sobre la pelicual de un indio en un barco con un tigre y otros animales', '1621272218_79f90b7f2fd7f0cf91a0.jpg', 'audio-libro', 1, 0, '2021-05-17 15:23:38', '2021-05-17 15:23:38'),
+(18, 19, 'mi vida es muy buena', 'la historia de un tipo que se comio un perro crudo', '1621290011_f5cd51d0681d28d80499.jpg', 'revista', 2, 1, '2021-05-17 20:20:11', '2021-05-17 20:20:11');
 
 -- --------------------------------------------------------
 
@@ -221,7 +231,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `email`, `nick`, `password`, `tipo`, `created_at`, `updated_at`) VALUES
 (27, 'pablo@gmail.com', 'pablogb83', '1234', 'autor', '2021-05-16 16:42:45', '2021-05-16 16:42:45'),
-(31, 'toto@gmail.com', 'jose89', '1234', 'cliente', '2021-05-16 17:16:27', '2021-05-16 17:16:27');
+(31, 'toto@gmail.com', 'jose89', '1234', 'cliente', '2021-05-16 17:16:27', '2021-05-16 17:16:27'),
+(32, 'josegarcia@gmail.com', 'morcilla', '1234', 'cliente', '2021-05-17 18:14:00', '2021-05-17 18:14:00');
 
 --
 -- Índices para tablas volcadas
@@ -238,6 +249,12 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `autor`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `autor_cliente`
+--
+ALTER TABLE `autor_cliente`
+  ADD PRIMARY KEY (`autor_id`,`cliente_id`);
 
 --
 -- Indices de la tabla `categorias`
@@ -289,13 +306,13 @@ ALTER TABLE `autor`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -307,13 +324,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `recursos`
 --
 ALTER TABLE `recursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

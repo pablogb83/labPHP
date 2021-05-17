@@ -34,7 +34,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 //$routes->get('/', 'Home::index');
 $routes->get('/', 'MainController::index');
-$routes->get('/login', 'MainController::loginPage');
+$routes->get('/loginpage', 'MainController::loginPage');
 $routes->get('/admin', 'MainController::adminPage');
 $routes->get('/registrarse', 'MainController::seleccionarPerfil');
 $routes->post('/registrarUsuario', 'UsuarioController::guardar');
@@ -64,6 +64,10 @@ $routes->get('/paginaAutor', 'AutorController::perfil');
 $routes->get('/paginaCliente', 'ClienteController::perfil');
 $routes->get('/perfilUsuario', 'MainController::perfil');
 $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
+$routes->get('/suscribirse', 'ClienteController::formSuscrip');
+$routes->post('/suscripExito', 'ClienteController::suscripExito');
+
+
 
 /*
  * --------------------------------------------------------------------

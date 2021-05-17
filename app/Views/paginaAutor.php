@@ -75,13 +75,12 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#btn_seguidores").on("click", function() {
-          if($('#seguidores').css("display")=='none'){
-               $('#seguidores').css("display", "inline");
-          }
-            else{
-                 $('#seguidores').css("display", "none");
-            }
-       
+        if ($('#seguidores').css("display") == 'none') {
+          $('#seguidores').css("display", "inline");
+        } else {
+          $('#seguidores').css("display", "none");
+        }
+
       });
     });
   </script>
@@ -179,8 +178,9 @@
       </div>
 
       <div class="container" id="seguidores" style="display: none;">
-          <?php foreach($clientes as $cliente) {?>
-            <p> <?php echo $cliente->nombre ?> </p>
-          <?php } ?>
+        <?php foreach ($clientes as $cliente) { 
+            echo $cliente->nombre . '<br>'; 
+        } ?>
       </div>
-
+    </div>
+  </div>
