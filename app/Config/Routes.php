@@ -64,6 +64,7 @@ $routes->get('/paginaAutor', 'AutorController::perfil');
 $routes->get('/paginaCliente', 'ClienteController::perfil');
 $routes->get('/perfilUsuario', 'MainController::perfil');
 $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

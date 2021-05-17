@@ -99,9 +99,6 @@ class UsuarioController extends BaseController
 
 	public function listarAutores(){
 		$usuarios=Usuario::where('tipo', 'autor')->get();
-		//$autoresModel = new Autor();
-		//$autores=$autoresModel->get();
-		//var_dump($autores);
 		$usuarios = array('usuarios'=>$usuarios);
 		echo view('headerAdmin');
 		echo view('listaAutoresAdmin', $usuarios);
@@ -109,7 +106,6 @@ class UsuarioController extends BaseController
 	}
 
 	public function listarClientes(){
-		//$usuarioModel = new UsuarioModel($db);
 		$usuarios=Usuario::where('tipo', 'cliente')->get();
 		$usuarios = array('usuarios'=>$usuarios);
 		echo view('headerAdmin');

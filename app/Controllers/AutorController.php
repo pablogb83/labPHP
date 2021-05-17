@@ -57,10 +57,19 @@ class AutorController extends BaseController
 		$id = $request->getPostGet('id');
 		$usuario = Usuario::find($id);
 		$autor = Usuario::find($id)->autor;
+		$clientes = Autor::find($autor->id)->clientes()->get();
 		$datos['autor'] = $autor;
 		$datos['usuario'] = $usuario;
+		$datos['clientes'] = $clientes;
 		echo view('header');
 		echo view('paginaAutor', $datos);
 		echo view('footer');
 	}
+	/*
+	public function seguidores(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$autor = Usuario::find($id)->autor;
+		$clientes = Autor::find($autor->id)->clientes()->get();
+	}*/
 }

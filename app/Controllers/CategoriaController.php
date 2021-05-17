@@ -35,15 +35,14 @@ class CategoriaController extends BaseController
 	public function guardar(){
 
 		$request = Services::request();
-		$categoria = new Categoria();
-		$categoria->nombre = $request->getPost('nombre');
+		$this->categoria->nombre = $request->getPost('nombre');
 
 		$file = $request->getFile('rutaFoto');
 		$name=$file->getRandomName();
-		$categoria->rutaImg = $name;
+		$this->categoria->rutaImg = $name;
 		$file->move('images', $name);
 
-		$this->categoriaModel->save($categoria);
+		$this->categoria->save();
 		return redirect()->to(base_url().'/listaCategorias');
 
 	}
@@ -51,14 +50,15 @@ class CategoriaController extends BaseController
 	public function borrar(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$this->categoriaModel->delete($id);
+		$categoria = $this->categoria::find($id);
+		$categoria->delete();
 		return redirect()->to(base_url().'/listaCategorias');
 	}
 
 	public function editar(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$categoria = $this->categoriaModel->find($id);
+		$categoria = $this->categoria->find($id);
 		$categoria=array('categoria'=>$categoria);
 		echo view('headerAdmin');
 		echo view('editarCategoria', $categoria);
@@ -68,8 +68,9 @@ class CategoriaController extends BaseController
 	public function actualizar(){
 		$request = \Config\Services::request();
 		$id = $request->getPost('id');
-		$data = $request->getPost();
-		$this->categoriaModel->update($id,$data);
+		$categoria = $this->categoria->find($id);
+		$categoria->nombre = $request->getPost('nombre');
+		$categoria->save();
 		return redirect()->to(base_url().'/listaCategorias');
 	}
 }

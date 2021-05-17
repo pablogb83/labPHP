@@ -70,18 +70,18 @@
       box-shadow: none !important;
     }
   </style>
+
 </head>
 
 <body>
+<br>
   <div class="container">
-    <div class="main-body">
+
 
       <!-- Breadcrumb -->
       <nav aria-label="breadcrumb" class="main-breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-          <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+          <h4>Perfil del Cliente</h4>
         </ol>
       </nav>
       <!-- /Breadcrumb -->
@@ -155,14 +155,3 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-
-  </script>
-</body>
-
-</html>

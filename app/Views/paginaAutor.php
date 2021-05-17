@@ -70,101 +70,117 @@
       box-shadow: none !important;
     }
   </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#btn_seguidores").on("click", function() {
+          if($('#seguidores').css("display")=='none'){
+               $('#seguidores').css("display", "inline");
+          }
+            else{
+                 $('#seguidores').css("display", "none");
+            }
+       
+      });
+    });
+  </script>
+
+
 </head>
 
 <body>
+  <br>
   <div class="container">
-    <div class="main-body">
 
-      <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-          <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-        </ol>
-      </nav>
-      <!-- /Breadcrumb -->
 
-      <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="images/<?php echo $autor->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
-                <div class="mt-3">
-                  <h4><?php echo $usuario->nick ?></h4>
-                  <br>
-                  <?php if(isset($_SESSION['logueado'])){ 
-                          if ($_SESSION['datos_usuario']['tipo'] == 'autor'){ ?>
-                              <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
-                          <?php }else{ ?>
-                            <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
-                  <?php }}?> 
-                  <button class="btn btn-outline-primary">Seguidores</button>
-                </div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <h4>Perfil del Autor</h4>
+      </ol>
+    </nav>
+    <!-- /Breadcrumb -->
+
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="images/<?php echo $autor->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
+              <div class="mt-3">
+                <h4><?php echo $usuario->nick ?></h4>
+                <br>
+                <?php if (isset($_SESSION['logueado'])) {
+                  if ($_SESSION['datos_usuario']['tipo'] == 'autor') { ?>
+                    <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
+                  <?php } else { ?>
+                    <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
+                <?php }
+                } ?>
+                <button class="btn btn-outline-primary" id="btn_seguidores">Seguidores</button>
               </div>
             </div>
           </div>
-
         </div>
-        <div class="col-md-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Nombre:</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $autor->nombre ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Apellido</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $autor->apellido ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $usuario->email ?>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Perfil</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <b><?php echo $usuario->tipo ?></b>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Biografia</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  <?php echo $autor->biografia ?>
-                </div>
-              </div>
 
-
-            </div>
-          </div>
-        </div>
-        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript"></script>
       </div>
-    </div>
-</body>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nombre:</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $autor->nombre ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Apellido</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $autor->apellido ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $usuario->email ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Perfil</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <b><?php echo $usuario->tipo ?></b>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Biografia</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php echo $autor->biografia ?>
+              </div>
+            </div>
 
-</html>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container" id="seguidores" style="display: none;">
+          <?php foreach($clientes as $cliente) {?>
+            <p> <?php echo $cliente->nombre ?> </p>
+          <?php } ?>
+      </div>
+

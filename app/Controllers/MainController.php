@@ -18,7 +18,6 @@ class MainController extends BaseController
 		$categorias = $categoriaModel->take(5)->get();
 		$datos['categorias'] = $categorias;
 		$datos['recursos'] = $recursos;
-		//$categorias = array('categorias'=>$categorias);
 		echo view('header');
 		echo view('paginainicio', $datos);
 		echo view('footer');
@@ -41,11 +40,7 @@ class MainController extends BaseController
 	public function adminPage(){
 		
 		echo view('loginAdmin');
-		/*
-		echo view('headerAdmin');
-		echo view('adminPage');
-		echo view('footerAdmin');
-		*/
+
 	}
 
 	public function seleccionarPerfil(){
