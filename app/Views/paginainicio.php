@@ -41,6 +41,44 @@
 
 <div class="container">
     <center><h2 style="margin-top: 30px; margin-bottom: 15px;">Categorias</h2></center>
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Categorias</button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <?php
+
+                function mostrarHijos($categorias, $cont){
+                   
+                    $cont3 = $cont;
+                    foreach($categorias as $categoria){
+                        $cont2 = $cont;
+                        while($cont2>=0){
+                            echo "--";
+                            $cont2--;
+                        }
+                        echo ">";
+                        echo $categoria->nombre . "<br>";
+                        if($categoria->hijas!=null){
+                            mostrarHijos($categoria->hijas, $cont3+=2);
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                }
+
+                foreach($categorias as $categoria){
+                    if($categoria->categoria_id==0){
+                        echo $categoria->nombre . "<br>";
+                        mostrarHijos($categoria->hijas, 0);
+                    }
+                }
+            ?>
+        </div>
+        </div>
 </div>
 
 <div class="container">
@@ -48,8 +86,8 @@
         <div class="container" >
 
             <?php foreach ($categorias as $categoria) { ?>
-
-                <a href="">
+               
+                <a href="<?php echo base_url(); ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>">
                     <figure>
                         <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">
                         <figcaption> <?php echo $categoria->nombre ?> </figcaption>

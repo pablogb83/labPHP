@@ -20,4 +20,15 @@ class Recurso extends Model
         return $this->belongsToMany(Categoria::class);
     }
 
+    public function guardarCategoria($recurso, $categoria){
+		if($categoria->categoria_id==0){
+			return;
+		}
+		$padre_divorciado=$categoria->padre;
+		if($recurso->categorias()->find($padre_divorciado->id)==null){
+			$recurso->categorias()->save($padre_divorciado);
+			return $this->guardarCategoria($recurso, $padre_divorciado);
+		}
+	}
+
 }

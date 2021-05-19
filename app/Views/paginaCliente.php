@@ -150,6 +150,19 @@
                 <?php echo $cliente->fechaNac ?>
               </div>
             </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Status</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php if ($cliente->suscripto == 1){ ?>
+                <b> Suscripto </b>
+                <?php }else{ ?>
+                <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id'];?>">Suscribirse</a>
+                <?php } ?>
+              </div>
+            </div>
 
 
           </div>

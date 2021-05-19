@@ -96,11 +96,21 @@ class ClienteController extends BaseController
 	}
 
 	public function SuscripExito(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
 		$request = Services::request();
 		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
 		$cliente = Usuario::find($id)->cliente;
 		$cliente->suscripto = true;
 		$cliente->save();
-		echo "la suscripcion fue exitosa para " . $cliente->nombre;
+		$datos=['usuario' => $usuario,
+				'cliente' => $cliente
+				];
+		echo view('header');
+		echo view('regresoSuscrip', $datos);
+		echo view('footer');
 	}
+
 }

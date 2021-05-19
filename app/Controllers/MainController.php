@@ -15,7 +15,7 @@ class MainController extends BaseController
 		$categoriaModel = new Categoria();
 		$recursosModel = new Recurso();
 		$recursos = $recursosModel->orderBy('created_at','desc')->take(3)->get();
-		$categorias = $categoriaModel->take(5)->get();
+		$categorias = $categoriaModel->get();
 		$datos['categorias'] = $categorias;
 		$datos['recursos'] = $recursos;
 		echo view('header');

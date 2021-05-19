@@ -14,6 +14,7 @@
 <?php if(!isset($_SESSION)){
 			session_start();
 		}	 ?>
+
 <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -53,11 +54,13 @@
                                 <li><a class="dropdown-item" href="#">¿Necesitas ayuda?</a></li>
                             </ul>
                         </li>
+                        
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
                         <button class="btn btn-outline-dark" type="submit">Buscar</button>
                     </form>
+                    
                 </div>
             </div>
         </nav>

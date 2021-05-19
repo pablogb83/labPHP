@@ -52,7 +52,16 @@ class RecursoController extends BaseController
 		foreach ($id_categoria as $id){
 			$categoria = Categoria::find($id);
 			$this->recurso->categorias()->save($categoria);
+			$this->recurso->guardarCategoria($this->recurso, $categoria);
+			/*$this->recurso->categorias()->save($categoria);
+			if($categoria->categoria_id!=0){
+				$padre_divorciado=$categoria->padre;
+				if($this->recurso->categorias()->find($padre_divorciado->id)==null){
+					$this->recurso->categorias()->save($padre_divorciado);
+				}
+			}*/
 		}
+
 
 		
 		return redirect()->to(base_url());
@@ -63,6 +72,18 @@ class RecursoController extends BaseController
 		//echo 'estamos en guardar recurso';
 	}
 
+	/*public function guardarCategoria($recurso, $categoria){
+		if($categoria->categoria_id==0){
+			return;
+		}
+		$padre_divorciado=$categoria->padre;
+		if($recurso->categorias()->find($padre_divorciado->id)==null){
+			$recurso->categorias()->save($padre_divorciado);
+			return $this->guardarCategoria($recurso, $padre_divorciado);
+		}
+		
+	}*/
+
 	public function mostrar(){
 
 			$request = Services::request();
@@ -70,9 +91,11 @@ class RecursoController extends BaseController
 			$rec = Recurso::find($id);
 			$autor = Recurso::find($id)->autor;
 			$usuario = Autor::find($autor->id)->usuario;
+			$categorias = $rec->categorias;
 			$datos['autor'] = $autor;
 			$datos['usuario'] = $usuario;
 			$datos['recurso'] = $rec;
+			$datos['categorias'] = $categorias;
 			echo view('header');
 			echo view('paginaRecurso', $datos);
 			echo view('footer');

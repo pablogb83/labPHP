@@ -74,7 +74,9 @@ class UsuarioController extends BaseController
 		//echo  'El usuarios encontrado es' . $usuario[0]['nick'];
 		
 		if($usuario!=null){
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
 			$_SESSION['logueado'] = true;
 			$_SESSION['datos_usuario'] = array(
 				"id"	=> $usuario[0]['id'],
@@ -89,7 +91,9 @@ class UsuarioController extends BaseController
 	}
 
 	public function logout(){
-		session_start();
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
 		unset($_SESSION['logueado']);
 		unset($_SESSION['datos_usuario']);
 		session_destroy();
