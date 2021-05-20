@@ -40,23 +40,39 @@
 </div>
 
 <div class="container">
-    <center><h2 style="margin-top: 30px; margin-bottom: 15px;">Categorias</h2></center>
+    <center><button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="margin-top: 30px; margin-bottom: 15px;">Ver todas</button></center>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Categorias</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <?php
+                foreach($categorias as $categoria){
+                    if($categoria->categoria_id==0){
+                        echo $categoria->nombre . "<br>";
+                        $categoria->mostrarHijos($categoria->hijas, 0);
+                    }
+                }
+            ?>
+        </div>
+        </div>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="container" >
 
-            <?php foreach ($categorias as $categoria) { ?>
-
-                <a href="">
+            <?php $cont=0; foreach ($categorias as $categoria) { ?>
+                <?php if($categoria->categoria_id == 0 && $cont<6){  ?>
+                <a href="<?php echo base_url(); ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>">
                     <figure>
                         <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">
                         <figcaption> <?php echo $categoria->nombre ?> </figcaption>
                     </figure>
                 </a>
 
-            <?php } ?>
+            <?php ++$cont; }} ?>
 
         </div>
     </div>

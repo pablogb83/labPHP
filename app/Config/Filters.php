@@ -6,6 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
+use App\Filters\FilterCliente;
+use App\Filters\FilterAutor;
+use App\Filters\FilterVisitante;
 
 class Filters extends BaseConfig
 {
@@ -19,6 +22,9 @@ class Filters extends BaseConfig
 		'csrf'     => CSRF::class,
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
+		'logincliente'    => FilterCliente::class,
+		'loginautor'    => FilterAutor::class,
+		'filtervisitante' => FilterVisitante::class,
 	];
 
 	/**
@@ -29,7 +35,9 @@ class Filters extends BaseConfig
 	 */
 	public $globals = [
 		'before' => [
-			// 'honeypot',
+			//'loginautor' => ['except' => ['/loginpage', '/', '/registrarse', '/login','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso', '/admin','/loginAdmin', '/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/seguirAutor','/suscribirse','/suscripExito']],
+			//'logincliente' =>['except' => ['/loginpage', '/', '/registrarse', '/login','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso', '/admin','/loginAdmin', '/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/nuevoRecurso','/registrarRecurso']],
+			//'filtervisitante' => ['except' => ['/','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso','/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/nuevoRecurso','/registrarRecurso', '/suscribirse']],
 			// 'csrf',
 		],
 		'after'  => [

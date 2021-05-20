@@ -15,7 +15,7 @@ class MainController extends BaseController
 		$categoriaModel = new Categoria();
 		$recursosModel = new Recurso();
 		$recursos = $recursosModel->orderBy('created_at','desc')->take(3)->get();
-		$categorias = $categoriaModel->take(5)->get();
+		$categorias = $categoriaModel->get();
 		$datos['categorias'] = $categorias;
 		$datos['recursos'] = $recursos;
 		echo view('header');
@@ -63,5 +63,16 @@ class MainController extends BaseController
 				return redirect()->to(base_url().'/paginaCliente?id='. $id);
 				break;
 		}
+	}
+
+	public function buscador(){
+		$request = Services::request();
+		$busqueda = $request->getPostGet('busqueda');
+		$recursos = Recurso::where('nombre', 'like', '%'.$busqueda.'%')->orderBy('created_at')->get();
+		$recursos= array('recursos'=>$recursos);
+		echo view('header');
+		echo view('mostrarRecursos', $recursos);
+		echo view('footer');
+		//echo $busqueda;
 	}
 }

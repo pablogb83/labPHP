@@ -37,7 +37,6 @@ $routes->get('/', 'MainController::index');
 $routes->get('/loginpage', 'MainController::loginPage');
 $routes->get('/admin', 'MainController::adminPage');
 $routes->get('/registrarse', 'MainController::seleccionarPerfil');
-$routes->post('/registrarUsuario', 'UsuarioController::guardar');
 $routes->post('/login', 'UsuarioController::login');
 $routes->get('/logout', 'UsuarioController::logout');
 $routes->get('/listaAutores', 'UsuarioController::listarAutores');
@@ -66,9 +65,11 @@ $routes->get('/perfilUsuario', 'MainController::perfil');
 $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 $routes->get('/suscribirse', 'ClienteController::formSuscrip');
 $routes->post('/suscripExito', 'ClienteController::suscripExito');
-
-
-
+//Nuevas rutas
+$routes->get('/nuevaCategoriaHija', 'CategoriaController::nuevaHija');
+$routes->post('/registrarCategoriaHija', 'CategoriaController::guardarHija');
+$routes->get('/mostrarRecursosCategoria', 'CategoriaController::mostrarRecursos');
+$routes->get('/buscador', 'MainController::buscador');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

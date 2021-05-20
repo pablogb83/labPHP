@@ -96,7 +96,18 @@
                 <h4><?php echo $usuario->nick ?></h4>
                 <br>
                 <button class="btn btn-primary">Favoritos</button>
-                <button class="btn btn-outline-primary">Autores Seguidos</button>
+                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Autores seguidos</button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                  <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel">Lista de autores</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body">
+                    <?php foreach ($autores as $autor){ ?>
+                       <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a>  <br>
+                    <?php } ?>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -148,6 +159,19 @@
               </div>
               <div class="col-sm-9 text-secondary">
                 <?php echo $cliente->fechaNac ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Status</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php if ($cliente->suscripto == 1) { ?>
+                  <b> Suscripto </b>
+                <?php } else { ?>
+                  <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+                <?php } ?>
               </div>
             </div>
 

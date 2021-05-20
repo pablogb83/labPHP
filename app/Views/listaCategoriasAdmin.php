@@ -41,7 +41,10 @@
                                         <td><img src="images/<?php echo $categoria->rutaImg;  ?>" alt="" width="100"></td>
                                         <td><a href="<?php echo base_url(); ?>/editarCategoria?id=<?php echo $categoria->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
                                         <a href="#" data-href="<?php echo base_url(); ?>/borrarCategoria?id=<?php echo $categoria->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
-                                        </td>
+                                        <a href="<?php echo base_url(); ?>/nuevaCategoriaHija?id=<?php echo $categoria->id; ?>" class="btn btn-success" role="button"><i class="fas fa-baby"></i></a>
+                                       </td>
+                                        
+
                                     </tr>
                                 <?php  } ?>
                             </tbody>

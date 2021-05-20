@@ -117,7 +117,19 @@
                     <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
                 <?php }
                 } ?>
-                <button class="btn btn-outline-primary" id="btn_seguidores">Seguidores</button>
+                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Seguidores</button>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                  <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel">Lista de seguidores</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body">
+                  <?php foreach ($clientes as $cliente){ ?>
+                       <a href="<?php echo base_url(); ?>/paginaCliente?id=<?php echo $cliente->usuario->id; ?>"> <?php echo $cliente->nombre . ' ' . $cliente->apellido ?></a> <br>  
+                    <?php } ?>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -178,8 +190,8 @@
       </div>
 
       <div class="container" id="seguidores" style="display: none;">
-        <?php foreach ($clientes as $cliente) { 
-            echo $cliente->nombre . '<br>'; 
+        <?php foreach ($clientes as $cliente) {
+          echo $cliente->nombre . '<br>';
         } ?>
       </div>
     </div>
