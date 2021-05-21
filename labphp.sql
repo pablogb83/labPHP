@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2021 a las 00:53:34
+-- Tiempo de generación: 21-05-2021 a las 21:32:13
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -154,7 +154,10 @@ INSERT INTO `categoria_recurso` (`categoria_id`, `recurso_id`) VALUES
 (25, 27),
 (17, 27),
 (26, 27),
-(27, 27);
+(27, 27),
+(26, 28),
+(25, 28),
+(17, 28);
 
 -- --------------------------------------------------------
 
@@ -180,7 +183,31 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id`, `usuario_id`, `nombre`, `apellido`, `rutaImg`, `fechaNac`, `suscripto`, `created_at`, `updated_at`) VALUES
 (9, 31, 'jose', 'perez', '1621192587_c2c2f032f2551eadfdad.jpg', '1989-02-15', 1, '2021-05-17 22:59:25', '2021-05-17 20:59:25'),
-(10, 32, 'joselo', 'garcia', '1621282440_8aa34b37278460c98ad2.png', '1982-05-04', 1, '2021-05-18 20:53:55', '2021-05-18 18:53:55');
+(10, 32, 'joselo', 'garcia', '1621282440_8aa34b37278460c98ad2.png', '1982-05-04', 1, '2021-05-18 20:53:55', '2021-05-18 18:53:55'),
+(11, 33, 'marcelo', 'Arena', '1621617233_62597bbbbfbe54cf837e.jpg', '1963-02-12', 1, '2021-05-21 17:14:51', '2021-05-21 15:14:51');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cliente_recurso`
+--
+
+CREATE TABLE `cliente_recurso` (
+  `cliente_id` int(11) NOT NULL,
+  `recurso_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cliente_recurso`
+--
+
+INSERT INTO `cliente_recurso` (`cliente_id`, `recurso_id`) VALUES
+(9, 25),
+(10, 27),
+(9, 27),
+(9, 26),
+(10, 24),
+(9, 21);
 
 -- --------------------------------------------------------
 
@@ -222,6 +249,7 @@ CREATE TABLE `recursos` (
   `tipo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `descargable` int(11) NOT NULL,
   `suscripcion` tinyint(1) NOT NULL,
+  `nota` float NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -230,19 +258,17 @@ CREATE TABLE `recursos` (
 -- Volcado de datos para la tabla `recursos`
 --
 
-INSERT INTO `recursos` (`id`, `autor_id`, `nombre`, `descripcion`, `rutaImg`, `tipo`, `descargable`, `suscripcion`, `created_at`, `updated_at`) VALUES
-(15, 19, 'una historia maravillosa', 'libro de arte', '1621198428_17f50e87ecd26607da00.jpg', 'audio-libro', 1, 0, '2021-05-16 18:53:48', '2021-05-16 18:53:48'),
-(16, 19, 'Video Juegos', 'te ayudo si me pagas bien ', '1621199086_02f72ba0597a9c97a267.jpg', 'podcast', 1, 0, '2021-05-16 19:04:46', '2021-05-16 19:04:46'),
-(17, 19, 'La historia de Pi', 'Audio libro sobre la pelicual de un indio en un barco con un tigre y otros animales', '1621272218_79f90b7f2fd7f0cf91a0.jpg', 'audio-libro', 1, 0, '2021-05-17 15:23:38', '2021-05-17 15:23:38'),
-(18, 19, 'mi vida es muy buena', 'la historia de un tipo que se comio un perro crudo', '1621290011_f5cd51d0681d28d80499.jpg', 'revista', 2, 1, '2021-05-17 20:20:11', '2021-05-17 20:20:11'),
-(19, 19, 'Las rosas rojas', 'Lasrosas rojas', '1621450663_320bbb4faadbfdda0f4c.png', 'revista', 2, 1, '2021-05-19 16:57:43', '2021-05-19 16:57:43'),
-(20, 19, 'Marta', 'De todo', '1621451052_441b3c794299adbabf1c.png', 'documento', 1, 1, '2021-05-19 17:04:12', '2021-05-19 17:04:12'),
-(21, 19, 'Biblia', 'Biblia catolica', '1621451554_840e822a4b7d36ca0ad6.png', 'audio-libro', 1, 1, '2021-05-19 17:12:34', '2021-05-19 17:12:34'),
-(23, 19, 'Documentos x', 'Confidencial', '1621453118_a17ecfede5a2071da6a5.png', 'podcast', 1, 1, '2021-05-19 17:38:38', '2021-05-19 17:38:38'),
-(24, 19, 'Locura y fama', 'Fama', '1621454195_35c03fe0cb0207b156b0.png', 'audio-libro', 1, 0, '2021-05-19 17:56:35', '2021-05-19 17:56:35'),
-(25, 19, 'Biografia de goku', 'Dragon ball z', '1621454453_f6ede35acb3a80da1782.png', 'revista', 1, 1, '2021-05-19 18:00:53', '2021-05-19 18:00:53'),
-(26, 19, 'Biografia de goha', 'Gohan', '1621454673_012d661e19776cea4136.png', 'podcast', 1, 1, '2021-05-19 18:04:33', '2021-05-19 18:04:33'),
-(27, 19, 'Biografia de vegueta', 'Vegueta', '1621454970_414b49f7b4fb88be7cb2.jpg', 'documento', 1, 1, '2021-05-19 18:09:30', '2021-05-19 18:09:30');
+INSERT INTO `recursos` (`id`, `autor_id`, `nombre`, `descripcion`, `rutaImg`, `tipo`, `descargable`, `suscripcion`, `nota`, `created_at`, `updated_at`) VALUES
+(15, 19, 'una historia maravillosa', 'libro de arte', '1621198428_17f50e87ecd26607da00.jpg', 'audio-libro', 1, 0, 0, '2021-05-16 18:53:48', '2021-05-16 18:53:48'),
+(16, 19, 'Video Juegos', 'te ayudo si me pagas bien ', '1621199086_02f72ba0597a9c97a267.jpg', 'podcast', 1, 0, 0, '2021-05-16 19:04:46', '2021-05-16 19:04:46'),
+(17, 19, 'La historia de Pi', 'Audio libro sobre la pelicual de un indio en un barco con un tigre y otros animales', '1621272218_79f90b7f2fd7f0cf91a0.jpg', 'audio-libro', 1, 0, 0, '2021-05-17 15:23:38', '2021-05-17 15:23:38'),
+(18, 19, 'mi vida es muy buena', 'la historia de un tipo que se comio un perro crudo', '1621290011_f5cd51d0681d28d80499.jpg', 'revista', 2, 1, 0, '2021-05-17 20:20:11', '2021-05-17 20:20:11'),
+(19, 19, 'Las rosas rojas', 'Lasrosas rojas', '1621450663_320bbb4faadbfdda0f4c.png', 'revista', 2, 1, 0, '2021-05-19 16:57:43', '2021-05-19 16:57:43'),
+(20, 19, 'Marta', 'De todo', '1621451052_441b3c794299adbabf1c.png', 'documento', 1, 1, 0, '2021-05-19 17:04:12', '2021-05-19 17:04:12'),
+(21, 19, 'Biblia', 'Biblia catolica', '1621451554_840e822a4b7d36ca0ad6.png', 'audio-libro', 1, 1, 0, '2021-05-19 17:12:34', '2021-05-19 17:12:34'),
+(23, 19, 'Documentos x', 'Confidencial', '1621453118_a17ecfede5a2071da6a5.png', 'podcast', 1, 1, 4, '2021-05-19 17:38:38', '2021-05-19 17:38:38'),
+(24, 19, 'Locura y fama', 'Fama', '1621454195_35c03fe0cb0207b156b0.png', 'audio-libro', 1, 0, 0, '2021-05-19 17:56:35', '2021-05-19 17:56:35'),
+(28, 19, 'La moto rota', 'historia de una moto que se rompio y ta', '1621625103_3fd4f5e428e8b4ae5766.jpg', 'audio-libro', 1, 0, 0, '2021-05-21 17:25:03', '2021-05-21 17:25:03');
 
 -- --------------------------------------------------------
 
@@ -267,7 +293,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `email`, `nick`, `password`, `tipo`, `created_at`, `updated_at`) VALUES
 (27, 'pablo@gmail.com', 'pablogb83', '1234', 'autor', '2021-05-16 16:42:45', '2021-05-16 16:42:45'),
 (31, 'toto@gmail.com', 'jose89', '1234', 'cliente', '2021-05-16 17:16:27', '2021-05-16 17:16:27'),
-(32, 'josegarcia@gmail.com', 'morcilla', '1234', 'cliente', '2021-05-17 18:14:00', '2021-05-17 18:14:00');
+(32, 'josegarcia@gmail.com', 'morcilla', '1234', 'cliente', '2021-05-17 18:14:00', '2021-05-17 18:14:00'),
+(33, 'marcelo@gmail.com', 'garka', '1234', 'cliente', '2021-05-21 15:13:53', '2021-05-21 15:13:53');
 
 --
 -- Índices para tablas volcadas
@@ -347,7 +374,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -359,13 +386,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `recursos`
 --
 ALTER TABLE `recursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

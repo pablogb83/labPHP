@@ -70,6 +70,7 @@ class MainController extends BaseController
 		$busqueda = $request->getPostGet('busqueda');
 		$recursos = Recurso::where('nombre', 'like', '%'.$busqueda.'%')->orderBy('created_at')->get();
 		$recursos= array('recursos'=>$recursos);
+		//var_dump($recursos);
 		echo view('header');
 		echo view('mostrarRecursos', $recursos);
 		echo view('footer');

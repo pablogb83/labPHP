@@ -6,10 +6,10 @@ namespace App\Controllers;
 use App\Models\Cliente;
 use App\Models\Usuario;
 use App\Models\Autor;
-use App\Models\ClientesautoresModel;
 use Config\Services;
 
 use App\Controllers\BaseController;
+use App\Models\Recurso;
 
 class ClienteController extends BaseController
 {
@@ -83,6 +83,20 @@ class ClienteController extends BaseController
 		
 	}
 
+	public function dejarSeguirAutor(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$autor = Autor::find($id);
+		$usuario = Usuario::find($_SESSION['datos_usuario']['id']);
+		$cliente = $usuario->cliente;
+		$cliente->autores()->detach($autor->id);
+		return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
+
+	}
+
 	public function formSuscrip(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
@@ -113,6 +127,36 @@ class ClienteController extends BaseController
 		echo view('header');
 		echo view('regresoSuscrip', $datos);
 		echo view('footer');
+	}
+
+	public function guardarRecurso(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$recurso = Recurso::find($id);
+
+		$usuario = Usuario::find($_SESSION['datos_usuario']['id']);
+		$cliente = $usuario->cliente;
+		if($cliente->recursos()->find($recurso->id)==null){
+			$cliente->recursos()->save($recurso);
+		}
+		return redirect()->to(base_url().'/paginaRecurso?id='. $id);
+	}
+
+	public function borrarRecurso(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$recurso = Recurso::find($id);
+
+		$usuario = Usuario::find($_SESSION['datos_usuario']['id']);
+		$cliente = $usuario->cliente;
+		$cliente->recursos()->detach($recurso->id);
+		return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
 	}
 
 }

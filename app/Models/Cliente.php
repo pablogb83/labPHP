@@ -18,4 +18,9 @@ class Cliente extends Model
     {
         return $this->belongsToMany(Autor::class);
     }
+
+    public function recursos()
+    {
+        return $this->belongsToMany(Recurso::class);
+    }
 }

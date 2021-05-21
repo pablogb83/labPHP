@@ -32,7 +32,7 @@ class Categoria extends Model
                 $cont2--;
             }
             echo ">";
-            echo $categoria->nombre . "<br>";
+            echo  "<a href='mostrarRecursosCategoria?id=" . $categoria->id . "'>" . $categoria->nombre . "</a><br>";
             if($categoria->hijas!=null){
                 $this->mostrarHijos($categoria->hijas, $cont3+=2);
             }

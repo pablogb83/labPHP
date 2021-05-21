@@ -95,7 +95,19 @@
               <div class="mt-3">
                 <h4><?php echo $usuario->nick ?></h4>
                 <br>
-                <button class="btn btn-primary">Favoritos</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Contenido Guardado</button>
+
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Lista de contenidos</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body small">
+                  <?php foreach ($cliente->recursos as $recurso) { ?>
+                      <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a> <a href="<?php echo base_url(); ?>/quitarRecursoUsuario?id=<?php echo $recurso->id; ?>"><i class="fas fa-eraser"></i></a><br>
+                    <?php } ?>
+                  </div>
+                </div>
                 <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Autores seguidos</button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                   <div class="offcanvas-header">
@@ -103,8 +115,8 @@
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                   <div class="offcanvas-body">
-                    <?php foreach ($autores as $autor){ ?>
-                       <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a>  <br>
+                    <?php foreach ($autores as $autor) { ?>
+                      <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a> <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a><br>
                     <?php } ?>
                   </div>
                 </div>

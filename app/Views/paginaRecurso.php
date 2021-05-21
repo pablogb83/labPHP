@@ -23,7 +23,7 @@
           <button class="btn btn-light"> Vista previa </button>
         </div>
         <br>
-        <p><i class="far fa-bookmark"></i> Guardar para despues</p>
+        <a href="<?php echo base_url(); ?>/guardarRecursoCliente?id=<?php echo $recurso->id ?>"><p><i class="far fa-bookmark"></i> Guardar para despues</p></a>
         <hr>
         <p><i class="far fa-list-alt"></i> Crear una lista</p>
         <hr>
@@ -49,7 +49,18 @@
           </div>
         </div>
         <div class="row">
-          <p>Aca va la valoracion ranking de estrellas</p>
+        <table style="margin-left: 10px;">
+        <tbody>
+        <tr class="hotel_a">
+          <td>Nota</td>
+          <td>
+            <div class="stars-outer">
+              <div class="stars-inner"></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+        </table>
           <hr>
         </div>
         <div class="row">
@@ -70,3 +81,24 @@
     </div>
   </div>
 </div>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script>
+    const ratings = {
+      hotel_a: <?php echo $recurso->nota ?>,
+
+    };
+
+    // total number of stars
+    const starTotal = 5;
+
+    for (const rating in ratings) {
+      const starPercentage = (ratings[rating] / starTotal) * 100;
+      const starPercentageRounded = `${
+        Math.round(starPercentage / 10) * 10
+      }%`;
+      document.querySelector(`.${rating} .stars-inner`).style.width =
+        starPercentageRounded;
+    }
+  </script>

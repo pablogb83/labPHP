@@ -20,6 +20,11 @@ class Recurso extends Model
         return $this->belongsToMany(Categoria::class);
     }
 
+	public function clientes()
+    {
+        return $this->belongsToMany(Cliente::class);
+    }
+
     public function guardarCategoria($recurso, $categoria){
 		if($categoria->categoria_id==0){
 			return;

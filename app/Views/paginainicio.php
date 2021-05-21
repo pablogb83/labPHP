@@ -49,12 +49,12 @@
         <div class="offcanvas-body">
             <?php
                 foreach($categorias as $categoria){
-                    if($categoria->categoria_id==0){
-                        echo $categoria->nombre . "<br>";
-                        $categoria->mostrarHijos($categoria->hijas, 0);
+                    if($categoria->categoria_id==0){ ?>
+                        <a href="<?php echo base_url() ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>"> <?php echo $categoria->nombre ?> </a><br>
+                        <?php $categoria->mostrarHijos($categoria->hijas, 0); 
                     }
                 }
-            ?>
+            ?> 
         </div>
         </div>
 </div>

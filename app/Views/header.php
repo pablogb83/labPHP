@@ -9,6 +9,52 @@
     <script src="https://kit.fontawesome.com/e1b9012e50.js" crossorigin="anonymous"></script>
     <title>Truchameo</title>
     <link href="css/estilos.css" rel="stylesheet">
+
+    <style>
+
+
+      
+      .stars-outer {
+        display: inline-block;
+        position: relative;
+        font-family: FontAwesome;
+      }
+
+      .stars-outer::before {
+        content: "\f006 \f006 \f006 \f006 \f006";
+      }
+
+      .stars-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+      }
+
+      .stars-inner::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        color: #f8ce0b;
+      }
+
+      .attribution {
+        font-size: 12px;
+        color: #444;
+        text-decoration: none;
+        text-align: center;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        z-index: -1;
+      }
+      .attribution:hover {
+        color: #1fa67a;
+      }
+    </style>
+
+
+
 </head>
 <body>
 <?php if(!isset($_SESSION)){

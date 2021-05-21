@@ -65,11 +65,21 @@ $routes->get('/perfilUsuario', 'MainController::perfil');
 $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 $routes->get('/suscribirse', 'ClienteController::formSuscrip');
 $routes->post('/suscripExito', 'ClienteController::suscripExito');
+$routes->get('/adminPage', 'AdminController::mainpage');
 //Nuevas rutas
 $routes->get('/nuevaCategoriaHija', 'CategoriaController::nuevaHija');
 $routes->post('/registrarCategoriaHija', 'CategoriaController::guardarHija');
 $routes->get('/mostrarRecursosCategoria', 'CategoriaController::mostrarRecursos');
 $routes->get('/buscador', 'MainController::buscador');
+$routes->get('/guardarRecursoCliente', 'ClienteController::guardarRecurso');
+$routes->get('/quitarRecursoUsuario', 'ClienteController::borrarRecurso');
+$routes->get('/dejarSeguirAutor', 'ClienteController::dejarSeguirAutor');
+
+
+
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
