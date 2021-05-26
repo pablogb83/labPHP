@@ -61,10 +61,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="container" >
+        <div class="container" style="overflow-x: scroll; height: 210px;">
 
             <?php $cont=0; foreach ($categorias as $categoria) { ?>
-                <?php if($categoria->categoria_id == 0 && $cont<6){  ?>
+                <?php if($categoria->categoria_id == 0 /*&& $cont<6*/){  ?>
                 <a href="<?php echo base_url(); ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>">
                     <figure>
                         <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">

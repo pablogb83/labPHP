@@ -71,27 +71,9 @@
     }
   </style>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#btn_seguidores").on("click", function() {
-        if ($('#seguidores').css("display") == 'none') {
-          $('#seguidores').css("display", "inline");
-        } else {
-          $('#seguidores').css("display", "none");
-        }
-
-      });
-    });
-  </script>
-
-
 </head>
 
 <body>
-
-  <?php use App\Models\Usuario; ?>
-
   <br>
   <div class="container">
 
@@ -99,7 +81,7 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="main-breadcrumb">
       <ol class="breadcrumb">
-        <h4>Perfil del Autor</h4>
+        <h4>Perfil del Cliente</h4>
       </ol>
     </nav>
     <!-- /Breadcrumb -->
@@ -109,39 +91,33 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
-              <img src="images/<?php echo $autor->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
+              <img src="images/<?php echo $cliente->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
               <div class="mt-3">
                 <h4><?php echo $usuario->nick ?></h4>
                 <br>
-                <?php if (isset($_SESSION['logueado'])) {
-                  if ($_SESSION['datos_usuario']['tipo'] == 'autor') { ?>
-                    <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
-                  <?php } else { ?>
-                    <?php if(Usuario::find($_SESSION['datos_usuario']['id'])->cliente->autores->find($autor->id)!= null){ ?>
-                    <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>" class="btn btn-primary"> Dejar de Seguir</a>
-                <?php } else{ ?>
-                  <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
-                <?php }}
-                } ?>
-                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Seguidores</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Contenido Guardado</button>
 
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Lista de contenidos</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body small">
+                  <?php foreach ($cliente->recursos as $recurso) { ?>
+                      <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a> <a href="<?php echo base_url(); ?>/quitarRecursoUsuario?id=<?php echo $recurso->id; ?>"><i class="fas fa-eraser"></i></a><br>
+                    <?php } ?>
+                  </div>
+                </div>
+                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Autores seguidos</button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                   <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel">Lista de seguidores</h5>
+                    <h5 id="offcanvasRightLabel">Lista de autores</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                   <div class="offcanvas-body">
-                    <table class="table">
-                    <thead>
-                    <th>Nombre</th>
-                    <th>Foto</th>
-                    </thead>
-                    <?php foreach ($clientes as $cliente) { ?>
-                      <tr><td><a href="<?php echo base_url(); ?>/paginaCliente?id=<?php echo $cliente->usuario->id; ?>"> <?php echo $cliente->nombre . ' ' . $cliente->apellido ?></a> </td>
-                      <td> <img src="images/<?php echo $cliente->rutaImg  ?>" alt="" width="50px"> </td>
-                      </tr>
+                    <?php foreach ($autores as $autor) { ?>
+                      <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a> <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a><br>
                     <?php } ?>
-                    </table>
                   </div>
                 </div>
               </div>
@@ -158,7 +134,7 @@
                 <h6 class="mb-0">Nombre:</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <?php echo $autor->nombre ?>
+                <?php echo $cliente->nombre ?>
               </div>
             </div>
             <hr>
@@ -167,7 +143,7 @@
                 <h6 class="mb-0">Apellido</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <?php echo $autor->apellido ?>
+                <?php echo $cliente->apellido ?>
               </div>
             </div>
             <hr>
@@ -191,10 +167,23 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <h6 class="mb-0">Biografia</h6>
+                <h6 class="mb-0">Fecha de Nacimiento</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <?php echo $autor->biografia ?>
+                <?php echo $cliente->fechaNac ?>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Status</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <?php if ($cliente->suscripto == 1) { ?>
+                  <b> Suscripto </b>
+                <?php } else { ?>
+                  <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+                <?php } ?>
               </div>
             </div>
 
@@ -202,41 +191,5 @@
           </div>
         </div>
       </div>
-      <!--creo que no se esta usando no me animo a borrarlo -->
-      <div class="container" id="seguidores" style="display: none;">
-        <?php foreach ($clientes as $cliente) {
-          echo $cliente->nombre . '<br>';
-        } ?>
-      </div>
-      <!--creo que no se esta usando no me animo a borrarlo -->
-    </div>
-
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <h4>Publicaciones del Autor</h4>
-      </ol>
-    </nav>
-
-    <div class="row">
-
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($autor->recursos as $recurso) { ?>
-          <div class="col">
-            <div class="card" style="width: 18rem;">
-              <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $recurso->nombre ?></h5>
-                <p class="card-text"><?php echo $recurso->tipo ?></p>
-                <p class="card-text"><?php echo $recurso->descripcion ?></p>
-                <p class="card-text"><?php echo $recurso->created_at ?></p>
-
-                <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-primary">Leer mas...</a>
-
-              </div>
-            </div>
-          </div>
-        <?php } ?>
-      </div>
-
     </div>
   </div>

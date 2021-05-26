@@ -1,195 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="container" style="margin-top: 15px;">
 
-<head>
-  <meta charset="utf-8">
-  <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
-  <!--  All snippets are MIT license http://bootdey.com/license -->
-  <title>profile with data and skills - Bootdey.com</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      margin-top: 20px;
-      color: #1a202c;
-      text-align: left;
-      background-color: #e2e8f0;
-    }
+  <nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+      <h4>Perfil del Usuario</h4>
+    </ol>
+  </nav>
+  <div class="row justify-content-center">
 
-    .main-body {
-      padding: 15px;
-    }
-
-    .card {
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    }
-
-    .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      word-wrap: break-word;
-      background-color: #fff;
-      background-clip: border-box;
-      border: 0 solid rgba(0, 0, 0, .125);
-      border-radius: .25rem;
-    }
-
-    .card-body {
-      flex: 1 1 auto;
-      min-height: 1px;
-      padding: 1rem;
-    }
-
-    .gutters-sm {
-      margin-right: -8px;
-      margin-left: -8px;
-    }
-
-    .gutters-sm>.col,
-    .gutters-sm>[class*=col-] {
-      padding-right: 8px;
-      padding-left: 8px;
-    }
-
-    .mb-3,
-    .my-3 {
-      margin-bottom: 1rem !important;
-    }
-
-    .bg-gray-300 {
-      background-color: #e2e8f0;
-    }
-
-    .h-100 {
-      height: 100% !important;
-    }
-
-    .shadow-none {
-      box-shadow: none !important;
-    }
-  </style>
-
-</head>
-
-<body>
-  <br>
-  <div class="container">
-
-
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <h4>Perfil del Cliente</h4>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
-
-    <div class="row gutters-sm">
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="images/<?php echo $cliente->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
-              <div class="mt-3">
-                <h4><?php echo $usuario->nick ?></h4>
-                <br>
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Contenido Guardado</button>
-
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-                  <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Lista de contenidos</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <div class="offcanvas-body small">
-                  <?php foreach ($cliente->recursos as $recurso) { ?>
-                      <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a> <a href="<?php echo base_url(); ?>/quitarRecursoUsuario?id=<?php echo $recurso->id; ?>"><i class="fas fa-eraser"></i></a><br>
-                    <?php } ?>
-                  </div>
-                </div>
-                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Autores seguidos</button>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                  <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel">Lista de autores</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <div class="offcanvas-body">
-                    <?php foreach ($autores as $autor) { ?>
-                      <a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a> <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a><br>
-                    <?php } ?>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="row justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="row">
+          <img src="images/<?php echo $usuario->cliente->rutaImg ?>" alt="">
         </div>
 
       </div>
-      <div class="col-md-8">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Nombre:</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $cliente->nombre ?>
-              </div>
+
+      <div class="col-6 col-md-6">
+        <div class="row">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Perfil <i class="fas fa-user"></i></button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Autores <i class="fas fa-users"></i></button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Recursos Guardados <i class="fas fa-bookmark"></i></button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Crear lista <i class="far fa-plus-square"></i></button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#editarlista" type="button" role="tab" aria-controls="editarlista" aria-selected="false">Mis listas <i class="far fa-list-alt"></i></button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <br>
+              <h4>Datos personales</h4>
+              <hr>
+              <table class="table">
+
+                <tbody>
+                  <tr>
+                    <th scope="row">Nick:</th>
+                    <td><?php echo $usuario->nick ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nombre:</th>
+                    <td><?php echo $cliente->nombre ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Apellido:</th>
+                    <td><?php echo $cliente->apellido ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Email:</th>
+                    <td><?php echo $usuario->email ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Fecha de nacimiento:</th>
+                    <td><?php echo $cliente->fechaNac ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Perfil:</th>
+                    <td><?php echo $usuario->tipo ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Status:</th>
+                    <td> <?php if ($cliente->suscripto == 1) { ?>
+                        <b> Suscripto </b>
+                      <?php } else { ?>
+                        <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+                      <?php } ?>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Apellido</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $cliente->apellido ?>
-              </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <br>
+              <h4>Autores Seguidos</h4>
+              <hr>
+              <table class="table">
+                <tbody>
+                  <thead>
+                    <th>Nombre</th>
+                    <th>Accion</th>
+                  </thead>
+                  <?php foreach ($autores as $autor) { ?>
+                    <tr>
+                      <td><a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a></td>
+                      <td><a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $usuario->email ?>
-              </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <br>
+              <h4>Recursos guardados</h4>
+              <hr>
+              <table class="table">
+                <tbody>
+                  <thead>
+                    <th>Nombre</th>
+                    <th>Accion</th>
+                  </thead>
+                  <?php foreach ($cliente->recursos as $recurso) { ?>
+                    <tr>
+                      <td><a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a></td>
+                      <td><a href="<?php echo base_url(); ?>/quitarRecursoUsuario?id=<?php echo $recurso->id; ?>"><i class="fas fa-eraser"></i></a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Perfil</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <b><?php echo $usuario->tipo ?></b>
-              </div>
+            <div class="tab-pane fade" id="lista" role="tabpanel" aria-labelledby="lista-tab">
+              <br>
+              <h4>Crear una lista</h4>
+              <hr>
+              <form action="crearLista" method="post">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="nombre de la lista"><br>
+                  <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="recursos" name="recursos[]" multiple class="form-select">
+                    <?php foreach ($cliente->recursos as $recurso) { ?>
+                      <option value="<?php echo $recurso->id ?>"><?php echo $recurso->nombre ?></option>
+                    <?php } ?>
+                  </select>
+                  <p>Tipo:</p>
+                  <input type="radio" id="tipo" name="tipo" value="1">
+                  <label for="1">Publica</label><br>
+                  <input type="radio" id="tipo" name="tipo" value="2">
+                  <label for="2">Privada</label><br><br>
+                  <input type="submit" value="Guardar" class="btn btn-success">
+                </div>
+              </form>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Fecha de Nacimiento</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $cliente->fechaNac ?>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Status</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php if ($cliente->suscripto == 1) { ?>
-                  <b> Suscripto </b>
-                <?php } else { ?>
-                  <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+            <div class="tab-pane fade" id="editarlista" role="tabpanel" aria-labelledby="editarlista-tab">
+              <br>
+              <h4>Editar mis listas</h4>
+              <hr>
+              <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="listas" name="listas">
+                <?php foreach ($cliente->listas as $lista) { ?>
+                  <option id="listaseditables" value="<?php echo $lista->id ?>"><?php echo $lista->nombre ?></option>
                 <?php } ?>
-              </div>
+              </select>
+              <hr>
+
+              <table class="table">
+                <thead>
+                  <th>Nombre Recurso</th>
+                  <th>Accion</th>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+              </table>
+
             </div>
-
-
           </div>
         </div>
+
       </div>
     </div>
   </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<!-- script para actualizar los recursos de las listas en la pagina del perfil de usuario -->
+<script>
+  $(function() {
+    //mostrarRecursos();
+  });
+
+  function mostrarRecursos() {
+    $.ajax({
+      url: 'mostarRecursosLista?id=' + document.getElementById("listas").value,
+      type: 'POST',
+      success: function(res) {
+        var js = JSON.parse(res);
+        //var tabla;
+        /*for (var i = 0; i<js.lenght; i++){
+            tabla+='<tr><td>' + js[i].nombre + '</td></tr>';
+        }*/
+        $('#tbody').html(js);
+      }
+    });
+  };
+  $('#listas').click(function() {
+    mostrarRecursos();
+    //alert(this.value);
+  });
+</script>

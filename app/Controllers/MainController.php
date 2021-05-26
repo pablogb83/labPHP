@@ -76,4 +76,19 @@ class MainController extends BaseController
 		echo view('footer');
 		//echo $busqueda;
 	}
+
+	public function checkSuscrip(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$cliente = Usuario::find($_SESSION['datos_usuario']['id'])->cliente;
+		if($cliente->suscripto == 1){
+			return redirect()->to(base_url().'/paginaRecurso?id='. $id);
+		}else{
+			return redirect()->to(base_url().'/suscribirse?id=' . $_SESSION['datos_usuario']['id']);	
+		}
+		//echo $cliente->nombre;
+	}
 }

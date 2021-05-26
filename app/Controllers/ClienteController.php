@@ -31,28 +31,68 @@ class ClienteController extends BaseController
 	}
 
 	public function guardar(){
+		
 		$request = Services::request();
-		
-		$this->usuarioModel->email = $request->getPost('email');
-		$this->usuarioModel->nick = $request->getPost('nick');
-		$this->usuarioModel->password = $request->getPost('password');
-		$this->usuarioModel->tipo = 'cliente';
+
+		if (! $this->validate([
+			'email' => "required|is_unique[usuarios.email]",
+			'nick' => "required|is_unique[usuarios.nick]",
+			'password' => "required",
+			'passwordConf' => "required|matches[password]"
+			//'nombre'  => 'required|alpha_numeric_spaces'
+		],[   // Errors
+			'email' => [
+				'required' => 'El email es obligatorio',
+				'is_unique' => 'Ya existe un usuario con ese email'
+			],
+			'nick' => [
+				'required' => 'El nick es obligatorio',
+				'is_unique' => 'Ya existe un usuario con ese nick'
+			],
+			'passwordConf' => [
+				'required' => 'Por favor re ingresa tu password',
+				'matches' => 'Los password no coinciden'
+			],
+			'password' => [
+				'required' => 'Por favor ingresa tu password',
+			]
+		]))
+		{
+			echo view('header');
+			echo view('_errors_list', [
+				'errors' => $this->validator->getErrors()
+			]);
+			echo view('registrarCliente');
+			echo view('footer');
+		}else{
+
+			$this->usuarioModel->email = $request->getPost('email');
+			$this->usuarioModel->nick = $request->getPost('nick');
+			$this->usuarioModel->password = $request->getPost('password');
+			$this->usuarioModel->tipo = 'cliente';
 
 
-		$this->clienteModel->nombre = $request->getPost('nombre');
-		$this->clienteModel->apellido = $request->getPost('apellido');
-		$this->clienteModel->fechaNac = $request->getPost('fechNac');
+			$this->clienteModel->nombre = $request->getPost('nombre');
+			$this->clienteModel->apellido = $request->getPost('apellido');
+			$this->clienteModel->fechaNac = $request->getPost('fechNac');
 
-		
-		$file = $request->getFile('foto');
-		$name=$file->getRandomName();
-		$this->clienteModel->rutaImg = $name;
-		$file->move('images', $name);
+			
+			$file = $request->getFile('foto');
+			if(!$file->isValid()){
+				$this->clienteModel->rutaImg = 'default.png';
+			}else{
+				$name=$file->getRandomName();
+				$this->clienteModel->rutaImg = $name;
+				$file->move('images', $name);
+			}
+			$this->usuarioModel->save();
+			$this->usuarioModel->cliente()->save($this->clienteModel);
 
-		$this->usuarioModel->save();
-		$this->usuarioModel->cliente()->save($this->clienteModel);
-
-		return redirect()->to(base_url());
+			echo view('header');
+			echo view('userRegExito');
+			echo view('footer');
+			//return redirect()->to(base_url());
+		}
 	}
 
 	public function perfil(){
@@ -84,6 +124,8 @@ class ClienteController extends BaseController
 	}
 
 	public function dejarSeguirAutor(){
+		$origen =  $_SERVER['HTTP_REFERER'];
+	
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
@@ -93,8 +135,13 @@ class ClienteController extends BaseController
 		$usuario = Usuario::find($_SESSION['datos_usuario']['id']);
 		$cliente = $usuario->cliente;
 		$cliente->autores()->detach($autor->id);
-		return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
-
+		if(strpos($origen, "Cliente") != false){
+			return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
+		}else{
+			return redirect()->to(base_url().'/paginaAutor?id='. $autor->usuario->id);
+		}
+		
+		
 	}
 
 	public function formSuscrip(){

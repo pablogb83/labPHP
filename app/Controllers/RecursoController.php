@@ -42,13 +42,21 @@ class RecursoController extends BaseController
 		$name=$file->getRandomName();
 		$this->recurso->rutaImg = $name;
 		$file->move('images', $name);
+
+		$file = $request->getFile('archivo');
+		$name=$file->getRandomName();
+		$this->recurso->rutaArch = $name;
+		$file->move('archivos', $name);
 		
 		$autor->recursos()->save($this->recurso);
 
 
 		$id_categoria = $request->getPost('Categoria');
+
+		$this->recurso->categorias()->attach($id_categoria);
 		//$categoria = Categoria::find($id_categoria);
 		//$this->recurso->categorias()->save($categoria);
+		/*
 		foreach ($id_categoria as $id){
 			$categoria = Categoria::find($id);
 			$this->recurso->categorias()->save($categoria);
@@ -59,8 +67,8 @@ class RecursoController extends BaseController
 				if($this->recurso->categorias()->find($padre_divorciado->id)==null){
 					$this->recurso->categorias()->save($padre_divorciado);
 				}
-			}*/
-		}
+			}
+		}*/
 
 
 		
@@ -86,19 +94,22 @@ class RecursoController extends BaseController
 
 	public function mostrar(){
 
-			$request = Services::request();
-			$id = $request->getPostGet('id');
-			$rec = Recurso::find($id);
-			$autor = Recurso::find($id)->autor;
-			$usuario = Autor::find($autor->id)->usuario;
-			$categorias = $rec->categorias;
-			$datos['autor'] = $autor;
-			$datos['usuario'] = $usuario;
-			$datos['recurso'] = $rec;
-			$datos['categorias'] = $categorias;
-			echo view('header');
-			echo view('paginaRecurso', $datos);
-			echo view('footer');
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$rec = Recurso::find($id);
+		$autor = Recurso::find($id)->autor;
+		$usuario = Autor::find($autor->id)->usuario;
+		$categorias = $rec->categorias;
+		$comentarios = $rec->comentarios;
+		$datos['autor'] = $autor;
+		$datos['usuario'] = $usuario;
+		$datos['recurso'] = $rec;
+		$datos['categorias'] = $categorias;
+		$datos['comentarios'] = $comentarios;
+		echo view('header');
+		echo view('paginaRecurso', $datos);
+		echo view('footer');
 
 	}
+
 }

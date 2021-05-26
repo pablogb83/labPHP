@@ -25,6 +25,16 @@ class Recurso extends Model
         return $this->belongsToMany(Cliente::class);
     }
 
+	public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
+
+	public function listas()
+    {
+        return $this->belongsToMany(Lista::class);
+    }
+
     public function guardarCategoria($recurso, $categoria){
 		if($categoria->categoria_id==0){
 			return;

@@ -66,7 +66,7 @@ $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 $routes->get('/suscribirse', 'ClienteController::formSuscrip');
 $routes->post('/suscripExito', 'ClienteController::suscripExito');
 $routes->get('/adminPage', 'AdminController::mainpage');
-//Nuevas rutas
+
 $routes->get('/nuevaCategoriaHija', 'CategoriaController::nuevaHija');
 $routes->post('/registrarCategoriaHija', 'CategoriaController::guardarHija');
 $routes->get('/mostrarRecursosCategoria', 'CategoriaController::mostrarRecursos');
@@ -74,6 +74,18 @@ $routes->get('/buscador', 'MainController::buscador');
 $routes->get('/guardarRecursoCliente', 'ClienteController::guardarRecurso');
 $routes->get('/quitarRecursoUsuario', 'ClienteController::borrarRecurso');
 $routes->get('/dejarSeguirAutor', 'ClienteController::dejarSeguirAutor');
+//Nuevas rutas
+$routes->get('/comentarRecurso', 'ComentarioController::guardar');
+$routes->post('/crearLista', 'ListaController::guardar');
+$routes->get('/agregarRecursoLista', 'ListaController::agregarRecurso');
+
+$routes->post('/mostarRecursosLista', 'ListaController::mostarRecursosLista');
+$routes->get('/quitarRecursoLista', 'ListaController::quitarRecursoLista');
+
+$routes->get('/checkSuscrip', 'MainController::checkSuscrip');
+
+
+
 
 
 

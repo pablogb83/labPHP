@@ -40,6 +40,11 @@
                     <label for="floatingInput">Foto</label>
                 </div>
 
+                <div class="form-floating mb-3">
+                    <input type="file" class="form-control" id="floatingInput" name="archivo">
+                    <label for="floatingInput">Archivo</label>
+                </div>
+
                 <p>Descargable:</p>
                 <input type="radio" id="descargable" name="descargable" value="1">
                 <label for="1">Si</label><br>

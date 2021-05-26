@@ -28,28 +28,65 @@ class AutorController extends BaseController
 	}
 
 	public function guardar(){
+		
 		$request = Services::request();
+
+		if (! $this->validate([
+			'email' => "required|is_unique[usuarios.email]",
+			'nick' => "required|is_unique[usuarios.nick]",
+			'password' => "required",
+			'passwordConf' => "required|matches[password]",
+			//'foto' => "uploaded[foto]|is_image",
+			//'nombre'  => 'required|alpha_numeric_spaces'
+		],[   // Errors
+			'email' => [
+				'required' => 'El email es obligatorio',
+				'is_unique' => 'Ya existe un usuario con ese email'
+			],
+			'nick' => [
+				'required' => 'El nick es obligatorio',
+				'is_unique' => 'Ya existe un usuario con ese nick'
+			],
+			'passwordConf' => [
+				'required' => 'Por favor re ingresa tu password',
+				'matches' => 'Los password no coinciden'
+			],
+			'password' => [
+				'required' => 'Por favor ingresa tu password',
+			]
+		]))
+		{
+			echo view('header');
+			echo view('_errors_list', [
+				'errors' => $this->validator->getErrors()
+			]);
+			echo view('registrarAutor');
+			echo view('footer');
+		}else{
 		
-		$this->usuarioModel->email = $request->getPost('email');
-		$this->usuarioModel->nick = $request->getPost('nick');
-		$this->usuarioModel->password = $request->getPost('password');
-		$this->usuarioModel->tipo = 'autor';
+			$this->usuarioModel->email = $request->getPost('email');
+			$this->usuarioModel->nick = $request->getPost('nick');
+			$this->usuarioModel->password = $request->getPost('password');
+			$this->usuarioModel->tipo = 'autor';
 
 
-		$this->autorModel->nombre = $request->getPost('nombre');
-		$this->autorModel->apellido = $request->getPost('apellido');
-		$this->autorModel->biografia = $request->getPost('biografia');
+			$this->autorModel->nombre = $request->getPost('nombre');
+			$this->autorModel->apellido = $request->getPost('apellido');
+			$this->autorModel->biografia = $request->getPost('biografia');
 
-		
-		$file = $request->getFile('foto');
-		$name=$file->getRandomName();
-		$this->autorModel->rutaImg = $name;
-		$file->move('images', $name);
+			
+			$file = $request->getFile('foto');
+			$name=$file->getRandomName();
+			$this->autorModel->rutaImg = $name;
+			$file->move('images', $name);
 
-		$this->usuarioModel->save();
-		$this->usuarioModel->autor()->save($this->autorModel);
+			$this->usuarioModel->save();
+			$this->usuarioModel->autor()->save($this->autorModel);
 
-		return redirect()->to(base_url());
+			echo view('header');
+			echo view('userRegExito');
+			echo view('footer');
+		}
 	}
 
 	public function perfil(){

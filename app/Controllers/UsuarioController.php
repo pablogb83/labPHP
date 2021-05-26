@@ -21,7 +21,7 @@ class UsuarioController extends BaseController
 	public function index(){
 
 	}
-
+	//esta funcion no esta en uso
 	public function guardar()
 	{	
 		//$usuarioModel = new UsuarioModel($db);
@@ -122,6 +122,11 @@ class UsuarioController extends BaseController
 		$id = $request->getPostGet('id');
 		$usuario = Usuario::find($id);
 		$tipo = $usuario->tipo;
+		if($tipo == 'autor'){
+			$usuario->autor->delete();
+		}else{
+			$usuario->cliente->delete();
+		}
 		$usuario->delete();
 		switch($tipo){
 			case 'autor':
