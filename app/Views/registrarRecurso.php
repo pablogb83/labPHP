@@ -12,12 +12,12 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Nombre" name="nombre">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nombre" name="nombre" required>
                     <label for="floatingInput">Nombre</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="textarea" class="form-control" id="floatingInput" placeholder="descripcion" name="descripcion">
+                    <input type="textarea" class="form-control" id="floatingInput" placeholder="descripcion" name="descripcion" required>
                     <label for="floatingInput">Descripcion</label>
                 </div>
 
@@ -25,7 +25,7 @@
                 <label for="cars">Tipo de recurso</label>
                 <br>
                 <div class="form-floating mb-3">
-                    <select name="tipo" id="tipo" class="form-select" aria-label="Default select example">
+                    <select name="tipo" id="tipo" class="form-select" aria-label="Default select example" required>
                         <option value="libro">Libro</option>
                         <option value="audio-libro">Audio-libro</option>
                         <option value="revista">Revista</option>
@@ -36,12 +36,12 @@
                 <br>
 
                 <div class="form-floating mb-3">
-                    <input type="file" class="form-control" id="floatingInput" name="foto">
+                    <input type="file" class="form-control" id="floatingInput" name="foto" required>
                     <label for="floatingInput">Foto</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="file" class="form-control" id="floatingInput" name="archivo">
+                    <input type="file" class="form-control" id="floatingInput" name="archivo" required>
                     <label for="floatingInput">Archivo</label>
                 </div>
 
@@ -65,7 +65,7 @@
 
                 <label for="cars">Categoria</label>
                 <br><br>
-                <select name="Categoria[]" id="Categoria" multiple class="form-select" aria-label="Default select example">
+                <select name="Categoria[]" id="Categoria" multiple class="form-select" aria-label="Default select example" required>
                     <?php foreach ($categorias as $categoria) { ?>
                         <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
                     <?php } ?>

@@ -13,13 +13,13 @@ class FilterCliente implements FilterInterface
             session_start();
         }
         if(!isset($_SESSION['logueado']) || $_SESSION['logueado']==false){
-            echo "NO SESION";
+            ///echo "NO SESION";
             //var_dump($request->getServer());
             return redirect()->to(base_url().'/loginpage');
         }
         if(isset($_SESSION['datos_usuario']['tipo']) && $_SESSION['datos_usuario']['tipo']!="cliente"){
-            echo $_SESSION['datos_usuario']['tipo'];
-            echo "ACCESO RESTRINGIDO";
+            //echo $_SESSION['datos_usuario']['tipo'];
+            //echo "ACCESO RESTRINGIDO";
             return redirect()->to(base_url());
         }
     }

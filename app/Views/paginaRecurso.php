@@ -18,7 +18,7 @@
           <img src="images/<?php echo $recurso->rutaImg ?>" alt="">
         </div>
         <br>
-        <?php if ($recurso->suscripcion == 1) { ?>
+        <?php if ($recurso->suscripcion == 1 and isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente' and Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 0) { ?>
           <div class="row">
             <a href="checkSuscrip?id=<?php echo $recurso->id ?>" class="btn btn-success" role="button" >Comprar </a>
           </div>
@@ -37,7 +37,7 @@
           <p><i class="far fa-list-alt"></i> Agregar a mi lista</p>
         </a>
         <hr>
-        <?php if ($recurso->descargable == 1 and isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente') { ?>
+        <?php if ($recurso->descargable == 1 and isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente' and Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 1) { ?>
 
           <a title="Descargar Archivo" href="archivos/<?php echo $recurso->rutaArch ?>" download="<?php echo $recurso->rutaArch ?>">
 

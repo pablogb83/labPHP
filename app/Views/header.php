@@ -61,7 +61,9 @@
 </head>
 
 <body>
-  <?php if (!isset($_SESSION)) {
+  <?php 
+    use App\Models\Usuario;
+    if (!isset($_SESSION)) {
     session_start();
   }   ?>
 
@@ -94,9 +96,14 @@
                 ¡Comenzar!
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <?php if (!isset($_SESSION['logueado'])) { ?>
                 <li><a class="dropdown-item" href="<?php echo base_url(); ?>/registrarse">Registrarse</a></li>
-                <?php if (isset($_SESSION['logueado']) && $_SESSION['datos_usuario']['tipo'] == 'cliente') { ?>
+                <?php } ?>
+                <?php if (isset($_SESSION['logueado']) && $_SESSION['datos_usuario']['tipo'] == 'cliente' and Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 0) { ?>
                   <li><a class="dropdown-item" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a></li>
+                <?php }  ?>
+                <?php if (isset($_SESSION['logueado']) && $_SESSION['datos_usuario']['tipo'] == 'autor'){ ?>
+                <li><a class="dropdown-item" href="nuevoRecurso">Publicar</a></li>
                 <?php }  ?>
                 <li>
                   <hr class="dropdown-divider">

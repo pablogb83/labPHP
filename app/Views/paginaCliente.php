@@ -24,12 +24,14 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Autores <i class="fas fa-users"></i></button>
             </li>
+            <?php if(isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']){ ?>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Recursos Guardados <i class="fas fa-bookmark"></i></button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Crear lista <i class="far fa-plus-square"></i></button>
             </li>
+            <?php } ?>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#editarlista" type="button" role="tab" aria-controls="editarlista" aria-selected="false">Mis listas <i class="far fa-list-alt"></i></button>
             </li>

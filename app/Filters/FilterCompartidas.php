@@ -13,8 +13,8 @@ class FilterCompartidas implements FilterInterface
             session_start();
         }
         if(isset($_SESSION['datos_usuario']['tipo']) && $_SESSION['datos_usuario']['tipo']=="admin"){
-            echo $_SESSION['datos_usuario']['tipo'];
-            echo "ACCESO RESTRINGIDO";
+            //echo $_SESSION['datos_usuario']['tipo'];
+            //echo "ACCESO RESTRINGIDO";
             /*echo view('headerAdmin');
             echo view('adminPage');
             echo view('footerAdmin');*/

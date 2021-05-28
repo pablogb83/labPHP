@@ -84,6 +84,10 @@ class CategoriaController extends BaseController
 		$request = Services::request();
 		$id = $request->getPostGet('id');
 		$categoria = $this->categoria::find($id);
+		foreach($categoria->hijas as $hija){
+			 $hija->categoria_id = 0;
+			 $hija->save();
+		}
 		$categoria->delete();
 		return redirect()->to(base_url().'/listaCategorias');
 	}

@@ -29,68 +29,64 @@ class RecursoController extends BaseController
 
 	public function guardar(){
 		$request = Services::request();
-		session_start();
-		$autor=Usuario::find($_SESSION['datos_usuario']['id'])->autor;
-		//$this->recurso->id_autor=$autor->id;
-		$this->recurso->nombre = $request->getPost('nombre');
-		$this->recurso->descripcion = $request->getPost('descripcion');
-		$this->recurso->tipo = $request->getPost('tipo');
-		$this->recurso->descargable = $request->getPost('descargable');
-		$this->recurso->suscripcion = $request->getPost('suscripcion');
-		
-		$file = $request->getFile('foto');
-		$name=$file->getRandomName();
-		$this->recurso->rutaImg = $name;
-		$file->move('images', $name);
 
-		$file = $request->getFile('archivo');
-		$name=$file->getRandomName();
-		$this->recurso->rutaArch = $name;
-		$file->move('archivos', $name);
-		
-		$autor->recursos()->save($this->recurso);
+		if (! $this->validate([
+			'nombre' => "required|is_unique[recursos.nombre]",
+			'descripcion' => "required",
+			'tipo' => "required",
+			'Categoria' => "required",
+		],[   
+			'nombre' => [
+				'required' => 'Debes ingresar un nombre para el recurso',
+				'is_unique' => 'Ya existe un recurso con ese nombre'
+			],
+			'descripcion' => [
+				'required' => 'Debes ingresar una descripcion para el recurso',
+			],
+			'Categoria' => [
+				'required' => 'Por favor selecciona al menos una categoria',
+			]
+		]))
+		{	
+			$categorias= Categoria::get();
+			$categorias=array('categorias'=>$categorias);
+			echo view('header');
+			echo view('_errors_list', [
+				'errors' => $this->validator->getErrors()
+			]);
+			echo view('registrarRecurso', $categorias);
+			echo view('footer');
+		}else{
+
+			session_start();
+			$autor=Usuario::find($_SESSION['datos_usuario']['id'])->autor;
+			$this->recurso->nombre = $request->getPost('nombre');
+			$this->recurso->descripcion = $request->getPost('descripcion');
+			$this->recurso->tipo = $request->getPost('tipo');
+			$this->recurso->descargable = $request->getPost('descargable');
+			$this->recurso->suscripcion = $request->getPost('suscripcion');
+			
+			$file = $request->getFile('foto');
+			$name=$file->getRandomName();
+			$this->recurso->rutaImg = $name;
+			$file->move('images', $name);
+
+			$file = $request->getFile('archivo');
+			$name=$file->getRandomName();
+			$this->recurso->rutaArch = $name;
+			$file->move('archivos', $name);
+			
+			$autor->recursos()->save($this->recurso);
 
 
-		$id_categoria = $request->getPost('Categoria');
+			$id_categoria = $request->getPost('Categoria');
 
-		$this->recurso->categorias()->attach($id_categoria);
-		//$categoria = Categoria::find($id_categoria);
-		//$this->recurso->categorias()->save($categoria);
-		/*
-		foreach ($id_categoria as $id){
-			$categoria = Categoria::find($id);
-			$this->recurso->categorias()->save($categoria);
-			$this->recurso->guardarCategoria($this->recurso, $categoria);
-			/*$this->recurso->categorias()->save($categoria);
-			if($categoria->categoria_id!=0){
-				$padre_divorciado=$categoria->padre;
-				if($this->recurso->categorias()->find($padre_divorciado->id)==null){
-					$this->recurso->categorias()->save($padre_divorciado);
-				}
-			}
-		}*/
+			$this->recurso->categorias()->attach($id_categoria);
 
+			return redirect()->to(base_url());
 
-		
-		return redirect()->to(base_url());
-
-		
-		//echo $autor->nick_usuario;
-
-		//echo 'estamos en guardar recurso';
+		}
 	}
-
-	/*public function guardarCategoria($recurso, $categoria){
-		if($categoria->categoria_id==0){
-			return;
-		}
-		$padre_divorciado=$categoria->padre;
-		if($recurso->categorias()->find($padre_divorciado->id)==null){
-			$recurso->categorias()->save($padre_divorciado);
-			return $this->guardarCategoria($recurso, $padre_divorciado);
-		}
-		
-	}*/
 
 	public function mostrar(){
 

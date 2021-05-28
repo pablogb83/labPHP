@@ -14,15 +14,15 @@ class FilterAdmin implements FilterInterface
             session_start();
         }
         if(!isset($_SESSION['logueado']) || $_SESSION['logueado']==false){
-            echo "NO SESION";
+            //echo "NO SESION";
             return redirect()->to(base_url().'/admin');
         }
         if(isset($_SESSION['datos_usuario']['tipo']) && $_SESSION['datos_usuario']['tipo']!="admin"){
             echo $_SESSION['datos_usuario']['tipo'];
-            echo "ACCESO RESTRINGIDO";
+            //echo "ACCESO RESTRINGIDO";
             return redirect()->to(base_url());
         }
-        echo "ACA FUNCIONO";
+        //echo "ACA FUNCIONO";
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
