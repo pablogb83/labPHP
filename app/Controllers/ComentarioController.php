@@ -4,12 +4,10 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Recurso;
-use App\Models\Autor;
 use App\Models\Usuario;
-use App\Models\Categoria;
 use App\Models\Comentario;
 use Config\Services;
-use phpDocumentor\Reflection\Types\This;
+
 
 class ComentarioController extends BaseController
 {

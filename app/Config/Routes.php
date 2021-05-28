@@ -64,7 +64,7 @@ $routes->get('/paginaCliente', 'ClienteController::perfil');
 $routes->get('/perfilUsuario', 'MainController::perfil');
 $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 $routes->get('/suscribirse', 'ClienteController::formSuscrip');
-$routes->post('/suscripExito', 'ClienteController::suscripExito');
+$routes->get('/suscripExito', 'ClienteController::suscripExito');
 $routes->get('/adminPage', 'AdminController::mainpage');
 
 $routes->get('/nuevaCategoriaHija', 'CategoriaController::nuevaHija');
@@ -84,6 +84,8 @@ $routes->get('/quitarRecursoLista', 'ListaController::quitarRecursoLista');
 
 $routes->get('/checkSuscrip', 'MainController::checkSuscrip');
 
+$routes->get('/ExecutePayment', 'PaypalController::executePayment');
+$routes->get('/confirmarsus', 'PaypalController::getApprovalLink');
 
 
 
