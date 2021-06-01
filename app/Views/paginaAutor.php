@@ -62,7 +62,7 @@
 
       </div>
 
-      <div class="col-6 col-md-6">
+      <div class="col-6 col-md-8">
         <div class="row">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -115,7 +115,7 @@
                 </tbody>
               </table>
               <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
-              <a href="<?php echo base_url(); ?>/paginaEditAutor?id=<?php echo $usuario->id ?>" class="btn btn-primary">Editar</a>
+              <a href="<?php echo base_url(); ?>/paginaEditAutor?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
               <?php }?>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -129,6 +129,7 @@
                       <th>Nombre</th>
                       <th>Tipo</th>
                       <th>Valoracion</th>
+                      <th>Acciones</th>
                     </thead>
                     <?php foreach ($autor->recursos as $recurso) { ?>
                       <tr>
@@ -149,6 +150,10 @@
                             }
 
                             ?></td>
+                        <td>
+                        <a href="<?php echo base_url(); ?>/editarRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
+                        <a href="#" data-href="<?php echo base_url(); ?>/borrarRecurso?id=<?php echo $recurso->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
+                        </td>
                       </tr>
                     <?php } ?>
                   </tbody>
@@ -206,3 +211,24 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modal-confirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma que desea eliminar el registro</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">No</button>
+                    <a class="btn btn-danger btn-ok">Confirma</a>
+                </div>
+            </div>
+        </div>
+    </div>

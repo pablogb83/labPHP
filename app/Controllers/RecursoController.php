@@ -132,9 +132,10 @@ class RecursoController extends BaseController
 			echo view('footer');
 
 		}catch(Exception $e){
-			
+			$message = 'Parece que este recurso no existe, hacelo vos!!';
+			$message = array('message' => $message);
 			echo view('header');
-			echo view('errors/html/error_404');
+			echo view('errors/html/error_404',$message);
 			echo view('footer');
 
 		}
@@ -151,4 +152,46 @@ class RecursoController extends BaseController
 		//echo 'estoy aca ' . $rec->nombre;
 	}
 
+	public function paginaEditar(){
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$rec = Recurso::find($id);
+		$datos['recurso'] = $rec;
+		echo view('header');
+		echo view('paginaEditarRecurso', $datos);
+		echo view('footer');
+	}
+
+	public function editar(){
+		
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$recurso = Recurso::find($id);
+		$recurso->nombre = $request->getPost('nombre');
+		$recurso->descripcion = $request->getPost('descripcion');
+		
+		$file = $request->getFile('foto');
+		if ($file->isValid()) {
+			$name = $file->getRandomName();
+			$recurso->rutaImg = $name;
+			$file->move('images', $name);
+		}
+			
+		$recurso->save();
+		return redirect()->to(base_url().'/paginaAutor?id='. $_SESSION['datos_usuario']['id']);
+	}
+
+	public function borrar(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$recurso = Recurso::find($id);
+		$recurso->delete();
+		return redirect()->to(base_url().'/paginaAutor?id='. $_SESSION['datos_usuario']['id']);
+	}
 }

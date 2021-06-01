@@ -97,7 +97,7 @@
           </div>
           <div class="row">
             <h4>Comentarios</h4>
-
+            <div class="container" style="overflow-y: scroll; height: 240px;">
             <table class="table">
               <tr>
                 <th>Usuario</th>
@@ -128,6 +128,7 @@
                 </tr>
               <?php } ?>
             </table>
+            </div>
           </div>
         </div>
 
@@ -186,7 +187,7 @@
           <div class="modal-body">
             <form action="<?php echo base_url(); ?>/agregarRecursoLista">
               <input type="hidden" name="id" value="<?php echo $recurso->id ?>">
-              <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="lista" name="lista">
+              <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="lista" name="lista" required>
                 <?php if ($_SESSION['datos_usuario']['tipo'] == 'cliente') {
                   foreach (Usuario::find($_SESSION['datos_usuario']['id'])->cliente->listas as $lista) { ?>
                     <option value="<?php echo $lista->id ?>"><?php echo $lista->nombre ?></option>

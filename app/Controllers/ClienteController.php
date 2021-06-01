@@ -109,8 +109,10 @@ class ClienteController extends BaseController
 			echo view('paginaCliente', $datos);
 			echo view('footer');
 		}catch(Exception $e){
+			$message = 'Parece que este usuario no existe';
+			$message = array('message' => $message);
 			echo view('header');
-			echo view('errors/html/error_404');
+			echo view('errors/html/error_404',$message);
 			echo view('footer');
 		}
 
@@ -211,6 +213,40 @@ class ClienteController extends BaseController
 		$cliente = $usuario->cliente;
 		$cliente->recursos()->detach($recurso->id);
 		return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
+	}
+
+	public function paginaEditar()
+	{
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$cliente = $usuario->cliente;
+		$datos['cliente'] = $cliente;
+		$datos['usuario'] = $usuario;
+		echo view('header');
+		echo view('paginaEditarCliente', $datos);
+		echo view('footer');
+	}
+
+	public function editar()
+	{
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$cliente = $usuario->cliente;
+		$cliente->nombre = $request->getPost('nombre');
+		$cliente->apellido = $request->getPost('apellido');
+		$cliente->fechaNac = $request->getPost('fechNac');
+
+		$file = $request->getFile('foto');
+		if ($file->isValid()) {
+			$name = $file->getRandomName();
+			$cliente->rutaImg = $name;
+			$file->move('images', $name);
+		}
+			
+		$cliente->save();
+		return redirect()->to(base_url().'/paginaCliente?id='. $id);
 	}
 
 }

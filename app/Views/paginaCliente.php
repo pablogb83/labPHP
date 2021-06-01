@@ -79,6 +79,11 @@
                   </tr>
                 </tbody>
               </table>
+
+              <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+              <a href="<?php echo base_url(); ?>/paginaEditCliente?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
+              <?php }?>
+
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <br>

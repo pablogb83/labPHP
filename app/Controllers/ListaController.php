@@ -65,10 +65,28 @@ class ListaController extends BaseController
 
 	public function agregarRecurso(){
 		$request = Services::request();
-		$this->lista = Lista::find($request->getPostGet('lista'));
-		$recurso = Recurso::find($request->getPostGet('id'));
-		$this->lista->recursos()->syncWithoutDetaching($recurso->id);
-		return redirect()->to(base_url().'/paginaRecurso?id='. $recurso->id);
+
+		if (! $this->validate([
+			'lista' => "required",
+		],[   
+			'lista' => [
+				'required' => 'Debes seleccionar o crear una lista antes'
+			]
+		]))
+		{	
+			echo view('header');
+			echo view('_errors_list', [
+				'errors' => $this->validator->getErrors()
+			]);
+			echo view('footer');
+		}else{
+
+			$this->lista = Lista::find($request->getPostGet('lista'));
+			$recurso = Recurso::find($request->getPostGet('id'));
+			$this->lista->recursos()->syncWithoutDetaching($recurso->id);
+			return redirect()->to(base_url().'/paginaRecurso?id='. $recurso->id);
+
+		}
 	}
 
 	public function mostarRecursosLista(){
