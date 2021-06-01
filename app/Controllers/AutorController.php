@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use Config\Services;
 
 use App\Controllers\BaseController;
+use Exception;
 
 class AutorController extends BaseController
 {
@@ -27,18 +28,19 @@ class AutorController extends BaseController
 		echo view('footer');
 	}
 
-	public function guardar(){
-		
+	public function guardar()
+	{
+
 		$request = Services::request();
 
-		if (! $this->validate([
+		if (!$this->validate([
 			'email' => "required|is_unique[usuarios.email]",
 			'nick' => "required|is_unique[usuarios.nick]",
 			'password' => "required",
 			'passwordConf' => "required|matches[password]",
 			//'foto' => "uploaded[foto]|is_image",
 			//'nombre'  => 'required|alpha_numeric_spaces'
-		],[   // Errors
+		], [   // Errors
 			'email' => [
 				'required' => 'El email es obligatorio',
 				'is_unique' => 'Ya existe un usuario con ese email'
@@ -54,16 +56,15 @@ class AutorController extends BaseController
 			'password' => [
 				'required' => 'Por favor ingresa tu password',
 			]
-		]))
-		{
+		])) {
 			echo view('header');
 			echo view('_errors_list', [
 				'errors' => $this->validator->getErrors()
 			]);
 			echo view('registrarAutor');
 			echo view('footer');
-		}else{
-		
+		} else {
+
 			$this->usuarioModel->email = $request->getPost('email');
 			$this->usuarioModel->nick = $request->getPost('nick');
 			$this->usuarioModel->password = $request->getPost('password');
@@ -74,9 +75,9 @@ class AutorController extends BaseController
 			$this->autorModel->apellido = $request->getPost('apellido');
 			$this->autorModel->biografia = $request->getPost('biografia');
 
-			
+
 			$file = $request->getFile('foto');
-			$name=$file->getRandomName();
+			$name = $file->getRandomName();
 			$this->autorModel->rutaImg = $name;
 			$file->move('images', $name);
 
@@ -89,18 +90,28 @@ class AutorController extends BaseController
 		}
 	}
 
-	public function perfil(){
-		$request = Services::request();
-		$id = $request->getPostGet('id');
-		$usuario = Usuario::find($id);
-		$autor = Usuario::find($id)->autor;
-		$clientes = Autor::find($autor->id)->clientes()->get();
-		$datos['autor'] = $autor;
-		$datos['usuario'] = $usuario;
-		$datos['clientes'] = $clientes;
-		echo view('header');
-		echo view('paginaAutor', $datos);
-		echo view('footer');
+	public function perfil()
+	{
+
+		try {
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$usuario = Usuario::find($id);
+			$autor = Usuario::find($id)->autor;
+			$clientes = Autor::find($autor->id)->clientes()->get();
+			$datos['autor'] = $autor;
+			$datos['usuario'] = $usuario;
+			$datos['clientes'] = $clientes;
+			echo view('header');
+			echo view('paginaAutor', $datos);
+			echo view('footer');
+		} catch (Exception $e) {
+			$message = 'Parece que ese autor no existe, create una cuenta y podrias ser tu!';
+			$message = array('message' => $message);
+			echo view('header');
+			echo view('errors/html/error_404', $message);
+			echo view('footer');
+		}
 	}
 	/*
 	public function seguidores(){
@@ -109,4 +120,39 @@ class AutorController extends BaseController
 		$autor = Usuario::find($id)->autor;
 		$clientes = Autor::find($autor->id)->clientes()->get();
 	}*/
+
+
+	public function paginaEditar()
+	{
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$autor = $usuario->autor;
+		$datos['autor'] = $autor;
+		$datos['usuario'] = $usuario;
+		echo view('header');
+		echo view('paginaEditarAutor', $datos);
+		echo view('footer');
+	}
+
+	public function editar()
+	{
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$usuario = Usuario::find($id);
+		$autor = $usuario->autor;
+		$autor->nombre = $request->getPost('nombre');
+		$autor->apellido = $request->getPost('apellido');
+		$autor->biografia = $request->getPost('biografia');
+
+		$file = $request->getFile('foto');
+		if ($file->isValid()) {
+			$name = $file->getRandomName();
+			$autor->rutaImg = $name;
+			$file->move('images', $name);
+		}
+			
+		$autor->save();
+		return redirect()->to(base_url().'/paginaAutor?id='. $id);
+	}
 }

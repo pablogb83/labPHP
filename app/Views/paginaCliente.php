@@ -125,7 +125,7 @@
               <form action="crearLista" method="post">
                 <div class="mb-3">
                   <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="nombre de la lista"><br>
+                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="nombre de la lista" required><br>
                   <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="recursos" name="recursos[]" multiple class="form-select">
                     <?php foreach ($cliente->recursos as $recurso) { ?>
                       <option value="<?php echo $recurso->id ?>"><?php echo $recurso->nombre ?></option>
@@ -134,7 +134,7 @@
                   <p>Tipo:</p>
                   <input type="radio" id="tipo" name="tipo" value="1">
                   <label for="1">Publica</label><br>
-                  <input type="radio" id="tipo" name="tipo" value="2">
+                  <input type="radio" id="tipo" name="tipo" value="2" checked>
                   <label for="2">Privada</label><br><br>
                   <input type="submit" value="Guardar" class="btn btn-success">
                 </div>

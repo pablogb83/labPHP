@@ -28,19 +28,39 @@ class ListaController extends BaseController
 	public function guardar(){
 		
 		$request = Services::request();
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
+
+		if (! $this->validate([
+			'nombre' => "required",
+			'tipo' => "required"
+		],[   
+			'nombre' => [
+				'required' => 'Debes ingresar un nombre para la lista'
+			],
+			'tipo' => [
+				'required' => 'Debes seleccionar un tipo',
+			]
+		]))
+		{	
+			echo view('header');
+			echo view('_errors_list', [
+				'errors' => $this->validator->getErrors()
+			]);
+			echo view('footer');
+		}else{
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$cliente=Usuario::find($_SESSION['datos_usuario']['id'])->cliente;
+			$this->lista->cliente_id = $cliente->id;
+			$this->lista->nombre = $request->getPost('nombre');
+			$this->lista->tipo = $request->getPost('tipo');
+
+			$recursos_id = $request->getPost('recursos');
+
+			$cliente->listas()->save($this->lista);
+			$this->lista->recursos()->attach($recursos_id);
+			return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
 		}
-		$cliente=Usuario::find($_SESSION['datos_usuario']['id'])->cliente;
-		$this->lista->cliente_id = $cliente->id;
-		$this->lista->nombre = $request->getPost('nombre');
-		$this->lista->tipo = $request->getPost('tipo');
-
-		$recursos_id = $request->getPost('recursos');
-
-		$cliente->listas()->save($this->lista);
-		$this->lista->recursos()->attach($recursos_id);
-		return redirect()->to(base_url().'/paginaCliente?id='. $_SESSION['datos_usuario']['id']);
 	}
 
 	public function agregarRecurso(){

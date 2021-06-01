@@ -8,6 +8,7 @@ use App\Models\Autor;
 use App\Models\Usuario;
 use App\Models\Categoria;
 use Config\Services;
+use Exception;
 
 class RecursoController extends BaseController
 {
@@ -35,6 +36,8 @@ class RecursoController extends BaseController
 			'descripcion' => "required",
 			'tipo' => "required",
 			'Categoria' => "required",
+			'foto' => "ext_in[foto,png,jpg,jpeg]",
+			'archivo' => "ext_in[archivo,pdf,mp3,mp4,m4a]"
 		],[   
 			'nombre' => [
 				'required' => 'Debes ingresar un nombre para el recurso',
@@ -45,6 +48,12 @@ class RecursoController extends BaseController
 			],
 			'Categoria' => [
 				'required' => 'Por favor selecciona al menos una categoria',
+			],
+			'foto' => [
+				'ext_in' => 'Extencion de imagen invalida, solo puede ser png, jpg o jpeg'
+			],
+			'archivo' => [
+				'ext_in' => 'Extencion de archivo invalida, solo puede ser pdf,mp3,mp4,m4a'
 			]
 		]))
 		{	
@@ -58,7 +67,9 @@ class RecursoController extends BaseController
 			echo view('footer');
 		}else{
 
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
 			$autor=Usuario::find($_SESSION['datos_usuario']['id'])->autor;
 			$this->recurso->nombre = $request->getPost('nombre');
 			$this->recurso->descripcion = $request->getPost('descripcion');
@@ -90,22 +101,54 @@ class RecursoController extends BaseController
 
 	public function mostrar(){
 
+		try{
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$rec = Recurso::find($id);
+
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+
+			$autor = Autor::find($rec->autor_id);
+			$usuario = $autor->usuario;
+
+			if( !(isset($_SESSION['datos_usuario']['id']) and $_SESSION['datos_usuario']['id'] == $usuario->id)){
+				$rec->visitas++;
+				$rec->save();
+			}		
+			
+			$autor = Recurso::find($id)->autor;
+			$usuario = Autor::find($autor->id)->usuario;
+			$categorias = $rec->categorias;
+			$comentarios = $rec->comentarios;
+			$datos['autor'] = $autor;
+			$datos['usuario'] = $usuario;
+			$datos['recurso'] = $rec;
+			$datos['categorias'] = $categorias;
+			$datos['comentarios'] = $comentarios;
+			echo view('header');
+			echo view('paginaRecurso', $datos);
+			echo view('footer');
+
+		}catch(Exception $e){
+			
+			echo view('header');
+			echo view('errors/html/error_404');
+			echo view('footer');
+
+		}
+		
+
+	}
+
+	public function contarDescargas(){
 		$request = Services::request();
 		$id = $request->getPostGet('id');
 		$rec = Recurso::find($id);
-		$autor = Recurso::find($id)->autor;
-		$usuario = Autor::find($autor->id)->usuario;
-		$categorias = $rec->categorias;
-		$comentarios = $rec->comentarios;
-		$datos['autor'] = $autor;
-		$datos['usuario'] = $usuario;
-		$datos['recurso'] = $rec;
-		$datos['categorias'] = $categorias;
-		$datos['comentarios'] = $comentarios;
-		echo view('header');
-		echo view('paginaRecurso', $datos);
-		echo view('footer');
-
+		$rec->descargas++;
+		$rec->save();
+		//echo 'estoy aca ' . $rec->nombre;
 	}
 
 }

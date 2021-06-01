@@ -1,242 +1,208 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="container" style="margin-top: 15px;">
+  <?php
 
-<head>
-  <meta charset="utf-8">
-  <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
-  <!--  All snippets are MIT license http://bootdey.com/license -->
-  <title>profile with data and skills - Bootdey.com</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      margin-top: 20px;
-      color: #1a202c;
-      text-align: left;
-      background-color: #e2e8f0;
-    }
+  use App\Models\Usuario; ?>
+  <nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+      <h4>Perfil del Autor</h4>
+    </ol>
+  </nav>
+  <div class="row justify-content-center">
 
-    .main-body {
-      padding: 15px;
-    }
+    <div class="row justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="row">
+          <img src="images/<?php echo $usuario->autor->rutaImg ?>" alt="">
+        </div>
+        <br>
+        <?php if (isset($_SESSION['logueado'])) {
+          if ($_SESSION['datos_usuario']['tipo'] == 'autor' ) { ?>
+            <div class="row">
+              <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
+            </div>
 
-    .card {
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    }
-
-    .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      word-wrap: break-word;
-      background-color: #fff;
-      background-clip: border-box;
-      border: 0 solid rgba(0, 0, 0, .125);
-      border-radius: .25rem;
-    }
-
-    .card-body {
-      flex: 1 1 auto;
-      min-height: 1px;
-      padding: 1rem;
-    }
-
-    .gutters-sm {
-      margin-right: -8px;
-      margin-left: -8px;
-    }
-
-    .gutters-sm>.col,
-    .gutters-sm>[class*=col-] {
-      padding-right: 8px;
-      padding-left: 8px;
-    }
-
-    .mb-3,
-    .my-3 {
-      margin-bottom: 1rem !important;
-    }
-
-    .bg-gray-300 {
-      background-color: #e2e8f0;
-    }
-
-    .h-100 {
-      height: 100% !important;
-    }
-
-    .shadow-none {
-      box-shadow: none !important;
-    }
-  </style>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#btn_seguidores").on("click", function() {
-        if ($('#seguidores').css("display") == 'none') {
-          $('#seguidores').css("display", "inline");
-        } else {
-          $('#seguidores').css("display", "none");
-        }
-
-      });
-    });
-  </script>
+          <?php } else { ?>
+            <?php if (Usuario::find($_SESSION['datos_usuario']['id'])->cliente->autores->find($autor->id) != null) { ?>
+              <div class="row">
+                <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>" class="btn btn-primary"> Dejar de Seguir</a>
+              </div>
+            <?php } else { ?>
+              <div class="row">
+                <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
+              </div>
+        <?php }
+          }
+        } ?>
+        <br>
+        <div class="row">
+          <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Seguidores</button>
+        </div>
+        <br>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Lista de seguidores</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <table class="table">
+              <thead>
+                <th>Nombre</th>
+                <th>Foto</th>
+              </thead>
+              <?php foreach ($clientes as $cliente) { ?>
+                <tr>
+                  <td><a href="<?php echo base_url(); ?>/paginaCliente?id=<?php echo $cliente->usuario->id; ?>"> <?php echo $cliente->nombre . ' ' . $cliente->apellido ?></a> </td>
+                  <td> <img src="images/<?php echo $cliente->rutaImg  ?>" alt="" width="50px"> </td>
+                </tr>
+              <?php } ?>
+            </table>
+          </div>
+        </div>
 
 
-</head>
+      </div>
 
-<body>
+      <div class="col-6 col-md-6">
+        <div class="row">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Perfil <i class="fas fa-user"></i></button>
+            </li>
+            <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Mis publicaciones <i class="fas fa-cloud-upload-alt"></i></button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Mas vistos <i class="far fa-plus-square"></i></button>
+              </li>
+            <?php } ?>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#editarlista" type="button" role="tab" aria-controls="editarlista" aria-selected="false">Top descargas <i class="fas fa-fire"></i></button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <br>
+              <h4>Datos personales</h4>
+              <hr>
+              <table class="table">
 
-  <?php use App\Models\Usuario; ?>
-
-  <br>
-  <div class="container">
-
-
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <h4>Perfil del Autor</h4>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
-
-    <div class="row gutters-sm">
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="images/<?php echo $autor->rutaImg ?>" alt="Admin" class="rounded-circle" width="150" height="150">
-              <div class="mt-3">
-                <h4><?php echo $usuario->nick ?></h4>
-                <br>
-                <?php if (isset($_SESSION['logueado'])) {
-                  if ($_SESSION['datos_usuario']['tipo'] == 'autor') { ?>
-                    <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
-                  <?php } else { ?>
-                    <?php if(Usuario::find($_SESSION['datos_usuario']['id'])->cliente->autores->find($autor->id)!= null){ ?>
-                    <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>" class="btn btn-primary"> Dejar de Seguir</a>
-                <?php } else{ ?>
-                  <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
-                <?php }}
-                } ?>
-                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Seguidores</button>
-
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                  <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel">Lista de seguidores</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <div class="offcanvas-body">
-                    <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Nick:</th>
+                    <td><?php echo $usuario->nick ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nombre:</th>
+                    <td><?php echo $autor->nombre ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Apellido:</th>
+                    <td><?php echo $autor->apellido ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Email:</th>
+                    <td><?php echo $usuario->email ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Biografia:</th>
+                    <td><?php echo $autor->biografia ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Perfil:</th>
+                    <td><?php echo $usuario->tipo ?></td>
+                  </tr>
+                </tbody>
+              </table>
+              <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+              <a href="<?php echo base_url(); ?>/paginaEditAutor?id=<?php echo $usuario->id ?>" class="btn btn-primary">Editar</a>
+              <?php }?>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <br>
+              <h4>Mis publicaciones</h4>
+              <hr>
+              <div class="container" style="overflow-y: scroll; height: 260px;">
+                <table class="table">
+                  <tbody>
                     <thead>
-                    <th>Nombre</th>
-                    <th>Foto</th>
+                      <th>Nombre</th>
+                      <th>Tipo</th>
+                      <th>Valoracion</th>
                     </thead>
-                    <?php foreach ($clientes as $cliente) { ?>
-                      <tr><td><a href="<?php echo base_url(); ?>/paginaCliente?id=<?php echo $cliente->usuario->id; ?>"> <?php echo $cliente->nombre . ' ' . $cliente->apellido ?></a> </td>
-                      <td> <img src="images/<?php echo $cliente->rutaImg  ?>" alt="" width="50px"> </td>
+                    <?php foreach ($autor->recursos as $recurso) { ?>
+                      <tr>
+                        <td><a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a></td>
+                        <td><?php echo $recurso->tipo ?></td>
+                        <td><?php $cont = 0;
+                            $cont2 = 0;
+                            while ($cont < $recurso->nota || $cont2 < 5) {
+
+                              if ($cont < $recurso->nota) {
+                                echo '<span class="fa fa-star checked"></span>';
+                                $cont++;
+                                $cont2++;
+                              } else {
+                                echo '<span class="fa fa-star"></span>';
+                                $cont2++;
+                              }
+                            }
+
+                            ?></td>
                       </tr>
                     <?php } ?>
-                    </table>
-                  </div>
-                </div>
+                  </tbody>
+                </table>
               </div>
+            </div>
+            <div class="tab-pane fade" id="lista" role="tabpanel" aria-labelledby="lista-tab">
+              <br>
+              <h4>Mas vistos</h4>
+              <hr>
+              <table class="table">
+                <tbody>
+                  <thead>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Visitas</th>
+                  </thead>
+                </tbody>
+                <?php foreach ($autor->masVistos() as $recurso) { ?>
+                  <tr>
+                    <td><a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a></td>
+                    <td><?php echo $recurso->tipo ?></td>
+                    <td><?php echo $recurso->visitas ?></td>
+                  </tr>
+                <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="editarlista" role="tabpanel" aria-labelledby="editarlista-tab">
+              <br>
+              <h4>Descargas</h4>
+              <hr>
+              <table class="table">
+                <thead class="thead-dark">
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Descargas</th>
+                </thead>
+
+                <tbody>
+                  <?php foreach ($autor->masDescargados() as $recurso) { ?>
+                    <tr>
+                      <td><a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>"> <?php echo $recurso->nombre ?></a></td>
+                      <td><?php echo $recurso->tipo ?></td>
+                      <td><?php echo $recurso->descargas ?></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="col-md-8">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Nombre:</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $autor->nombre ?>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Apellido</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $autor->apellido ?>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $usuario->email ?>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Perfil</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <b><?php echo $usuario->tipo ?></b>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Biografia</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <?php echo $autor->biografia ?>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-      <!--creo que no se esta usando no me animo a borrarlo -->
-      <div class="container" id="seguidores" style="display: none;">
-        <?php foreach ($clientes as $cliente) {
-          echo $cliente->nombre . '<br>';
-        } ?>
-      </div>
-      <!--creo que no se esta usando no me animo a borrarlo -->
-    </div>
-
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <h4>Publicaciones del Autor</h4>
-      </ol>
-    </nav>
-
-    <div class="row">
-
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($autor->recursos as $recurso) { ?>
-          <div class="col">
-            <div class="card" style="width: 18rem;">
-              <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $recurso->nombre ?></h5>
-                <p class="card-text"><?php echo $recurso->tipo ?></p>
-                <p class="card-text"><?php echo $recurso->descripcion ?></p>
-                <p class="card-text"><?php echo $recurso->created_at ?></p>
-
-                <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-primary">Leer mas...</a>
-
-              </div>
-            </div>
-          </div>
-        <?php } ?>
-      </div>
-
     </div>
   </div>
+</div>

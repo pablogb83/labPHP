@@ -10,6 +10,7 @@ use Config\Services;
 
 use App\Controllers\BaseController;
 use App\Models\Recurso;
+use Exception;
 
 class ClienteController extends BaseController
 {
@@ -71,11 +72,9 @@ class ClienteController extends BaseController
 			$this->usuarioModel->password = $request->getPost('password');
 			$this->usuarioModel->tipo = 'cliente';
 
-
 			$this->clienteModel->nombre = $request->getPost('nombre');
 			$this->clienteModel->apellido = $request->getPost('apellido');
 			$this->clienteModel->fechaNac = $request->getPost('fechNac');
-
 			
 			$file = $request->getFile('foto');
 			if(!$file->isValid()){
@@ -96,17 +95,25 @@ class ClienteController extends BaseController
 	}
 
 	public function perfil(){
-		$request = Services::request();
-		$id = $request->getPostGet('id');
-		$usuario = Usuario::find($id);
-		$cliente = Usuario::find($id)->cliente;
-		$autores = $cliente->autores;
-		$datos['cliente'] = $cliente;
-		$datos['usuario'] = $usuario;
-		$datos['autores'] = $autores;
-		echo view('header');
-		echo view('paginaCliente', $datos);
-		echo view('footer');
+		
+		try{
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$usuario = Usuario::find($id);
+			$cliente = Usuario::find($id)->cliente;
+			$autores = $cliente->autores;
+			$datos['cliente'] = $cliente;
+			$datos['usuario'] = $usuario;
+			$datos['autores'] = $autores;
+			echo view('header');
+			echo view('paginaCliente', $datos);
+			echo view('footer');
+		}catch(Exception $e){
+			echo view('header');
+			echo view('errors/html/error_404');
+			echo view('footer');
+		}
+
 	}
 
 	public function seguirAutores(){

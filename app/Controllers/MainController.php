@@ -77,6 +77,17 @@ class MainController extends BaseController
 		//echo $busqueda;
 	}
 
+	public function mostrarPorTipo(){
+		$request = Services::request();
+		$busqueda = $request->getPostGet('tipo');
+		$recursos = Recurso::where('tipo', $busqueda)->orderBy('created_at')->get();
+		$recursos= array('recursos'=>$recursos);
+		//var_dump($recursos);
+		echo view('header');
+		echo view('mostrarRecursos', $recursos);
+		echo view('footer');
+	}
+
 	public function checkSuscrip(){
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();

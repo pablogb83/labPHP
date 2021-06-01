@@ -65,9 +65,9 @@ class UsuarioController extends BaseController
 		//$usuario = new Usuario();
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
-		$usuario=$this->usuarioModel->where('password', $pass)
-									->where('email',$email)
-									->get();
+		$usuario=$this->usuarioModel->where('email',$email)
+									->where('password', $pass)
+									->first();
 		//$user=array('user'=>$usuario);
 		//var_dump($usuario);
 		//$usuario = new Usuario($data);
@@ -79,14 +79,20 @@ class UsuarioController extends BaseController
 			}
 			$_SESSION['logueado'] = true;
 			$_SESSION['datos_usuario'] = array(
-				"id"	=> $usuario[0]['id'],
-				"nick" => $usuario[0]['nick'],
-				"tipo" => $usuario[0]['tipo'],
-				"email"	=> $usuario[0]['email']
+				"id"	=> $usuario->id,
+				"nick" => $usuario->nick,
+				"tipo" => $usuario->tipo,
+				"email"	=> $usuario->email
 			);
 			return redirect()->to(base_url());
 		}else{
-			return redirect()->to(base_url().'/login');
+			$errors=['errors' => 'Email o password incorrectos'];
+			$errors=array('errors'=>$errors);
+			echo view('header');
+			echo view('_errors_list', $errors);
+			echo view('login');
+			echo view('footer');
+			//return redirect()->to(base_url().'/loginpage');
 		}
 	}
 

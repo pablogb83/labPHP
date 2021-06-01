@@ -24,4 +24,14 @@ class Autor extends Model
         return $this->belongsToMany(Cliente::class);
     }
 
+    public function masDescargados(){
+        //return Recurso::where('autor_id', $autor_id)->orderBy('descargas', 'DESC')->get();
+        return $this->recursos()->orderBy('descargas', 'DESC')->take(5)->get();
+    }
+
+    public function masVistos(){
+        //return Recurso::where('autor_id', $autor_id)->orderBy('descargas', 'DESC')->get();
+        return $this->recursos()->orderBy('visitas', 'DESC')->take(5)->get();
+    }
+
 }

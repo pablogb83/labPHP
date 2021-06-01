@@ -46,4 +46,15 @@ class Recurso extends Model
 		}
 	}
 
+    public static function chequeaComentario($id_cliente, $id_recurso){
+		$comentarios = Recurso::find($id_recurso)->comentarios;
+		$comento = false;
+        foreach($comentarios as $comentario){
+			if($comentario->cliente_id == $id_cliente){
+				$comento = true;
+			}
+		}
+        return $comento;
+	}
+
 }

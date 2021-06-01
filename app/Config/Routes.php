@@ -66,7 +66,6 @@ $routes->get('/seguirAutor', 'ClienteController::seguirAutores');
 $routes->get('/suscribirse', 'ClienteController::formSuscrip');
 $routes->get('/suscripExito', 'ClienteController::suscripExito');
 $routes->get('/adminPage', 'AdminController::mainpage');
-
 $routes->get('/nuevaCategoriaHija', 'CategoriaController::nuevaHija');
 $routes->post('/registrarCategoriaHija', 'CategoriaController::guardarHija');
 $routes->get('/mostrarRecursosCategoria', 'CategoriaController::mostrarRecursos');
@@ -74,18 +73,24 @@ $routes->get('/buscador', 'MainController::buscador');
 $routes->get('/guardarRecursoCliente', 'ClienteController::guardarRecurso');
 $routes->get('/quitarRecursoUsuario', 'ClienteController::borrarRecurso');
 $routes->get('/dejarSeguirAutor', 'ClienteController::dejarSeguirAutor');
-//Nuevas rutas
 $routes->get('/comentarRecurso', 'ComentarioController::guardar');
 $routes->post('/crearLista', 'ListaController::guardar');
 $routes->get('/agregarRecursoLista', 'ListaController::agregarRecurso');
-
 $routes->post('/mostarRecursosLista', 'ListaController::mostarRecursosLista');
 $routes->get('/quitarRecursoLista', 'ListaController::quitarRecursoLista');
-
 $routes->get('/checkSuscrip', 'MainController::checkSuscrip');
-
+//Nuevas rutas
 $routes->get('/ExecutePayment', 'PaypalController::executePayment');
 $routes->get('/confirmarsus', 'PaypalController::getApprovalLink');
+$routes->get('/mostrarRecursoTipo', 'MainController::mostrarPorTipo');
+
+$routes->post('/contarDescargaRecurso', 'RecursoController::contarDescargas');
+$routes->get('/paginaEditAutor', 'AutorController::paginaEditar');
+$routes->post('/editarAutor', 'AutorController::editar');
+
+
+
+
 
 
 
