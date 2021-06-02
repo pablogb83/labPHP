@@ -13,7 +13,7 @@ use PayPal\Api\Transaction;
 use PayPal\Api\PaymentExecution;
 
 use App\Controllers\BaseController;
-use PayPal\Rest\ApiContext;
+use Paypal\Rest\ApiContext;
 
 class PaypalController extends BaseController{
 
@@ -22,8 +22,8 @@ class PaypalController extends BaseController{
     public function __construct(){
         $this->apiContext= new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'ASo-a1FD2hbEDxRsMt0HvDtLy4yww14Pa5lniL5DdQvIwdRc-T7HthB3-iPZzNF_tZrOJ_KCAKDPYLau',     // ClientID
-                'EKTksXdhGrBh7o9Lg1tZb1WnuGeq0iezBNAsS0jPgKEgJ7wgj7k4nPbr7Jcw8fU0W-oKlCDGJJOE_l36'      // ClientSecret
+                'AUC69zq-KIYShO3Ugts3D8z6JWv-Vjtq0UaLvdD4zmdMNJYZgjARISRIVc6mccj8Zb2m9xuBoF_sRjT7',     // ClientID
+                'EO1cXrrRsxnsqKNTVq-EEn0SdkdXl9sVXo16skgo5XH1RSutsbvi3ovzSY2UiiKeAJERnvb9iWaOsDlc'      // ClientSecret
             )
         );
     }

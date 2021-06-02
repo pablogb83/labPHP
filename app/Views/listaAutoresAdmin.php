@@ -1,7 +1,7 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
-            <h1 class="mt-4">Clientes</h1>
+            <h1 class="mt-4">Autores</h1>
 
             <div class="card mb-4">
 
@@ -11,7 +11,9 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Nick</th>
-                                    <th>Email</th>>
+                                    <th>Email</th>
+                                    <th>Nombre</th>
+                                    <th>Rec. Publicados</th>
                                     <th>Accion</th>
 
                                 </tr>
@@ -20,6 +22,8 @@
                                 <tr>
                                     <th>Nick</th>
                                     <th>Email</th>
+                                    <th>Nombre</th>
+                                    <th>Rec. Publicados</th>
                                     <th>Accion</th>
                                 </tr>
                             </tfoot>
@@ -28,6 +32,8 @@
                                     <tr>
                                         <td><?php echo $user->nick;  ?></td>
                                         <td><?php echo $user->email;  ?></td>
+                                        <td><?php echo $user->autor->nombre . ' ' . $user->autor->apellido;  ?></td>
+                                        <td><?php echo $user->autor->cantRecPublic();  ?></td>
                                         <td><a href="<?php echo base_url(); ?>/editar?id=<?php echo $user->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
                                         <a href="#" data-href="<?php echo base_url(); ?>/borrar?id=<?php echo $user->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
                                         </td>

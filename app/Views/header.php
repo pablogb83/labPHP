@@ -11,7 +11,7 @@
   <title>Truchameo</title>
   <link href="css/estilos.css" rel="stylesheet">
   <link href="css/estiloEstrellas.css" rel="stylesheet">
-
+  <link href="css/pdfcover.css" rel="stylesheet">
 </head>
 
 <body>

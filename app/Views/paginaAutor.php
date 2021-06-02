@@ -4,7 +4,7 @@
   use App\Models\Usuario; ?>
   <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
-      <h4>Perfil del Autor</h4>
+      <h4>Perfil del autor: <?php echo strtoupper($usuario->nick) ?></h4>
     </ol>
   </nav>
   <div class="row justify-content-center">
@@ -18,17 +18,17 @@
         <?php if (isset($_SESSION['logueado'])) {
           if ($_SESSION['datos_usuario']['tipo'] == 'autor' ) { ?>
             <div class="row">
-              <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-primary">Publicar</a>
+              <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-light">Publicar</a>
             </div>
 
           <?php } else { ?>
             <?php if (Usuario::find($_SESSION['datos_usuario']['id'])->cliente->autores->find($autor->id) != null) { ?>
               <div class="row">
-                <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>" class="btn btn-primary"> Dejar de Seguir</a>
+                <a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>" class="btn btn-danger"> Dejar de Seguir</a>
               </div>
             <?php } else { ?>
               <div class="row">
-                <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-primary">Seguir</a>
+                <a href="<?php echo base_url(); ?>/seguirAutor?id=<?php echo $usuario->id; ?>" class="btn btn-info">Seguir</a>
               </div>
         <?php }
           }

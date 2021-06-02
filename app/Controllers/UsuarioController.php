@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Autor;
 use App\Models\Usuario;
 use Config\Services;
+use Exception;
 
 class UsuarioController extends BaseController
 {
@@ -145,13 +145,21 @@ class UsuarioController extends BaseController
 	}
 
 	public function editar(){
-		$request = Services::request();
-		$id = $request->getPostGet('id');
-		$user = $this->usuarioModel->find($id);
-		$user=array('user'=>$user);
-		echo view('headerAdmin');
-		echo view('formEditar', $user);
-		echo view('footerAdmin');
+		try{	
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$user = $this->usuarioModel->find($id);
+			$user=array('user'=>$user);
+			echo view('headerAdmin');
+			echo view('formEditar', $user);
+			echo view('footerAdmin');
+		}catch(Exception $e){
+			$message = 'Parece que este usuario no existe';
+			$message = array('message' => $message);
+			echo view('headerAdmin');
+			echo view('errors/html/error_404',$message);
+			echo view('footerAdmin');
+		}
 	}
 
 	public function actualizar(){

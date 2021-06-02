@@ -7,7 +7,7 @@ figure img {
     padding: 4px;
     background: #666;
     border-radius: 20px;
-    -webkit-transition: -webkit-transform 0.3s ease-in-out 0.1s;
+    transition: -webkit-transform 0.3s ease-in-out 0.9s;
     box-shadow: #999 5px 5px 10px;
 }
 
@@ -15,7 +15,7 @@ figure img {
 /*pseudo clase*/
 
 figure img:hover {
-    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 figcaption {

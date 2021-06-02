@@ -2,7 +2,7 @@
 
   <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
-      <h4>Perfil del Usuario</h4>
+      <h4>Perfil del usuario: <?php echo strtoupper($usuario->nick) ?></h4> 
     </ol>
   </nav>
   <div class="row justify-content-center">
@@ -12,7 +12,6 @@
         <div class="row">
           <img src="images/<?php echo $usuario->cliente->rutaImg ?>" alt="">
         </div>
-
       </div>
 
       <div class="col-6 col-md-6">

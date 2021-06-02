@@ -2,7 +2,7 @@
 	<br>
 	<div class="row">
 		<div class="col">
-			<img src="images/autor.jpg" alt="">
+			<img src="images/error-404.png" alt="Ni siquiera econtramos la imagen, esto es vergonzoso">
 		</div>
 		<div class="col">
 			<div class="wrap">
@@ -12,7 +12,7 @@
 					<?php if (!empty($message) && $message !== '(null)') : ?>
 						<?= esc($message) ?>
 					<?php else : ?>
-						Sorry! Cannot seem to find the page you were looking for.
+						Ups! Parece que la pagina que estas buscando no existe.
 					<?php endif ?>
 				</p>
 			</div>

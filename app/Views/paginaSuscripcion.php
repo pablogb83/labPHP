@@ -39,7 +39,7 @@
 			<h5>Beneficios de la suscripción:</h5>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">Accede a contenido exlusivo</li>
-				<li class="list-group-item">Te querremos mas</li>
+				<li class="list-group-item">Colaboras con la comunidad de autores</li>
 				<li class="list-group-item">Nos ayudas a seguir creciendo</li>
 				<li class="list-group-item">Seras mas feliz</li>
 				<li class="list-group-item">Tal vez hasta te hagas millonario</li>

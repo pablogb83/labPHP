@@ -21,7 +21,7 @@
         <br>
         <?php if ($recurso->suscripcion == 1 and isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente' and Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 0) { ?>
           <div class="row">
-            <a href="checkSuscrip?id=<?php echo $recurso->id ?>" class="btn btn-success" role="button">Comprar </a>
+            <a href="checkSuscrip?id=<?php echo $recurso->id ?>" class="btn btn-success" role="button">Requiere Suscripción </a>
           </div>
           <br>
         <?php } ?>
@@ -40,7 +40,7 @@
         <hr>
         <?php if ($recurso->descargable == 1 and isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente' and Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 1) { ?>
 
-          <a title="Descargar Archivo" href="archivos/<?php echo $recurso->rutaArch ?>" download="<?php echo $recurso->rutaArch ?>" >
+          <a title="Descargar Archivo" href="archivos/<?php echo $recurso->rutaArch ?>" download="<?php echo $recurso->rutaArch ?>">
 
             <p id="descargas"><i class="fas fa-arrow-circle-down"></i> Descargar </p>
           </a>
@@ -98,36 +98,36 @@
           <div class="row">
             <h4>Comentarios</h4>
             <div class="container" style="overflow-y: scroll; height: 240px;">
-            <table class="table">
-              <tr>
-                <th>Usuario</th>
-                <th>Comentario</th>
-                <th>Nota</th>
-              </tr>
-
-              <?php foreach ($comentarios as $comentario) { ?>
-
+              <table class="table">
                 <tr>
-                  <td> <?php echo $comentario->cliente->usuario->nick ?> </td>
-                  <td> <em><?php echo '"' . $comentario->texto . '"' ?></em> </td>
-                  <td> <?php $cont = 0;
-                        $cont2 = 0;
-                        while ($cont < $comentario->nota || $cont2 < 5) {
-
-                          if ($cont < $comentario->nota) {
-                            echo '<span class="fa fa-star checked"></span>';
-                            $cont++;
-                            $cont2++;
-                          } else {
-                            echo '<span class="fa fa-star"></span>';
-                            $cont2++;
-                          }
-                        }
-                        ?>
-                  </td>
+                  <th>Usuario</th>
+                  <th>Comentario</th>
+                  <th>Nota</th>
                 </tr>
-              <?php } ?>
-            </table>
+
+                <?php foreach ($comentarios as $comentario) { ?>
+
+                  <tr>
+                    <td> <?php echo $comentario->cliente->usuario->nick ?> </td>
+                    <td> <em><?php echo '"' . $comentario->texto . '"' ?></em> </td>
+                    <td> <?php $cont = 0;
+                          $cont2 = 0;
+                          while ($cont < $comentario->nota || $cont2 < 5) {
+
+                            if ($cont < $comentario->nota) {
+                              echo '<span class="fa fa-star checked"></span>';
+                              $cont++;
+                              $cont2++;
+                            } else {
+                              echo '<span class="fa fa-star"></span>';
+                              $cont2++;
+                            }
+                          }
+                          ?>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </table>
             </div>
           </div>
         </div>
@@ -139,27 +139,35 @@
   <div class="modal fade" id="modal-confirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <?php if (isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente') { ?>
-        <?php if (!Recurso::chequeaComentario(Usuario::find($_SESSION['datos_usuario']['id'])->cliente->id, $recurso->id)) { ?>
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Comentar</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="<?php echo base_url(); ?>/comentarRecurso">
-                <input type="hidden" name="id" value="<?php echo $recurso->id ?>">
-                <input class="form-control" type=" textarea" name="comentario" id="comentario" required> <br>
-                <input class="form-control" type="number" name="nota" id="nota" max="5" min="1" required> <br>
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Enviar</button>
-              </form>
-            </div>
+        <?php if (Usuario::find($_SESSION['datos_usuario']['id'])->cliente->suscripto == 1 and $recurso->suscripcion == 1) { ?>
+          <?php if (!Recurso::chequeaComentario(Usuario::find($_SESSION['datos_usuario']['id'])->cliente->id, $recurso->id)) { ?>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Comentar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="<?php echo base_url(); ?>/comentarRecurso">
+                  <input type="hidden" name="id" value="<?php echo $recurso->id ?>">
+                  <input class="form-control" type=" textarea" name="comentario" id="comentario" required> <br>
+                  <input class="form-control" type="number" name="nota" id="nota" max="5" min="1" required> <br>
+                  <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-success">Enviar</button>
+                </form>
+              </div>
+            <?php } else { ?>
+              <div class="modal-content">
+                <div class="modal-header">
+                  <p>Ya calificaste y comentaste este recurso</p>
+                </div>
+              </div>
+            <?php } ?>
           <?php } else { ?>
             <div class="modal-content">
               <div class="modal-header">
-                <p>Ya calificaste y comentaste este recurso</p>
+                <p>Necesitas estar suscripto para esto</p>
               </div>
             </div>
           <?php } ?>
@@ -211,7 +219,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modal-archivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-archivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" oncontextmenu="return false;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
       <?php if (isset($_SESSION['logueado']) and $_SESSION['datos_usuario']['tipo'] == 'cliente') { ?>
         <div class="modal-content">
@@ -223,13 +231,15 @@
           </div>
           <div class="modal-body">
             <?php if ($recurso->tipo == 'audio-libro' or $recurso->tipo == 'podcast') { ?>
-              <audio controls>
-                <source src="archivos/<?php echo $recurso->rutaArch ?>" type="audio/mp3">
+              <audio controls controlsList="nodownload" id="audio2" src="archivos/<?php echo $recurso->rutaArch ?>#t=1,3">
+
                 Tu navegador no soporta audio HTML5.
               </audio>
             <?php } else { ?>
-              <object data="archivos/<?php echo $recurso->rutaArch ?>" width="100%"></object>
-
+              <div class="wrapper">
+                <embed src="archivos/<?php echo $recurso->rutaArch ?>#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="500" />
+                <div class="embed-cover"></div>
+              </div>
             <?php } ?>
           </div>
           <div class="modal-footer">
@@ -299,20 +309,28 @@
   </script>
 
 
-<!-- script para actualizar los recursos de las listas en la pagina del perfil de usuario -->
-<script>
-  $(function() {
-    //mostrarRecursos();
-  });
-
-  function contarDescargas() {
-    $.ajax({
-      url: 'contarDescargaRecurso?id=' +  <?php echo $recurso->id ?>,
-      type: 'POST',
+  <!-- script para actualizar los recursos de las listas en la pagina del perfil de usuario -->
+  <script>
+    $(function() {
+      //mostrarRecursos();
     });
-  };
-  $('#descargas').click(function() {
-    contarDescargas();
-    //alert(this.value);
-  });
-</script>
+
+    function contarDescargas() {
+      $.ajax({
+        url: 'contarDescargaRecurso?id=' + <?php echo $recurso->id ?>,
+        type: 'POST',
+      });
+    };
+    $('#descargas').click(function() {
+      contarDescargas();
+      //alert(this.value);
+    });
+  </script>
+
+  <script>
+    myAudio = document.getElementById('audio2');
+    myAudio.addEventListener('canplaythrough', function() {
+      this.currentTime = 11;
+      this.play();
+    });
+  </script>

@@ -11,7 +11,8 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Nick</th>
-                                    <th>Email</th>>
+                                    <th>Email</th>
+                                    <th>Status</th>
                                     <th>Accion</th>
 
                                 </tr>
@@ -20,6 +21,7 @@
                                 <tr>
                                     <th>Nick</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Accion</th>
                                 </tr>
                             </tfoot>
@@ -28,6 +30,7 @@
                                     <tr>
                                         <td><?php echo $user->nick;  ?></td>
                                         <td><?php echo $user->email;  ?></td>
+                                        <td><?php if ($user->cliente->suscripto == 1){ echo 'SUSCRIPTO';} else {echo 'NO';}  ?></td>
                                         <td><a href="<?php echo base_url(); ?>/editar?id=<?php echo $user->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
                                         <a href="#" data-href="<?php echo base_url(); ?>/borrar?id=<?php echo $user->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
                                         </td>

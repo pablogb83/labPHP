@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Categoria;
 use Config\Services;
+use Exception;
 
 class CategoriaController extends BaseController
 {
@@ -93,13 +94,22 @@ class CategoriaController extends BaseController
 	}
 
 	public function editar(){
-		$request = Services::request();
-		$id = $request->getPostGet('id');
-		$categoria = $this->categoria->find($id);
-		$categoria=array('categoria'=>$categoria);
-		echo view('headerAdmin');
-		echo view('editarCategoria', $categoria);
-		echo view('footerAdmin');
+		try{
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$categoria = $this->categoria->find($id);
+			$categoria=array('categoria'=>$categoria);
+			echo view('headerAdmin');
+			echo view('editarCategoria', $categoria);
+			echo view('footerAdmin');
+		}catch(Exception $e){
+			$message = 'Parece que esta categoria no existe';
+			$message = array('message' => $message);
+			echo view('headerAdmin');
+			echo view('errors/html/error_404',$message);
+			echo view('footerAdmin');
+		}
+
 	}
 
 	public function actualizar(){
@@ -107,6 +117,14 @@ class CategoriaController extends BaseController
 		$id = $request->getPost('id');
 		$categoria = $this->categoria->find($id);
 		$categoria->nombre = $request->getPost('nombre');
+
+		$file = $request->getFile('rutaFoto');
+		if ($file->isValid()) {
+			$name = $file->getRandomName();
+			$categoria->rutaImg = $name;
+			$file->move('images', $name);
+		}
+
 		$categoria->save();
 		return redirect()->to(base_url().'/listaCategorias');
 	}

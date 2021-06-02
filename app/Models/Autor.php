@@ -34,4 +34,9 @@ class Autor extends Model
         return $this->recursos()->orderBy('visitas', 'DESC')->take(5)->get();
     }
 
+    public function cantRecPublic(){
+        //return Recurso::where('autor_id', $autor_id)->orderBy('descargas', 'DESC')->get();
+        return $this->recursos()->count();
+    }
+
 }

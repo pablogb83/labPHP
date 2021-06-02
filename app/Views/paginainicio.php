@@ -9,22 +9,22 @@
             <div class="carousel-item active">
                 <img src="images/portadas-libros.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="tituloslider">First slide label</h2>
-                    <h5 class="subslider">Some representative placeholder content for the first slide.</h5>
+                    <h2 class="tituloslider">Las mejores obras estan aqui</h2>
+                    <h5 class="subslider">Los autores mas aclamados son nuestros principales publishers!!.</h5>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="images/librosPC.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="tituloslider">First slide label</h2>
-                    <h5 class="subslider">Some representative placeholder content for the first slide.</h5>
+                    <h2 class="tituloslider">Todo el contenido en tu pc</h2>
+                    <h5 class="subslider">Disfruta de los mejores contenidos desde la comodiad de tu casa.</h5>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="images/portadasRevistas.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="tituloslider">First slide label</h2>
-                    <h5 class="subslider">Some representative placeholder content for the first slide.</h5>
+                    <h2 class="tituloslider">Revistas, documentos academicos!!</h2>
+                    <h5 class="subslider">Enterate de todo lo que esta pasando en la acutalidad.</h5>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
 </div>
 
 <div class="container">
-    <center><button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="margin-top: 30px; margin-bottom: 15px;">Ver todas</button></center>
+    <center><button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="margin-top: 30px; margin-bottom: 15px;">Categorias</button></center>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">Categorias</h5>
@@ -48,31 +48,34 @@
         </div>
         <div class="offcanvas-body">
             <?php
-                foreach($categorias as $categoria){
-                    if($categoria->categoria_id==0){ ?>
-                        <a href="<?php echo base_url() ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>"> <?php echo $categoria->nombre ?> </a><br>
-                        <?php $categoria->mostrarHijos($categoria->hijas, 0); 
-                    }
+            foreach ($categorias as $categoria) {
+                if ($categoria->categoria_id == 0) { ?>
+                    <a href="<?php echo base_url() ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>"> <?php echo $categoria->nombre ?> </a><br>
+            <?php $categoria->mostrarHijos($categoria->hijas, 0);
                 }
-            ?> 
+            }
+            ?>
         </div>
-        </div>
+    </div>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="container" style="overflow-x: scroll; height: 210px;">
+        <div class="container">
 
-            <?php $cont=0; foreach ($categorias as $categoria) { ?>
-                <?php if($categoria->categoria_id == 0 /*&& $cont<6*/){  ?>
-                <a href="<?php echo base_url(); ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>">
-                    <figure>
-                        <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">
-                        <figcaption> <?php echo $categoria->nombre ?> </figcaption>
-                    </figure>
-                </a>
+            <?php $cont = 0;
+            foreach ($categorias as $categoria) { ?>
+                <?php if ($categoria->categoria_id == 0 && $cont < 5) {  ?>
+                    <a href="<?php echo base_url(); ?>/mostrarRecursosCategoria?id=<?php echo $categoria->id ?>">
+                        <figure>
+                            <img src="images/<?php echo $categoria->rutaImg ?>" alt="no hay imagen" width="210" height="150">
+                            <figcaption> <?php echo $categoria->nombre ?> </figcaption>
+                        </figure>
+                    </a>
 
-            <?php ++$cont; }} ?>
+            <?php ++$cont;
+                }
+            } ?>
 
         </div>
     </div>
@@ -85,11 +88,31 @@
     <div class="card-group" style="margin-top: 45px;">
         <?php foreach ($recursos as $recurso) { ?>
             <div class="card">
-                <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="...">
+                <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="..." width="150">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $recurso->nombre ?></h5>
-                    <p class="card-text"><?php echo $recurso->tipo ?></p>
+                    <h5 class="card-title"><?php echo strtoupper($recurso->nombre) ?></h5>
+                    <p class="card-text"><?php echo strtoupper($recurso->tipo) ?></p>
                     <p class="card-text"><?php echo $recurso->descripcion ?></p>
+
+                    <tr>
+                        <td> <?php $cont = 0;
+                                $cont2 = 0;
+                                while ($cont < $recurso->nota || $cont2 < 5) {
+
+                                    if ($cont < $recurso->nota) {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                        $cont++;
+                                        $cont2++;
+                                    } else {
+                                        echo '<span class="fa fa-star"></span>';
+                                        $cont2++;
+                                    }
+                                }
+
+                                ?> </td>
+                    </tr>
+
+                    <br><br>
                     <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>">
                         <p>Leer mas...</p>
                     </a>
