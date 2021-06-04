@@ -83,7 +83,8 @@ phpunit
 #-------------------------
 # Composer
 #-------------------------
-vendor/
+vendor/*
+!vendor/paypal
 
 #-------------------------
 # IDE / Development Files
