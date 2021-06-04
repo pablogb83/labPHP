@@ -1,55 +1,55 @@
+
 <div class="container" style="margin-top: 45px;">
-    <nav class="navbar navbar-light bg-light" style="height: 300px;">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#BE73EF; height: 300px;">
         <div class="container-fluid">
             <div id="columnas">
-                <li><b>Acerca de</b></li>
+                <li style="color:azure"><b>Acerca de</b></li>
                 <a href="">
-                    <li>Acerca de Truchomeo</li>
+                    <li style="color:azure">Acerca de Truchomeo</li>
                 </a>
                 <a href="">
-                    <li>Prensa</li>
+                    <li style="color:azure">Prensa</li>
                 </a>
                 <a href="">
-                    <li>Nuestro Blog</li>
+                    <li style="color:azure">Nuestro Blog</li>
                 </a>
                 <a href="">
-                    <li>Contactanos</li>
+                    <li style="color:azure">Contactanos</li>
                 </a>
                 <a href="">
-                    <li>Truchomeo para empresas</li>
+                    <li style="color:azure">Truchomeo para empresas</li>
                 </a>
-                <li><b>Ayuda</b></li>
+                <li style="color:azure"><b>Ayuda</b></li>
                 <a href="">
-                    <li>Ayuda</li>
-                </a>
-                <a href="">
-                    <li>Accesibilidad</li>
+                    <li style="color:azure">Ayuda</li>
                 </a>
                 <a href="">
-                    <li>Ayuda para compra</li>
+                    <li style="color:azure">Accesibilidad</li>
                 </a>
                 <a href="">
-                    <li>Editores</li>
+                    <li style="color:azure">Ayuda para compra</li>
                 </a>
                 <a href="">
-                    <li>Preguntas frecuentes</li>
-                </a>
-                <li><b>Legal</b></li>
-                <a href="">
-                    <li>Terminos</li>
+                    <li style="color:azure">Editores</li>
                 </a>
                 <a href="">
-                    <li>Privacidad</li>
+                    <li style="color:azure">Preguntas frecuentes</li>
+                </a>
+                <li style="color:azure"><b>Legal</b></li>
+                <a href="">
+                    <li style="color:azure">Terminos</li>
                 </a>
                 <a href="">
-                    <li>Copyright</li>
+                    <li style="color:azure">Privacidad</li>
+                </a>
+                <a href="">
+                    <li style="color:azure">Copyright</li>
                 </a>
             </div>
 
         </div>
     </nav>
 </div>
-
 
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

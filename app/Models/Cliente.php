@@ -33,4 +33,10 @@ class Cliente extends Model
     {
         return $this->hasMany(Lista::class);
     }
+    /*
+    public function suscripcion()
+    {
+        return $this->belongsTo(Suscripcion::class);
+    }
+    */
 }

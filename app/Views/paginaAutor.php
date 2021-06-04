@@ -16,7 +16,7 @@
         </div>
         <br>
         <?php if (isset($_SESSION['logueado'])) {
-          if ($_SESSION['datos_usuario']['tipo'] == 'autor' ) { ?>
+          if ($_SESSION['datos_usuario']['tipo'] == 'autor') { ?>
             <div class="row">
               <a href="<?php echo base_url(); ?>/nuevoRecurso" class="btn btn-light">Publicar</a>
             </div>
@@ -85,38 +85,40 @@
               <br>
               <h4>Datos personales</h4>
               <hr>
-              <table class="table">
+              <div class="container" style="overflow-y: scroll; height: 260px;">
+                <table class="table">
 
-                <tbody>
-                  <tr>
-                    <th scope="row">Nick:</th>
-                    <td><?php echo $usuario->nick ?></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nombre:</th>
-                    <td><?php echo $autor->nombre ?></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apellido:</th>
-                    <td><?php echo $autor->apellido ?></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Email:</th>
-                    <td><?php echo $usuario->email ?></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Biografia:</th>
-                    <td><?php echo $autor->biografia ?></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Perfil:</th>
-                    <td><?php echo $usuario->tipo ?></td>
-                  </tr>
-                </tbody>
-              </table>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Nick:</th>
+                      <td><?php echo $usuario->nick ?></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Nombre:</th>
+                      <td><?php echo $autor->nombre ?></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Apellido:</th>
+                      <td><?php echo $autor->apellido ?></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Email:</th>
+                      <td><?php echo $usuario->email ?></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Biografia:</th>
+                      <td><?php echo $autor->biografia ?></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Perfil:</th>
+                      <td><?php echo $usuario->tipo ?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
-              <a href="<?php echo base_url(); ?>/paginaEditAutor?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
-              <?php }?>
+                <a href="<?php echo base_url(); ?>/paginaEditAutor?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
+              <?php } ?>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
               <br>
@@ -151,8 +153,8 @@
 
                             ?></td>
                         <td>
-                        <a href="<?php echo base_url(); ?>/editarRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
-                        <a href="#" data-href="<?php echo base_url(); ?>/borrarRecurso?id=<?php echo $recurso->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
+                          <a href="<?php echo base_url(); ?>/editarRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
+                          <a href="#" data-href="<?php echo base_url(); ?>/borrarRecurso?id=<?php echo $recurso->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
                         </td>
                       </tr>
                     <?php } ?>
@@ -213,22 +215,22 @@
 </div>
 
 <div class="modal fade" id="modal-confirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Confirma que desea eliminar el registro</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-light" data-dismiss="modal">No</button>
-                    <a class="btn btn-danger btn-ok">Confirma</a>
-                </div>
-            </div>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Confirma que desea eliminar el registro</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">No</button>
+        <a class="btn btn-danger btn-ok">Confirma</a>
+      </div>
     </div>
+  </div>
+</div>

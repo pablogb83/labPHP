@@ -80,7 +80,12 @@ class MainController extends BaseController
 	public function mostrarPorTipo(){
 		$request = Services::request();
 		$busqueda = $request->getPostGet('tipo');
-		$recursos = Recurso::where('tipo', $busqueda)->orderBy('created_at')->get();
+		if($busqueda=='Todos'){
+			$recursos = Recurso::orderBy('created_at')->get();
+		}else{
+			$recursos = Recurso::where('tipo', $busqueda)->orderBy('created_at')->get();
+		}
+		
 		$recursos= array('recursos'=>$recursos);
 		//var_dump($recursos);
 		echo view('header');

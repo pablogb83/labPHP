@@ -2,7 +2,7 @@
     <br>
     <div class="row">
         <div class="col">
-            <img src="images/autor.jpg" alt="">
+            <center><img src="images/autor.jpg" alt=""></center>
         </div>
         <div class="col">
             <form action="<?php echo base_url(); ?>/registrarAutor" method="post" enctype="multipart/form-data">

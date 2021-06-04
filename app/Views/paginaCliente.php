@@ -2,7 +2,7 @@
 
   <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
-      <h4>Perfil del usuario: <?php echo strtoupper($usuario->nick) ?></h4> 
+      <h4>Perfil del usuario: <?php echo strtoupper($usuario->nick) ?></h4>
     </ol>
   </nav>
   <div class="row justify-content-center">
@@ -23,13 +23,13 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Autores <i class="fas fa-users"></i></button>
             </li>
-            <?php if(isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']){ ?>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Recursos Guardados <i class="fas fa-bookmark"></i></button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Crear lista <i class="far fa-plus-square"></i></button>
-            </li>
+            <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Recursos Guardados <i class="fas fa-bookmark"></i></button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Crear lista <i class="far fa-plus-square"></i></button>
+              </li>
             <?php } ?>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#editarlista" type="button" role="tab" aria-controls="editarlista" aria-selected="false">Mis listas <i class="far fa-list-alt"></i></button>
@@ -72,7 +72,11 @@
                     <td> <?php if ($cliente->suscripto == 1) { ?>
                         <b> Suscripto </b>
                       <?php } else { ?>
-                        <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+                        <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+                          <a class="btn btn-success" href="<?php echo base_url(); ?>/suscribirse?id=<?php echo $_SESSION['datos_usuario']['id']; ?>">Suscribirse</a>
+                        <?php } else { ?>
+                          <b> Sin suscripción </b>
+                        <?php } ?>
                       <?php } ?>
                     </td>
                   </tr>
@@ -80,33 +84,36 @@
               </table>
 
               <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
-              <a href="<?php echo base_url(); ?>/paginaEditCliente?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
-              <?php }?>
+                <a href="<?php echo base_url(); ?>/paginaEditCliente?id=<?php echo $usuario->id ?>" class="btn btn-secondary"><i class="fas fa-user-edit"></i></a>
+              <?php } ?>
 
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <br>
               <h4>Autores Seguidos</h4>
               <hr>
-              <table class="table">
-                <tbody>
-                  <thead>
-                    <th>Nombre</th>
-                    <th>Accion</th>
-                  </thead>
-                  <?php foreach ($autores as $autor) { ?>
-                    <tr>
-                      <td><a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a></td>
-                      <td><a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a></td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
+              <div class="container" style="overflow-y: scroll; height: 260px;">
+                <table class="table">
+                  <tbody>
+                    <thead>
+                      <th>Nombre</th>
+                      <th>Accion</th>
+                    </thead>
+                    <?php foreach ($autores as $autor) { ?>
+                      <tr>
+                        <td><a href="<?php echo base_url(); ?>/paginaAutor?id=<?php echo $autor->usuario->id; ?>"> <?php echo $autor->nombre . ' ' . $autor->apellido ?></a></td>
+                        <td><a href="<?php echo base_url(); ?>/dejarSeguirAutor?id=<?php echo $autor->id; ?>"><i class="fas fa-eraser"></i></a></td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
               <br>
               <h4>Recursos guardados</h4>
               <hr>
+              <div class="container" style="overflow-y: scroll; height: 260px;">
               <table class="table">
                 <tbody>
                   <thead>
@@ -121,6 +128,7 @@
                   <?php } ?>
                 </tbody>
               </table>
+              </div>
             </div>
             <div class="tab-pane fade" id="lista" role="tabpanel" aria-labelledby="lista-tab">
               <br>

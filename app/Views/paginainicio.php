@@ -1,3 +1,11 @@
+<style>
+    .card-img-top{
+        height: 350px;
+        object-fit: cover;  
+    }
+
+</style>
+
 <div class="container">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -7,7 +15,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/portadas-libros.jpg" class="d-block w-100" alt="...">
+                <img src="images/portadas-libros2.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="tituloslider">Las mejores obras estan aqui</h2>
                     <h5 class="subslider">Los autores mas aclamados son nuestros principales publishers!!.</h5>
@@ -21,7 +29,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/portadasRevistas.jpg" class="d-block w-100" alt="...">
+                <img src="images/portadasRevistas2.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="tituloslider">Revistas, documentos academicos!!</h2>
                     <h5 class="subslider">Enterate de todo lo que esta pasando en la acutalidad.</h5>
@@ -88,12 +96,13 @@
     <div class="card-group" style="margin-top: 45px;">
         <?php foreach ($recursos as $recurso) { ?>
             <div class="card">
-                <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="..." width="150">
+                <img src="images/<?php echo $recurso->rutaImg ?>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo strtoupper($recurso->nombre) ?></h5>
                     <p class="card-text"><?php echo strtoupper($recurso->tipo) ?></p>
+                    <div class="container" style="overflow-y: scroll; height: 100px;">
                     <p class="card-text"><?php echo $recurso->descripcion ?></p>
-
+                    </div>
                     <tr>
                         <td> <?php $cont = 0;
                                 $cont2 = 0;

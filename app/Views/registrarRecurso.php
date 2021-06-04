@@ -2,8 +2,21 @@
     <br>
     <div class="row">
         <div class="col">
-            <img src="images/autor.jpg" alt="">
+            <center><img src="images/autor.jpg" alt=""></center>
+             <br> <br> 
+            <h4>Antes de publicar</h4>
+            <hr>
+            <ul>
+            <li> Todos los campos del formulario son requeridos</li>
+            <li> Debes seleccionar al menos una categoria</li>
+            <li> Solo aceptamos PDF para los documentos escritos</li>
+            <li> Solo aceptamos MP3, MP4, M4A para los de audio</li>
+            <li> Describe tu obra sin escatimar en palabras!</li>
+            </ul>
         </div>
+
+
+
         <div class="col">
             <form action="<?php echo base_url(); ?>/registrarRecurso" method="post" enctype="multipart/form-data">
 
