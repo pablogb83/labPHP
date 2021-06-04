@@ -5,10 +5,10 @@
             <br>
             <form action="<?php echo base_url(); ?>/registrarCategoria" method="post" enctype="multipart/form-data">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Nombre" name="nombre">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Nombre" name="nombre" required>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="file" class="form-control" id="floatingInput" placeholder="Foto" name="rutaFoto">
+                    <input type="file" class="form-control" id="floatingInput" placeholder="Foto" name="rutaFoto" required>
                 <label for="floatingInput">Foto</label>
                 </div>
                 <div>

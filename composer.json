@@ -9,7 +9,8 @@
 		"php": "^7.3||^8.0",
 		"codeigniter4/framework": "^4",
 		"4spacesdk/ci4ormextension": "dev-master",
-		"illuminate/database": "9.x-dev"
+		"illuminate/database": "9.x-dev",
+		"paypal/rest-api-sdk-php": "*"
 	},
 	
 	"require-dev": {

@@ -18,4 +18,25 @@ class Cliente extends Model
     {
         return $this->belongsToMany(Autor::class);
     }
+
+    public function recursos()
+    {
+        return $this->belongsToMany(Recurso::class);
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function listas()
+    {
+        return $this->hasMany(Lista::class);
+    }
+    /*
+    public function suscripcion()
+    {
+        return $this->belongsTo(Suscripcion::class);
+    }
+    */
 }

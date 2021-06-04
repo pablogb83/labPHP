@@ -85,7 +85,6 @@ phpunit
 #-------------------------
 vendor/*
 !vendor/paypal
-
 #-------------------------
 # IDE / Development Files
 #-------------------------

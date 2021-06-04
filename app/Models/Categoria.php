@@ -22,4 +22,24 @@ class Categoria extends Model
         return $this->hasMany(Categoria::class, 'categoria_id');
     }
 
+    public function mostrarHijos($categorias, $cont){
+                   
+        $cont3 = $cont;
+        foreach($categorias as $categoria){
+            $cont2 = $cont;
+            while($cont2>=0){
+                echo "--";
+                $cont2--;
+            }
+            echo ">";
+            echo  "<a href='mostrarRecursosCategoria?id=" . $categoria->id . "'>" . $categoria->nombre . "</a><br>";
+            if($categoria->hijas!=null){
+                $this->mostrarHijos($categoria->hijas, $cont3+=2);
+            }
+            else{
+                return;
+            }
+        }
+    }
+
 }

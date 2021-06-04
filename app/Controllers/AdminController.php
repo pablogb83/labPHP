@@ -27,7 +27,14 @@ class AdminController extends BaseController
 		->findAll();
 		
 		if($admin!=null){
-		
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"nick" => 'admin',
+				"tipo" => 'admin'
+			);
 			echo view('headerAdmin');
 			echo view('adminPage');
 			echo view('footerAdmin');
@@ -35,4 +42,12 @@ class AdminController extends BaseController
 			return redirect()->to(base_url().'/admin');
 		}
 	}
+
+	public function mainpage(){
+		
+		echo view('headerAdmin');
+		echo view('adminPage');
+		echo view('footerAdmin');
+	}
+
 }

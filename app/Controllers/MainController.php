@@ -64,4 +64,47 @@ class MainController extends BaseController
 				break;
 		}
 	}
+
+	public function buscador(){
+		$request = Services::request();
+		$busqueda = $request->getPostGet('busqueda');
+		$recursos = Recurso::where('nombre', 'like', '%'.$busqueda.'%')->orderBy('created_at')->get();
+		$recursos= array('recursos'=>$recursos);
+		//var_dump($recursos);
+		echo view('header');
+		echo view('mostrarRecursos', $recursos);
+		echo view('footer');
+		//echo $busqueda;
+	}
+
+	public function mostrarPorTipo(){
+		$request = Services::request();
+		$busqueda = $request->getPostGet('tipo');
+		if($busqueda=='Todos'){
+			$recursos = Recurso::orderBy('created_at')->get();
+		}else{
+			$recursos = Recurso::where('tipo', $busqueda)->orderBy('created_at')->get();
+		}
+		
+		$recursos= array('recursos'=>$recursos);
+		//var_dump($recursos);
+		echo view('header');
+		echo view('mostrarRecursos', $recursos);
+		echo view('footer');
+	}
+
+	public function checkSuscrip(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		$request = Services::request();
+		$id = $request->getPostGet('id');
+		$cliente = Usuario::find($_SESSION['datos_usuario']['id'])->cliente;
+		if($cliente->suscripto == 1){
+			return redirect()->to(base_url().'/paginaRecurso?id='. $id);
+		}else{
+			return redirect()->to(base_url().'/suscribirse?id=' . $_SESSION['datos_usuario']['id']);	
+		}
+		//echo $cliente->nombre;
+	}
 }

@@ -20,6 +20,21 @@ class Recurso extends Model
         return $this->belongsToMany(Categoria::class);
     }
 
+	public function clientes()
+    {
+        return $this->belongsToMany(Cliente::class);
+    }
+
+	public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
+
+	public function listas()
+    {
+        return $this->belongsToMany(Lista::class);
+    }
+
     public function guardarCategoria($recurso, $categoria){
 		if($categoria->categoria_id==0){
 			return;
@@ -29,6 +44,17 @@ class Recurso extends Model
 			$recurso->categorias()->save($padre_divorciado);
 			return $this->guardarCategoria($recurso, $padre_divorciado);
 		}
+	}
+
+    public static function chequeaComentario($id_cliente, $id_recurso){
+		$comentarios = Recurso::find($id_recurso)->comentarios;
+		$comento = false;
+        foreach($comentarios as $comentario){
+			if($comentario->cliente_id == $id_cliente){
+				$comento = true;
+			}
+		}
+        return $comento;
 	}
 
 }

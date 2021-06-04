@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Autor;
 use App\Models\Usuario;
 use Config\Services;
+use Exception;
 
 class UsuarioController extends BaseController
 {
@@ -21,7 +21,7 @@ class UsuarioController extends BaseController
 	public function index(){
 
 	}
-
+	//esta funcion no esta en uso
 	public function guardar()
 	{	
 		//$usuarioModel = new UsuarioModel($db);
@@ -65,9 +65,9 @@ class UsuarioController extends BaseController
 		//$usuario = new Usuario();
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
-		$usuario=$this->usuarioModel->where('password', $pass)
-									->where('email',$email)
-									->get();
+		$usuario=$this->usuarioModel->where('email',$email)
+									->where('password', $pass)
+									->first();
 		//$user=array('user'=>$usuario);
 		//var_dump($usuario);
 		//$usuario = new Usuario($data);
@@ -79,14 +79,20 @@ class UsuarioController extends BaseController
 			}
 			$_SESSION['logueado'] = true;
 			$_SESSION['datos_usuario'] = array(
-				"id"	=> $usuario[0]['id'],
-				"nick" => $usuario[0]['nick'],
-				"tipo" => $usuario[0]['tipo'],
-				"email"	=> $usuario[0]['email']
+				"id"	=> $usuario->id,
+				"nick" => $usuario->nick,
+				"tipo" => $usuario->tipo,
+				"email"	=> $usuario->email
 			);
 			return redirect()->to(base_url());
 		}else{
-			return redirect()->to(base_url().'/login');
+			$errors=['errors' => 'Email o password incorrectos'];
+			$errors=array('errors'=>$errors);
+			echo view('header');
+			echo view('_errors_list', $errors);
+			echo view('login');
+			echo view('footer');
+			//return redirect()->to(base_url().'/loginpage');
 		}
 	}
 
@@ -122,6 +128,11 @@ class UsuarioController extends BaseController
 		$id = $request->getPostGet('id');
 		$usuario = Usuario::find($id);
 		$tipo = $usuario->tipo;
+		if($tipo == 'autor'){
+			$usuario->autor->delete();
+		}else{
+			$usuario->cliente->delete();
+		}
 		$usuario->delete();
 		switch($tipo){
 			case 'autor':
@@ -134,13 +145,21 @@ class UsuarioController extends BaseController
 	}
 
 	public function editar(){
-		$request = Services::request();
-		$id = $request->getPostGet('id');
-		$user = $this->usuarioModel->find($id);
-		$user=array('user'=>$user);
-		echo view('headerAdmin');
-		echo view('formEditar', $user);
-		echo view('footerAdmin');
+		try{	
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$user = $this->usuarioModel->find($id);
+			$user=array('user'=>$user);
+			echo view('headerAdmin');
+			echo view('formEditar', $user);
+			echo view('footerAdmin');
+		}catch(Exception $e){
+			$message = 'Parece que este usuario no existe';
+			$message = array('message' => $message);
+			echo view('headerAdmin');
+			echo view('errors/html/error_404',$message);
+			echo view('footerAdmin');
+		}
 	}
 
 	public function actualizar(){
