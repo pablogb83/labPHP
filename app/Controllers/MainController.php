@@ -107,4 +107,13 @@ class MainController extends BaseController
 		}
 		//echo $cliente->nombre;
 	}
+
+	public function mostrarAutores(){
+		
+		$usuarios = Usuario::where('tipo', 'autor')->get();
+		$usuarios= array('usuarios'=>$usuarios);
+		echo view('header');
+		echo view('mostrarAutores', $usuarios);
+		echo view('footer');
+	}
 }

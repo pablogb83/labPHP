@@ -3,15 +3,15 @@
     <div class="row">
         <div class="col">
             <center><img src="images/autor.jpg" alt=""></center>
-             <br> <br> 
+            <br> <br>
             <h4>Antes de publicar</h4>
             <hr>
             <ul>
-            <li> Todos los campos del formulario son requeridos</li>
-            <li> Debes seleccionar al menos una categoria</li>
-            <li> Solo aceptamos PDF para los documentos escritos</li>
-            <li> Solo aceptamos MP3, MP4, M4A para los de audio</li>
-            <li> Describe tu obra sin escatimar en palabras!</li>
+                <li> Todos los campos del formulario son requeridos</li>
+                <li> Debes seleccionar al menos una categoria</li>
+                <li> Solo aceptamos PDF para los documentos escritos</li>
+                <li> Solo aceptamos MP3, MP4, M4A para los de audio</li>
+                <li> Describe tu obra sin escatimar en palabras!</li>
             </ul>
         </div>
 
@@ -57,6 +57,18 @@
                     <input type="file" class="form-control" id="floatingInput" name="archivo" required>
                     <label for="floatingInput">Archivo</label>
                 </div>
+                
+                <div>
+                    <label for="cars">Categoria</label>
+                    <br><br>
+                    <select id="ms" multiple="multiple" class="form-control" name="Categoria[]" required>
+                        <?php foreach ($categorias as $categoria) { ?>
+                            <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <br>
+
 
                 <p>Descargable:</p>
                 <input type="radio" id="descargable" name="descargable" value="1">
@@ -76,16 +88,8 @@
 
                 <br>
 
-                <label for="cars">Categoria</label>
-                <br><br>
-                <select name="Categoria[]" id="Categoria" multiple class="form-select" aria-label="Default select example" required>
-                    <?php foreach ($categorias as $categoria) { ?>
-                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                    <?php } ?>
-                </select>
-                <br><br>
                 <div>
-                    <input type="submit" value="Registrar" class="btn btn-primary">
+                    <input type="submit" value="Publicar" class="btn btn-success">
                     <a href="<?php echo base_url(); ?>" type="button" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>

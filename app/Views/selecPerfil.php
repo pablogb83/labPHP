@@ -12,8 +12,8 @@
                 <img src="images/autor.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Autor</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="<?php echo base_url(); ?>/perfilAutor" class="btn btn-primary">Adelante</a>
+                    <p class="card-text">Como autor podras compartir tus obras con nuestra gran comunidad de usuarios.</p>
+                    <a href="<?php echo base_url(); ?>/perfilAutor" class="btn btn-warning">Adelante</a>
                 </div>
             </div>
         </div>
@@ -22,8 +22,8 @@
                 <img src="images/usuarios.jpeg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Cliente</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="<?php echo base_url(); ?>/perfilCliente" class="btn btn-primary">Adelante</a>
+                    <p class="card-text">Como cliente podras acceder a un gran numero de obras, documentos, podcast y mucho más.</p>
+                    <a href="<?php echo base_url(); ?>/perfilCliente" class="btn btn-warning">Adelante</a>
                 </div>
             </div>
         </div>

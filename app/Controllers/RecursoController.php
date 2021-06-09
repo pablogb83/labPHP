@@ -153,10 +153,14 @@ class RecursoController extends BaseController
 	}
 
 	public function paginaEditar(){
+
+		$origen =  $_SERVER['HTTP_REFERER'];
+
 		$request = Services::request();
 		$id = $request->getPostGet('id');
 		$rec = Recurso::find($id);
 		$datos['recurso'] = $rec;
+		$datos['origen'] = $origen;
 		echo view('header');
 		echo view('paginaEditarRecurso', $datos);
 		echo view('footer');
@@ -164,11 +168,13 @@ class RecursoController extends BaseController
 
 	public function editar(){
 		
+	
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
 		$request = Services::request();
 		$id = $request->getPostGet('id');
+		$origen = $request->getPostGet('origen');
 		$recurso = Recurso::find($id);
 		$recurso->nombre = $request->getPost('nombre');
 		$recurso->descripcion = $request->getPost('descripcion');
@@ -181,7 +187,12 @@ class RecursoController extends BaseController
 		}
 			
 		$recurso->save();
-		return redirect()->to(base_url().'/paginaAutor?id='. $_SESSION['datos_usuario']['id']);
+		if(strpos($origen, "Autor") != false){
+			return redirect()->to(base_url().'/paginaAutor?id='. $_SESSION['datos_usuario']['id']);
+		}else{
+			return redirect()->to(base_url().'/paginaRecurso?id='. $id);
+		}
+
 	}
 
 	public function borrar(){

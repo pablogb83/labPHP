@@ -66,14 +66,14 @@ class UsuarioController extends BaseController
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
 		$usuario=$this->usuarioModel->where('email',$email)
-									->where('password', $pass)
+									//->where('password', $pass)
 									->first();
 		//$user=array('user'=>$usuario);
 		//var_dump($usuario);
 		//$usuario = new Usuario($data);
 		//echo  'El usuarios encontrado es' . $usuario[0]['nick'];
 		
-		if($usuario!=null){
+		if($usuario!=null and password_verify($pass, $usuario->password)){
 			if (session_status() == PHP_SESSION_NONE) {
 				session_start();
 			}

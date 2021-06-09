@@ -67,9 +67,12 @@ class ClienteController extends BaseController
 			echo view('footer');
 		}else{
 
-			$this->usuarioModel->email = $request->getPost('email');
+			$email = $request->getPost('email');
+
+			$this->usuarioModel->email = $email;
 			$this->usuarioModel->nick = $request->getPost('nick');
-			$this->usuarioModel->password = $request->getPost('password');
+			
+			$this->usuarioModel->password =password_hash($request->getPost('password'),PASSWORD_ARGON2I);
 			$this->usuarioModel->tipo = 'cliente';
 
 			$this->clienteModel->nombre = $request->getPost('nombre');
@@ -86,6 +89,22 @@ class ClienteController extends BaseController
 			}
 			$this->usuarioModel->save();
 			$this->usuarioModel->cliente()->save($this->clienteModel);
+
+			//loguear al usuario recien registrado
+
+			$usuario = $usuario=$this->usuarioModel->where('email',$email)->first();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario->id,
+				"nick" => $usuario->nick,
+				"tipo" => $usuario->tipo,
+				"email"	=> $usuario->email
+			);
+			
+			//$this->usuarioModel->enviarEmail();
 
 			echo view('header');
 			echo view('userRegExito');
@@ -122,7 +141,9 @@ class ClienteController extends BaseController
 		$request = Services::request();
 		$id = $request->getPostGet('id');
 		$autor = Usuario::find($id)->autor;
-		session_start();
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
 		$id_cliente = $_SESSION['datos_usuario']['id'];
 		$cliente = Usuario::find($id_cliente)->cliente;
 		if($cliente->autores()->find($autor->id)==null){

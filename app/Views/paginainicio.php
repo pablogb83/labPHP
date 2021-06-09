@@ -100,9 +100,9 @@
                 <div class="card-body">
                     <h5 class="card-title"><?php echo strtoupper($recurso->nombre) ?></h5>
                     <p class="card-text"><?php echo strtoupper($recurso->tipo) ?></p>
-                    <div class="container" style="overflow-y: scroll; height: 100px;">
-                    <p class="card-text"><?php echo $recurso->descripcion ?></p>
-                    </div>
+                    
+                    <p class="card-text"><?php helper('text'); echo word_limiter($recurso->descripcion,20,'...') ?></p>
+                   
                     <tr>
                         <td> <?php $cont = 0;
                                 $cont2 = 0;

@@ -1,3 +1,10 @@
+<style>
+    .card-img-top {
+        height: 350px;
+        object-fit: cover;
+    }
+</style>
+
 <div class="container">
 
     <div class="row">
@@ -10,7 +17,9 @@
                         <div class="card-body">
                             <h5 class="card-title"><?php echo strtoupper($recurso->nombre) ?></h5>
                             <p class="card-text"><?php echo strtoupper($recurso->tipo) ?></p>
-                            <p class="card-text"><?php echo $recurso->descripcion ?></p>
+                           
+                                <p class="card-text"><?php helper('text'); echo word_limiter($recurso->descripcion,15,'...') ?></p>
+                          
                             <p class="card-text"><?php echo $recurso->created_at ?></p>
 
                             <tr>
@@ -30,7 +39,7 @@
 
                                         ?> </td>
                             </tr>
-                                    <br><br>
+                            <br><br>
                             <a href="<?php echo base_url(); ?>/paginaRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-light">Leer mas...</a>
 
                         </div>

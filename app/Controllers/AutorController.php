@@ -65,9 +65,12 @@ class AutorController extends BaseController
 			echo view('footer');
 		} else {
 
-			$this->usuarioModel->email = $request->getPost('email');
+			//agregado
+			$email = $request->getPost('email');
+
+			$this->usuarioModel->email = $email;
 			$this->usuarioModel->nick = $request->getPost('nick');
-			$this->usuarioModel->password = $request->getPost('password');
+			$this->usuarioModel->password = password_hash($request->getPost('password'),PASSWORD_ARGON2I);
 			$this->usuarioModel->tipo = 'autor';
 
 
@@ -83,6 +86,20 @@ class AutorController extends BaseController
 
 			$this->usuarioModel->save();
 			$this->usuarioModel->autor()->save($this->autorModel);
+
+			//loguear al usuario recien registrado
+
+			$usuario = $usuario=$this->usuarioModel->where('email',$email)->first();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario->id,
+				"nick" => $usuario->nick,
+				"tipo" => $usuario->tipo,
+				"email"	=> $usuario->email
+			);
 
 			echo view('header');
 			echo view('userRegExito');

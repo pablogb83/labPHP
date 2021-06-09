@@ -80,11 +80,13 @@ $routes->post('/mostarRecursosLista', 'ListaController::mostarRecursosLista');
 $routes->get('/quitarRecursoLista', 'ListaController::quitarRecursoLista');
 $routes->get('/checkSuscrip', 'MainController::checkSuscrip');
 //Nuevas rutas
+
 $routes->get('/ExecutePayment', 'PaypalController::executePayment');
 $routes->get('/confirmarsus', 'PaypalController::getApprovalLink');
 $routes->get('/mostrarRecursoTipo', 'MainController::mostrarPorTipo');
 
 $routes->post('/contarDescargaRecurso', 'RecursoController::contarDescargas');
+
 $routes->get('/paginaEditAutor', 'AutorController::paginaEditar');
 $routes->post('/editarAutor', 'AutorController::editar');
 $routes->get('/paginaEditCliente', 'ClienteController::paginaEditar');
@@ -93,6 +95,8 @@ $routes->post('/editarCliente', 'ClienteController::editar');
 $routes->get('/editarRecurso', 'RecursoController::paginaEditar');
 $routes->post('/actualizarRecurso', 'RecursoController::editar');
 $routes->get('/borrarRecurso', 'RecursoController::borrar');
+$routes->get('/mostrarAutores', 'MainController::mostrarAutores');
+
 
 
 

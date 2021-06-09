@@ -5,7 +5,7 @@
             <img src="images/autor.jpg" alt="">
         </div>
         <div class="col">
-            <form action="<?php echo base_url(); ?>/actualizarRecurso?id=<?php echo $recurso->id ?>" method="post" enctype="multipart/form-data">
+            <form action="<?php echo base_url(); ?>/actualizarRecurso?id=<?php echo $recurso->id ?>&origen=<?php echo $origen ?>" method="post" enctype="multipart/form-data">
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Nombre" name="nombre" value="<?php echo $recurso->nombre ?>" required>

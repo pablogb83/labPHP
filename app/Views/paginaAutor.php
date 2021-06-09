@@ -68,10 +68,11 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Perfil <i class="fas fa-user"></i></button>
             </li>
-            <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
+           
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Mis publicaciones <i class="fas fa-cloud-upload-alt"></i></button>
               </li>
+            <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="lista-tab" data-bs-toggle="tab" data-bs-target="#lista" type="button" role="tab" aria-controls="lista" aria-selected="false">Mas vistos <i class="far fa-plus-square"></i></button>
               </li>
@@ -131,7 +132,9 @@
                       <th>Nombre</th>
                       <th>Tipo</th>
                       <th>Valoracion</th>
+                      <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
                       <th>Acciones</th>
+                      <?php } ?>
                     </thead>
                     <?php foreach ($autor->recursos as $recurso) { ?>
                       <tr>
@@ -152,10 +155,12 @@
                             }
 
                             ?></td>
+                         <?php if (isset($_SESSION['logueado']) and $usuario->id == $_SESSION['datos_usuario']['id']) { ?>
                         <td>
                           <a href="<?php echo base_url(); ?>/editarRecurso?id=<?php echo $recurso->id; ?>" class="btn btn-warning" role="button"><i class="fas fa-user-edit"></i></a>
                           <a href="#" data-href="<?php echo base_url(); ?>/borrarRecurso?id=<?php echo $recurso->id; ?>" data-toggle="modal" data-target="#modal-confirma" data-placement="top" title="Eliminar registro" class="btn btn-danger" role="button"><i class="fa fa-trash"></i></a>
                         </td>
+                        <?php } ?>
                       </tr>
                     <?php } ?>
                   </tbody>

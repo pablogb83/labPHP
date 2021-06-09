@@ -162,7 +162,7 @@
                 <?php } ?>
               </select>
               <hr>
-
+              <div class="container" style="overflow-y: scroll; height: 230px;">
               <table class="table">
                 <thead>
                   <th>Nombre Recurso</th>
@@ -172,7 +172,7 @@
 
                 </tbody>
               </table>
-
+              </div>
             </div>
           </div>
         </div>

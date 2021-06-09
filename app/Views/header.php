@@ -6,12 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-  
-  <script src="https://kit.fontawesome.com/e1b9012e50.js" crossorigin="anonymous"></script>
-  <title>Truchameo</title>
   <link href="css/estilos.css" rel="stylesheet">
   <link href="css/estiloEstrellas.css" rel="stylesheet">
   <link href="css/pdfcover.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/multiple-select.css" />
+
+  <title>Truchameo</title>
+  <script src="https://kit.fontawesome.com/e1b9012e50.js" crossorigin="anonymous"></script>
+  
+
 </head>
 
 <body>
@@ -69,6 +73,10 @@
                 <li><a class="dropdown-item" href="mostrarRecursoTipo?tipo=Documento">Documento</a></li>
                 <li><a class="dropdown-item" href="mostrarRecursoTipo?tipo=Todos">Todos</a></li>
               </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="mostrarAutores">Autores</a>
             </li>
 
           </ul>

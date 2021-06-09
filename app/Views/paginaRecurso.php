@@ -1,3 +1,6 @@
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v10.0" nonce="ef2j7ht9"></script>
+
 <div class="container" style="margin-top: 15px;">
   <div class="row justify-content-center">
 
@@ -85,6 +88,8 @@
           <p><i class="fas fa-star-half-alt"></i> Comentar y calificar</p>
         </a>
         <hr>
+
+        <div class="fb-share-button" data-href="https://www.youtube.com/watch?v=GNP0ekSMypQ&amp;list=RDMMGNP0ekSMypQ&amp;start_radio=1" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DGNP0ekSMypQ%26list%3DRDMMGNP0ekSMypQ%26start_radio%3D1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
 
       </div>
 
@@ -264,14 +269,14 @@
           </div>
           <div class="modal-body">
             <?php if ($recurso->tipo == 'audio-libro' or $recurso->tipo == 'podcast') { ?>
-              <audio controls controlsList="nodownload" id="audio2" src="archivos/<?php echo $recurso->rutaArch ?>#t=1,3">
+              <audio controls controlsList="nodownload" ontimeupdate="restrictAudio(this)" id="audio2" src="archivos/<?php echo $recurso->rutaArch ?>">
 
                 Tu navegador no soporta audio HTML5.
               </audio>
             <?php } else { ?>
               <div class="wrapper" >
-                <embed src="archivos/<?php echo $recurso->rutaArch ?>#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="1000" />
-                <div class="embed-cover" style="width: 100%; height: 2000px; overflow-y: scroll;" ></div>
+                <embed src="archivos/<?php echo $recurso->rutaArch ?>#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="5000" />
+                <div class="embed-cover" style="width: 100%; height: 5000px; overflow-y: scroll;" ></div>
               </div>
             <?php } ?>
           </div>
@@ -301,7 +306,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Agregar este recurso a tu lista de guardados</p>
+            <p>Agregar <b><?php echo $recurso->nombre?></b> a tu lista de guardados</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
@@ -388,11 +393,21 @@
     //alert(this.value);
   });
 </script>
-
+<!--
 <script>
   myAudio = document.getElementById('audio2');
   myAudio.addEventListener('canplaythrough', function() {
     this.currentTime = 11;
     this.play();
   });
+</script>
+-->
+<script>
+  function restrictAudio(event) {
+    // Trying to stop the player if it goes above 10 second
+    if (event.currentTime < 10 || event.currentTime > 40) {
+      event.pause();
+      event.currentTime = 10
+    }
+  }
 </script>
