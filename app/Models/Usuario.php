@@ -19,7 +19,7 @@ class Usuario extends Model
         return $this->hasOne(Cliente::class);
     }
 
-    public function enviarEmail()
+    public function enviarEmail($nick)
     {
         $email = \Config\Services::email();
 
@@ -29,7 +29,7 @@ class Usuario extends Model
         //$email->setBCC('them@their-example.com');
 
         $email->setSubject('Suscripcion a Truchameo');
-        $email->setMessage('Se a registrado correctamente el usuario');
+        $email->setMessage('Se a registrado correctamente ' . $nick);
 
         //$email->print_debugger();
         $email->send(); 

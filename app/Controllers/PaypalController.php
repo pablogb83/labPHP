@@ -2,115 +2,79 @@
 
 namespace App\Controllers;
 
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
-use PayPal\Api\PaymentExecution;
-
 use App\Controllers\BaseController;
-use Paypal\Rest\ApiContext;
+use PayPal\Api\Links;
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalHttp\HttpException;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 
 class PaypalController extends BaseController{
 
-    protected $apiContext;
+  private $clientId = "ASo-a1FD2hbEDxRsMt0HvDtLy4yww14Pa5lniL5DdQvIwdRc-T7HthB3-iPZzNF_tZrOJ_KCAKDPYLau";
+  private $clientSecret = "EKTksXdhGrBh7o9Lg1tZb1WnuGeq0iezBNAsS0jPgKEgJ7wgj7k4nPbr7Jcw8fU0W-oKlCDGJJOE_l36";
+  private $environment;
+  private $client;
+  public function __construct(){
+    $this->environment = new SandboxEnvironment($this->clientId, $this->clientSecret);
+    $this->client = new PayPalHttpClient($this->environment);
+  }
+  private $orderId;
 
-    public function __construct(){
-        $this->apiContext= new \PayPal\Rest\ApiContext(
-            new \PayPal\Auth\OAuthTokenCredential(
-                'AUC69zq-KIYShO3Ugts3D8z6JWv-Vjtq0UaLvdD4zmdMNJYZgjARISRIVc6mccj8Zb2m9xuBoF_sRjT7',     // ClientID
-                'EO1cXrrRsxnsqKNTVq-EEn0SdkdXl9sVXo16skgo5XH1RSutsbvi3ovzSY2UiiKeAJERnvb9iWaOsDlc'      // ClientSecret
-            )
-        );
+  public function createOrder(){
+    // Creating an environment
+    $user=$_GET['id'];
+    $request = new OrdersCreateRequest();
+    $request->prefer('return=representation');
+    $baseUrl = base_url();
+    $request->body = [
+                        "intent" => "CAPTURE",
+                        "purchase_units" => [[
+                            "reference_id" => "test_ref_id1",
+                            'description' => "Suscripcion a Truchameo",
+                            'custom_id' => $user,
+                            "amount" => [
+                                "value" => "20.00",
+                                "currency_code" => "USD"
+                            ]
+                        ]],
+                        "application_context" => [
+                              "cancel_url" => "$baseUrl/ExecutePayment?success=false",
+                              "return_url" => "$baseUrl/ExecutePayment?success=true"
+                        ] 
+                    ];
+
+    try {
+        // Call API with your client and get a response for your call
+        $response = $this->client->execute($request);
+        // If call returns body in response, you can get the deserialized version from the result attribute of the response
+        $array = json_decode(json_encode($response->result), true);
+        $this->orderId=$array['id'];
+        print_r("El id es: " . $this->orderId);
+        $approvalUrl = $array['links'][1]['href'];
+        return redirect()->to($approvalUrl);  
+    }catch (HttpException $ex) {
+        echo $ex->statusCode;
+        print_r($ex->getMessage());
     }
+  }
 
-    public function getApprovalLink(){
-        
-        $user=$_GET['id'];
-        $payer = new Payer();
-        $payer->setPaymentMethod("paypal");
-
-        $item1 = new Item();
-        $item1->setName('Suscripcion')
-            ->setCurrency('USD')
-            ->setQuantity(1)
-            ->setPrice(20);
-        
-        $itemList = new ItemList();
-        $itemList->setItems(array($item1));
-
-        $details = new Details();
-        $details->setShipping(0)
-            ->setTax(0)
-            ->setSubtotal(20);
-
-        $amount = new Amount();
-        $amount->setCurrency("USD")
-            ->setTotal(20)
-            ->setDetails($details);
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount)
-            ->setItemList($itemList)
-            ->setDescription("Suscripcion a Truchameo")
-            ->setInvoiceNumber(uniqid())
-            ->setCustom($user);
-        $baseUrl = base_url();
-        $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment?success=true")
-            ->setCancelUrl("$baseUrl/ExecutePayment?success=false");
-
-        $payment = new Payment();
-        $payment->setIntent("authorize")
-            ->setPayer($payer)
-            ->setRedirectUrls($redirectUrls)
-            ->setTransactions(array($transaction));
-
-        $request = clone $payment;
-
-        $payment->create($this->apiContext);
-      
-        $approvalUrl = $payment->getApprovalLink();
-        return redirect()->to($approvalUrl);           
-
+  public function captureOrder(){
+    $id = $_GET['token'];
+    $request = new OrdersCaptureRequest($id);
+    $request->prefer('return=representation');
+    try {
+        // Call API with your client and get a response for your call
+        $response = $this->client->execute($request);
+        // If call returns body in response, you can get the deserialized version from the result attribute of the response
+        print_r($response); 
+        $array = json_decode(json_encode($response->result), true);
+        $user = $array['purchase_units'][0]['custom_id'];       
+        return redirect()->to(base_url().'/suscripExito?id='. $user);
+    }catch (HttpException $ex) {
+      return redirect()->to(base_url());
     }
-    public function executePayment(){
-        if (isset($_GET['success']) && $_GET['success'] == 'true') {
-                echo "ENTRE A EJECUTAR PAGO";
-                $paymentId = $_GET['paymentId'];
-                $payment = Payment::get($paymentId, $this->apiContext);
-            
-                $execution = new PaymentExecution();
-                $execution->setPayerId($_GET['PayerID']);
-            
-                $transactionlist = $payment->getTransactions();
-                $transaction = $transactionlist[0];
-                $amount = new Amount();
-                $details = new Details();
-
-                $details->setShipping(0)
-                    ->setTax(0)
-                    ->setSubtotal(20);
-            
-                $amount->setCurrency('USD');
-                $amount->setTotal(20);
-                $amount->setDetails($details);
-                $transaction->setAmount($amount);
-                $user = $transaction->getCustom();
-                $execution->addTransaction($transaction);
-            
-                $result = $payment->execute($execution, $this->apiContext);
-                return redirect()->to(base_url().'/suscripExito?id='. $user);
-
-            } else {
-                echo "ALGO FALLO";
-                return redirect()->to(base_url());
-            }
-    }
-
+  }
 
 }

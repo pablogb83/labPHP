@@ -10,7 +10,8 @@
 		"codeigniter4/framework": "^4",
 		"4spacesdk/ci4ormextension": "dev-master",
 		"illuminate/database": "9.x-dev",
-		"paypal/rest-api-sdk-php": "*"
+		"paypal/paypal-checkout-sdk": "1.0.1"
+		
 	},
 	
 	"require-dev": {

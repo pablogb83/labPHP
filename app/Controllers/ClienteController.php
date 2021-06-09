@@ -91,7 +91,7 @@ class ClienteController extends BaseController
 			$this->usuarioModel->cliente()->save($this->clienteModel);
 
 			//loguear al usuario recien registrado
-
+			
 			$usuario = $usuario=$this->usuarioModel->where('email',$email)->first();
 			if (session_status() == PHP_SESSION_NONE) {
 				session_start();
@@ -104,7 +104,7 @@ class ClienteController extends BaseController
 				"email"	=> $usuario->email
 			);
 			
-			//$this->usuarioModel->enviarEmail();
+			$this->usuarioModel->enviarEmail($this->usuarioModel->nick);
 
 			echo view('header');
 			echo view('userRegExito');

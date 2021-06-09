@@ -90,7 +90,7 @@
         <hr>
 
         <div class="fb-share-button" data-href="https://www.youtube.com/watch?v=GNP0ekSMypQ&amp;list=RDMMGNP0ekSMypQ&amp;start_radio=1" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DGNP0ekSMypQ%26list%3DRDMMGNP0ekSMypQ%26start_radio%3D1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
-
+        
       </div>
 
       <div class="col-6 col-md-8">
@@ -405,9 +405,10 @@
 <script>
   function restrictAudio(event) {
     // Trying to stop the player if it goes above 10 second
-    if (event.currentTime < 10 || event.currentTime > 40) {
+    //console.log(event.currentTime + event.duration);
+    if (event.currentTime > event.duration * 0.1) {
       event.pause();
-      event.currentTime = 10
+      event.currentTime = 0
     }
   }
 </script>
