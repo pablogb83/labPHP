@@ -4,7 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity;
 
-class Usuario extends Entity
+class Admin extends Entity
 {
 	protected $datamap = [];
 	protected $dates   = [

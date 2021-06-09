@@ -3,96 +3,182 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Entities\Usuario;
-use App\Models\UsuarioModel;
+use App\Models\Usuario;
+use Config\Services;
+use Exception;
 
 class UsuarioController extends BaseController
 {
 
+	protected $usuarioModel;
+
+	public function __construct()
+	{
+		$this->usuarioModel = new Usuario();
+	}
+
+
+	public function index(){
+
+	}
+	//esta funcion no esta en uso
 	public function guardar()
 	{	
-		$usuarioModel = new UsuarioModel($db);
-		$request = \Config\Services::request();
+		//$usuarioModel = new UsuarioModel($db);
+		$request = Services::request();
 		$usuario = new Usuario();
 		
 
-		$usuario->nombre=$request->getPost('nombre');
-		$usuario->email = $request->getPost('email');
-		$usuario->apellido = $request->getPost('apellido');
-		$usuario->nick = $request->getPost('nick');
-		$usuario->fechaNac = $request->getPost('fnac');
-		$usuario->password = $request->getPost('password');
+		
+		$this->usuarioModel->email = $request->getPost('email');
+		$this->usuarioModel->nick = $request->getPost('nick');
+		$this->usuarioModel->password = $request->getPost('password');
 
+		/*
 		$file = $request->getFile('rutaFoto');
 		$name=$file->getRandomName();
 		$usuario->rutaImg = $name;
-		$file->move('images', $name);
+		$file->move('images', $name);*/
 
 		/*
 		$data = $request->getPost();
 		$usuario->fill($data);*/
-		$usuarioModel->save($usuario);
-		return view('paginainicio');
+		$this->usuarioModel->save();
+		$usuario = $this->usuarioModel->asArray()->where('nick',$usuario->nick)->find();
+		if($usuario!=null){
+			session_start();
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario[0]['id'],
+				"nick" => $usuario[0]['nick'],
+				"tipo" => $usuario[0]['tipo'],
+				"email"	=> $usuario[0]['email']
+			);
+		}
+		//return redirect()->to(base_url());
+		return redirect()->to(base_url().'/completarPerfil');
 	}
 
 	public function login(){
-		$usuarioModel = new UsuarioModel($db);
-		$request = \Config\Services::request();
-		$usuario = new Usuario();
+		//$usuarioModel = new UsuarioModel($db);
+		$request = Services::request();
+		//$usuario = new Usuario();
 		$pass=$request->getPost('password');
 		$email=$request->getPost('email');
-		$usuario=$usuarioModel->where('password', $pass)
-		->where('email',$email)
-		->findAll();
-		if($usuario!=null){
-			echo "Bienvenido ";
+		$usuario=$this->usuarioModel->where('email',$email)
+									//->where('password', $pass)
+									->first();
+		//$user=array('user'=>$usuario);
+		//var_dump($usuario);
+		//$usuario = new Usuario($data);
+		//echo  'El usuarios encontrado es' . $usuario[0]['nick'];
+		
+		if($usuario!=null and password_verify($pass, $usuario->password)){
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$_SESSION['logueado'] = true;
+			$_SESSION['datos_usuario'] = array(
+				"id"	=> $usuario->id,
+				"nick" => $usuario->nick,
+				"tipo" => $usuario->tipo,
+				"email"	=> $usuario->email
+			);
+			return redirect()->to(base_url());
 		}else{
-			echo "Usuario no registrado";
+			$errors=['errors' => 'Email o password incorrectos'];
+			$errors=array('errors'=>$errors);
+			echo view('header');
+			echo view('_errors_list', $errors);
+			echo view('login');
+			echo view('footer');
+			//return redirect()->to(base_url().'/loginpage');
 		}
 	}
 
-	public function listar(){
-		$usuarioModel = new UsuarioModel($db);
-		$usuarios=$usuarioModel->findAll();
+	public function logout(){
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		unset($_SESSION['logueado']);
+		unset($_SESSION['datos_usuario']);
+		session_destroy();
+		// Redirect
+		return redirect()->to(base_url()); 
+	}
+
+	public function listarAutores(){
+		$usuarios=Usuario::where('tipo', 'autor')->get();
 		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
+		echo view('headerAdmin');
+		echo view('listaAutoresAdmin', $usuarios);
+		echo view('footerAdmin');
+	}
+
+	public function listarClientes(){
+		$usuarios=Usuario::where('tipo', 'cliente')->get();
+		$usuarios = array('usuarios'=>$usuarios);
+		echo view('headerAdmin');
+		echo view('listaClientesAdmin', $usuarios);
+		echo view('footerAdmin');
 	}
 
 	public function borrar(){
-		$request = \Config\Services::request();
+		$request = Services::request();
 		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$usuarioModel->delete($id);
-		$usuarios=$usuarioModel->findAll();
-		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
+		$usuario = Usuario::find($id);
+		$tipo = $usuario->tipo;
+		if($tipo == 'autor'){
+			$usuario->autor->delete();
+		}else{
+			$usuario->cliente->delete();
+		}
+		$usuario->delete();
+		switch($tipo){
+			case 'autor':
+				return redirect()->to(base_url().'/listaAutores');
+				break;
+			case 'cliente':
+				return redirect()->to(base_url().'/listaClientes');
+				break;
+		}
 	}
 
 	public function editar(){
-		$request = \Config\Services::request();
-		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$user = $usuarioModel->find($id);
-		$user=array('user'=>$user);
-		return view('formEditar', $user);
-		//echo "esto es editar";
+		try{	
+			$request = Services::request();
+			$id = $request->getPostGet('id');
+			$user = $this->usuarioModel->find($id);
+			$user=array('user'=>$user);
+			echo view('headerAdmin');
+			echo view('formEditar', $user);
+			echo view('footerAdmin');
+		}catch(Exception $e){
+			$message = 'Parece que este usuario no existe';
+			$message = array('message' => $message);
+			echo view('headerAdmin');
+			echo view('errors/html/error_404',$message);
+			echo view('footerAdmin');
+		}
 	}
 
 	public function actualizar(){
 		
-		echo "No esta implementado, ya me pondre a ello!! </br>";
-		echo "A.Z";
-		/*
 		$request = \Config\Services::request();
 		$id = $request->getPostGet('id');
-		$usuarioModel = new UsuarioModel($db);
-		$usuario = $usuarioModel->find($id);
-		$data = $request->getPost();
-		$usuario->fill($data);
-		$usuarioModel->save($data);
-		$usuarios=$usuarioModel->findAll();
-		$usuarios = array('usuarios'=>$usuarios);
-		return view('listaUsuarios', $usuarios);
-		*/
+		$usuario = Usuario::find($id);
+		$usuario->nick = $request->getPost('nick');
+		$usuario->email = $request->getPost('email');
+		$usuario->password = $request->getPost('password');
+		$usuario->save();
+		$tipo = $usuario->tipo;
+		switch($tipo){
+			case 'autor':
+				return redirect()->to(base_url().'/listaAutores');
+				break;
+			case 'cliente':
+				return redirect()->to(base_url().'/listaClientes');
+				break;
+		}
 	}
 }

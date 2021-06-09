@@ -22,6 +22,7 @@ use CodeIgniter\Exceptions\FrameworkException;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
+
 Events::on('pre_system', function () {
 	if (ENVIRONMENT !== 'testing')
 	{
@@ -51,4 +52,8 @@ Events::on('pre_system', function () {
 		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 		Services::toolbar()->respond();
 	}
+	
+	service('eloquent');
+
+	Events::on('pre_system', [\OrmExtension\Hooks\PreController::class, 'execute']);
 });

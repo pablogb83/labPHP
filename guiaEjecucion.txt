@@ -1,0 +1,9 @@
+GUIA
+
+*Copiar el proyecto a la carpeta del servidor (htdocs en xammp)
+*Crear la base de datos (labphp)
+*Ejecutar el script sql (labPHP.sql)
+*Renombrar el archivo env por .env (y setear los parametros de la base de datos: nombre y pass)
+*Ejecutar composer update (en la carpeta del proyecto)
+*Descomentar en el archivo php.ini (en la carpeta de instalación de php) la extensión intl, (extension=intl)
+*Levantar el servidor apache y MySql, e ingresar a: http://localhost/labPHP/public/

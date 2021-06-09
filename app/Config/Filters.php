@@ -2,10 +2,15 @@
 
 namespace Config;
 
+use App\Filters\FilterAdmin;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
+use App\Filters\FilterCliente;
+use App\Filters\FilterAutor;
+use App\Filters\FilterCompartidas;
+use App\Filters\FilterVisitante;
 
 class Filters extends BaseConfig
 {
@@ -19,6 +24,11 @@ class Filters extends BaseConfig
 		'csrf'     => CSRF::class,
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
+		'logincliente'    => FilterCliente::class,
+		'loginautor'    => FilterAutor::class,
+		'filtervisitante' => FilterVisitante::class,
+		'filterCompartidas' => FilterCompartidas::class,
+		'filterAdmin' => FilterAdmin::class
 	];
 
 	/**
@@ -29,8 +39,12 @@ class Filters extends BaseConfig
 	 */
 	public $globals = [
 		'before' => [
-			// 'honeypot',
-			// 'csrf',
+			'loginautor' => ['except' => ['/mostrarAutores','/editarCliente','/paginaEditCliente','/contarDescargaRecurso','/mostrarRecursoTipo','/confirmarsus','/ExecutePayment','/checkSuscrip','/quitarRecursoLista','/mostarRecursosLista','/agregarRecursoLista','/crearLista','/comentarRecurso','/dejarSeguirAutor','/quitarRecursoUsuario','/guardarRecursoCliente','/buscador','/mostrarRecursosCategoria','/registrarCategoriaHija','/nuevaCategoriaHija','/adminPage', '/loginpage', '/', '/registrarse', '/login','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso', '/admin','/loginAdmin', '/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/seguirAutor','/suscribirse','/suscripExito']],
+			'logincliente' =>['except' => ['/mostrarAutores','/borrarRecurso','/actualizarRecurso','/editarRecurso','/editarAutor','/paginaEditAutor','/mostrarRecursoTipo','/buscador','/mostrarRecursosCategoria','/registrarCategoriaHija','/nuevaCategoriaHija','/adminPage','/loginpage', '/', '/registrarse', '/login','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso', '/admin','/loginAdmin', '/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/nuevoRecurso','/registrarRecurso']],
+			'filtervisitante' => ['except' => ['/mostrarAutores','/borrarRecurso','/actualizarRecurso','/editarRecurso','/editarCliente','/paginaEditCliente','/editarAutor','/paginaEditAutor','/contarDescargaRecurso','/mostrarRecursoTipo','/confirmarsus','/ExecutePayment','/checkSuscrip','/quitarRecursoLista','/mostarRecursosLista','/agregarRecursoLista','/crearLista','/comentarRecurso','/dejarSeguirAutor','/quitarRecursoUsuario','/guardarRecursoCliente','/buscador','/mostrarRecursosCategoria','/registrarCategoriaHija','/nuevaCategoriaHija','/adminPage','/','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso','/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/nuevoRecurso','/registrarRecurso', '/suscribirse']],
+			'filterAdmin' => ['except' => ['/mostrarAutores','/borrarRecurso','/actualizarRecurso','/editarRecurso','/editarCliente','/paginaEditCliente','/editarAutor','/paginaEditAutor','/contarDescargaRecurso','/mostrarRecursoTipo','/confirmarsus','/ExecutePayment','/checkSuscrip','/quitarRecursoLista','/mostarRecursosLista','/agregarRecursoLista','/crearLista','/comentarRecurso','/dejarSeguirAutor','/quitarRecursoUsuario','/guardarRecursoCliente','/buscador','/mostrarRecursosCategoria','/loginpage', '/', '/registrarse', '/login','/perfilUsuario', '/logout', '/paginaAutor', '/paginaCliente','/paginaRecurso', '/admin','/loginAdmin','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/seguirAutor','/suscribirse','/suscripExito', '/nuevoRecurso','/registrarRecurso']],
+			'filterCompartidas' => ['except' => ['/borrarRecurso','/actualizarRecurso','/editarRecurso','/editarCliente','/paginaEditCliente','/editarAutor','/paginaEditAutor','/contarDescargaRecurso','/confirmarsus','/ExecutePayment','/checkSuscrip','/quitarRecursoLista','/mostarRecursosLista','/agregarRecursoLista','/crearLista','/comentarRecurso','/dejarSeguirAutor','/quitarRecursoUsuario','/guardarRecursoCliente','/registrarCategoriaHija','/nuevaCategoriaHija','/adminPage','/loginpage', '/registrarse', '/login', '/logout', '/admin','/loginAdmin', '/listaAutores','/listaClientes','/borrar','/editar','/actualizar','/listaCategorias','/nuevaCategoria','/registrarCategoria','/borrarCategoria','/editarCategoria','/actualizarCategoria','/perfilAutor','/registrarAutor','/perfilCliente','/registrarCliente','/seguirAutor','/suscribirse','/suscripExito','/nuevoRecurso','/registrarRecurso']]
+			//'csrf',
 		],
 		'after'  => [
 			'toolbar',
